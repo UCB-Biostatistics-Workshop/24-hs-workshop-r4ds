@@ -72,7 +72,7 @@ gives you information about what the function does
 Quadratic Equation
 ===
 type: prompt
-incremental: false
+incremental: true
 
 Solutions to a polynomial equation ax^2 + bx + c = 0 are given by
 
@@ -86,9 +86,6 @@ Figure out how to use R functions and operations for square roots, exponentiatio
 
 - How did this **feel**? What was your emotional reaction when you saw the question?
 - What did you **learn**? What did you notice?
-<!-- - Parentheses are used to encapsulate the *arguments* to a function like `sqrt()` -->
-<!-- - Operators like `\`, `*`, and `^` are useful for math -->
-<!-- - Parentheses can also be used to establish order of operations -->
 
 Packages
 ===

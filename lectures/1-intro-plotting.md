@@ -39,7 +39,7 @@ A simple example in the console
 ========================================================
 - The box contains an expression that will be evaluated by R, followed by the result of evaluating that expression.
 
-```r
+``` r
 1 + 2
 [1] 3
 ```
@@ -49,9 +49,12 @@ A simple example in the console
 - R performs operations (called *functions*) on data and values
 - These can be composed arbitrarily
 
-```r
+``` r
 log(1+3)
 [1] 1.386294
+```
+
+``` r
 paste("The answer is", log(1+3))
 [1] "The answer is 1.38629436111989"
 ```
@@ -70,7 +73,7 @@ gives you information about what the function does
 Quadratic Equation
 ===
 type: prompt
-incremental: false
+incremental: true
 
 Solutions to a polynomial equation ax^2 + bx + c = 0 are given by
 
@@ -82,9 +85,6 @@ Figure out how to use R functions and operations for square roots, exponentiatio
 
 - How did this **feel**? What was your emotional reaction when you saw the question?
 - What did you **learn**? What did you notice?
-<!-- - Parentheses are used to encapsulate the *arguments* to a function like `sqrt()` -->
-<!-- - Operators like `\`, `*`, and `^` are useful for math -->
-<!-- - Parentheses can also be used to establish order of operations -->
 
 Packages
 ===
@@ -95,14 +95,18 @@ Packages
 
 
 
-```r
+``` r
 install.packages("QuadRoot")
 ```
 
-```r
+``` r
 library(QuadRoot)
+Error in library(QuadRoot): there is no package called 'QuadRoot'
+```
+
+``` r
 QuadRoot(c(3,14,-5))
-[1] "The two x-intercepts for the quadratic equation are 0.3333 and -5.0000."
+Error in QuadRoot(c(3, 14, -5)): could not find function "QuadRoot"
 ```
 
 Packages
@@ -111,7 +115,7 @@ Packages
 - csv is a common format for data to come in, and it's easy to export csv files from microsoft excel, for instance. 
 
 
-```r
+``` r
 # I have a file called "lupusGenes.csv" on github that we can read from the URL 
 genes = read_csv("https://tinyurl.com/4vjrbwce")
 Error in read_csv("https://tinyurl.com/4vjrbwce"): could not find function "read_csv"
@@ -119,14 +123,14 @@ Error in read_csv("https://tinyurl.com/4vjrbwce"): could not find function "read
 
 - This fails because I haven't yet installed and loaded the `tidyverse` package
 
-```r
+``` r
 install.packages("tidyverse") # go download the package called "tidyverse"- only have to do this once
 library("tidyverse") # load the package into the current R session - do this every time you use R and need functions from this package
 ```
 
 
 
-```r
+``` r
 genes = read_csv("https://tinyurl.com/4vjrbwce")
 ```
 
@@ -137,7 +141,7 @@ Packages
 - packages only need to be loaded once per R session (session starts when you open R studio, ends when you shut it down)
 - once the package is loaded it doesn't need to be loaded again before each function call
 
-```r
+``` r
 poly = read_csv("https://tinyurl.com/y22p5j6j") # reading another csv file
 ```
 
@@ -157,7 +161,7 @@ Getting your data in R
 - Getting your data into R is easy. We already saw, for example:
 
 
-```r
+``` r
 genes = read_csv("https://tinyurl.com/4vjrbwce")
 ```
 
@@ -172,7 +176,7 @@ Looking at data
 ===
 - `genes` is now a dataset loaded into R. To look at it, just type
 
-```r
+``` r
 genes
 # A tibble: 59 × 11
    sampleid     age gender ancestry  phenotype FAM50A ERCC2 IFI44 EIF3L  RSAD2
@@ -203,7 +207,7 @@ different columns can be of different types.
 The Dataset
 ===
 
-```r
+``` r
 genes
 # A tibble: 59 × 11
    sampleid     age gender ancestry  phenotype FAM50A ERCC2 IFI44 EIF3L  RSAD2
@@ -232,7 +236,7 @@ Let's say we're curious about the relationship between two genes RSAD2 and IFI44
 - Can we use R to make a plot of these two variables?
 
 
-```r
+``` r
 ggplot(genes) + 
   geom_point(aes(x = RSAD2, y = IFI44))
 ```
@@ -251,7 +255,7 @@ ggplot
 ===
 
 
-```r
+``` r
 ggplot(genes) + 
   geom_point(aes(x = VAPA, y = EIF3L))
 ```
@@ -288,7 +292,7 @@ Aesthetics
 - You can also use them to assign color, for instance
 
 
-```r
+``` r
 ggplot(genes) + 
   geom_point(aes(x = RSAD2, 
                  y = IFI44,
@@ -307,7 +311,7 @@ Aesthetics
 - We could have used a shape
 
 
-```r
+``` r
 ggplot(genes) + 
   geom_point(aes(
     x = RSAD2, 
@@ -327,7 +331,7 @@ Aesthetics
 - Or size
 
 
-```r
+``` r
 ggplot(genes) + 
   geom_point(aes(
     x = RSAD2, 
@@ -350,7 +354,7 @@ Aesthetics
 - If we set a property *outside* of the aesthetic, it no longer maps that property to a column. 
 
 
-```r
+``` r
 ggplot(genes) + 
   geom_point(
     aes(
@@ -386,7 +390,7 @@ type: prompt
 What will this do? Why?
 
 
-```r
+``` r
 ggplot(genes) + 
   geom_point(aes(x = RSAD2, y = IFI44, color = "blue"))
 ```
@@ -395,7 +399,7 @@ Geoms
 ===
 
 
-```r
+``` r
 ggplot(genes) + 
   geom_point(aes(x = RSAD2, y = IFI44))
 ```
@@ -410,7 +414,7 @@ ggplot(genes) +
 
 ***
 
-```r
+``` r
 ggplot(genes) + 
   geom_smooth(aes(x = RSAD2, y = IFI44))
 ```
@@ -427,7 +431,7 @@ Geoms
 - On the other hand, you *can* set the "line type" of a line:
 
 
-```r
+``` r
 ggplot(genes) + 
   geom_smooth(aes(x = RSAD2, y = IFI44, linetype = phenotype))
 ```
@@ -441,7 +445,7 @@ Geoms
 ===
 - It's possible to add multiple geoms to the same plot
 
-```r
+``` r
 ggplot(genes) + 
   geom_smooth(aes(x = RSAD2, y = IFI44, color = phenotype)) + 
   geom_point(aes(x = RSAD2, y = IFI44, color = phenotype))
@@ -456,7 +460,7 @@ Geoms
 ===
 - To assign the same aesthetics to all geoms, pass the aesthetics to the `ggplot` function directly instead of to each geom individually
 
-```r
+``` r
 ggplot(genes, aes(x = RSAD2, y = IFI44, color = phenotype)) + 
   geom_smooth() + 
   geom_point()
@@ -471,7 +475,7 @@ Geoms
 ===
 - You can also use different mappings in different geoms
 
-```r
+``` r
 ggplot(genes, mapping = aes(x = RSAD2, y = IFI44)) + 
   geom_point(aes(color = ancestry)) + 
   geom_smooth()
@@ -509,7 +513,7 @@ Facets
 - Use **facets** to generate multiple plots with shared structure
 
 
-```r
+``` r
 ggplot(genes) + 
   geom_point(aes(x = RSAD2, y = IFI44)) + 
   facet_wrap(vars(phenotype), nrow = 2)
@@ -526,7 +530,7 @@ Facets
 - `facet_grid` is better for ordered categories, and can be used with two variables
 
 
-```r
+``` r
 ggplot(genes) + 
   geom_point(aes(x = RSAD2, y = IFI44)) + 
   facet_grid(rows=vars(phenotype), cols=vars(gender))
@@ -547,7 +551,7 @@ Use ggplot to investigate the relationship between gene expression and lupus usi
 
 For some plots it may be helpful to reformat your data using this code (we'll learn how to do this on day 4):
 
-```r
+``` r
 
 gene_names = names(genes)[6:11]
 reformatted_genes = pivot_longer(genes, all_of(gene_names), names_to='gene', values_to='expression')
