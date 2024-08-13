@@ -62,7 +62,7 @@ This is a subset of the Genotype Tissue Expression (GTEx) dataset
 
 **NOTE**: If copying the code, make sure there are no spaces in the download link (where it wraps to a new line).
 
-```r
+``` r
 # Read subsetted data from online file - make sure there are no spaces
 gtex = read_tsv('https://tinyurl.com/342rhdc2')
 
@@ -87,7 +87,7 @@ Filter rows with filter()
 - It takes two arguments: the dataset and the condition
 
 
-```r
+``` r
 filter(gtex, Blood >= 12)
 # A tibble: 12 × 6
    Gene       Ind        Blood Heart  Lung Liver
@@ -113,7 +113,7 @@ Comparison operators
 - `>=` and `<=` are greater-than-or-equal and less-than-or-equal
 - these can also be used directly on vectors outside of data frames
 
-```r
+``` r
 c(1,5,-22,4) > 0
 [1]  TRUE  TRUE FALSE  TRUE
 ```
@@ -122,7 +122,7 @@ Comparing to NA
 ===
 - A common "gotcha" is that  `==`  cannot be used to compare to `NA`:
 
-```r
+``` r
 x = NA
 x == NA
 [1] NA
@@ -130,7 +130,7 @@ x == NA
 - The result actually makes sense though, because I'm asking if "I don't know" is the same as "I don't know". Since either side could be any value, the right answer is "I don't know".
 - To check if something is `NA`, use `is.na()`
 
-```r
+``` r
 x = NA
 is.na(x)
 [1] TRUE
@@ -141,7 +141,7 @@ Equality on Strings
 - you can use `==` to test whether a string variable matches given text
 - but remember to quote the text you want to compare to
 
-```r
+``` r
 filter(gtex, Gene == "ZZZ3")
 # A tibble: 78 × 6
    Gene  Ind        Blood Heart  Lung Liver
@@ -166,7 +166,7 @@ Filtering on computed values
 - the condition can contain computed values
 
 
-```r
+``` r
 filter(gtex, exp(Blood) > 1)
 # A tibble: 185,698 × 6
    Gene  Ind        Blood Heart  Lung Liver
@@ -189,7 +189,7 @@ filter(gtex, exp(Blood) > 1)
 Filtering out all rows
 =========================================================
 
-```r
+``` r
 filter(gtex, Blood > 10000)
 # A tibble: 0 × 6
 # ℹ 6 variables: Gene <chr>, Ind <chr>, Blood <dbl>, Heart <dbl>, Lung <dbl>,
@@ -205,13 +205,13 @@ type:prompt
 - What is the result of running this code?
 
 
-```r
+``` r
 nrow(gtex)
 [1] 389922
 ```
 
 
-```r
+``` r
 filter(gtex, Gene == "ZZZ3")
 filter(gtex, Heart <= -5)
 nrow(gtex)
@@ -231,7 +231,7 @@ where **either** blood expression is positive (>0) **or** heart expression is ne
 Logical conjunctions (AND)
 ========================================================
 
-```r
+``` r
 filter(gtex, Blood <= -5 & Heart <= -5)
 # A tibble: 3 × 6
   Gene     Ind        Blood  Heart   Lung Liver
@@ -244,7 +244,7 @@ filter(gtex, Blood <= -5 & Heart <= -5)
 - The ampersand sign ` & ` stands for "AND"
 
 
-```r
+``` r
 filter(gtex, Blood <= -5, Heart <= -5)
 # A tibble: 3 × 6
   Gene     Ind        Blood  Heart   Lung Liver
@@ -258,7 +258,7 @@ filter(gtex, Blood <= -5, Heart <= -5)
 Logical conjunctions (OR)
 =========================================================
 
-```r
+``` r
 filter(gtex, Gene == "A2ML1" | Gene == "A4GALT")
 # A tibble: 156 × 6
    Gene  Ind        Blood Heart  Lung Liver
@@ -281,7 +281,7 @@ filter(gtex, Gene == "A2ML1" | Gene == "A4GALT")
 Logical conjunctions (OR)
 =========================================================
 
-```r
+``` r
 filter(gtex, Gene %in% c("ZZZ3","A2ML1")) 
 # A tibble: 156 × 6
    Gene  Ind        Blood Heart  Lung Liver
@@ -297,6 +297,9 @@ filter(gtex, Gene %in% c("ZZZ3","A2ML1"))
  9 A2ML1 GTEX-1212Z -0.3   0.53  0.1  -0.48
 10 A2ML1 GTEX-12696 -0.11  0.24  0.96  0.72
 # ℹ 146 more rows
+```
+
+``` r
 # equivalent to 
 # filter(gtex, Gene=="ZZZ3" | Gene=="A2ML1")
 ```
@@ -305,7 +308,7 @@ filter(gtex, Gene %in% c("ZZZ3","A2ML1"))
 Negation (NOT)
 =========================================================
 
-```r
+``` r
 filter(gtex, !(Gene=="A2ML1"))
 # A tibble: 389,844 × 6
    Gene    Ind        Blood Heart  Lung Liver
@@ -325,39 +328,36 @@ filter(gtex, !(Gene=="A2ML1"))
 - The exclamation point ` ! ` means "NOT", which negates the logical condition
 - sometimes it's easier to say what you *don't* want!
 
-Exercise: computed conditions
+Exercises: computed conditions, conjunctions, NAs
 ==========================================================
 type: prompt
+
+**Do each of these three exercises separately**
 
 - Filter the GTEX data to keep just the rows where the product of Blood and Heart expression is between 0 and 1.
 
-Exercise: conjunctions
-==========================================================
-type: prompt
 
-Excluding the gene `LAMP3`, does the individual `GTEX-11TT1` have any genes with expression level greater than 4 in their blood?
+- Excluding the gene `LAMP3`, does the individual `GTEX-11TT1` have any genes with expression level greater than 4 in their blood?
 
-Exercise: getting rid of NAs
-==========================================================
-type: prompt
 
 - Filter out any rows where the value for `Heart` is missing (value is `NA`) 
+
 
 Sampling rows
 ==========================================================
 - You can use `slice_sample()` to get `n` randomly selected rows if you don't have a particular condition you would like to filter on.
 
 
-```r
+``` r
 slice_sample(gtex, n=5)
 # A tibble: 5 × 6
-  Gene       Ind        Blood Heart  Lung Liver
-  <chr>      <chr>      <dbl> <dbl> <dbl> <dbl>
-1 AKNA       GTEX-11ZUS -1.75 -0.61  0.01 -0.7 
-2 AC108448.2 GTEX-11TUW -1.25  0.04  0.28 -0.27
-3 EOGT       GTEX-18A7A  2.02 -1.41  0.13 -0.49
-4 SEMA4D     GTEX-14DAQ  0.6  -1.3  -0.89 -0.28
-5 ZNF707     GTEX-1JMLX  0.17  1.79  0.41  2.15
+  Gene            Ind        Blood Heart  Lung Liver
+  <chr>           <chr>      <dbl> <dbl> <dbl> <dbl>
+1 SYNJ1           GTEX-ZEX8  -0.68  0.44 -0.93 -0.87
+2 ALOXE3          GTEX-1BAJH -0.78 -0.38 -0.86  0.62
+3 LL21NC02-1C16.2 GTEX-11DXZ  0.75 -0.49  0.1   0.21
+4 BNIP3P1         GTEX-ZEX8   0.51 -0.39  1.12 -1.79
+5 HMGA1           GTEX-U8XE  -0.86 -0.86 -1.86 -1.34
 ```
 
 - the named argument `prop` allows you to sample a proportion of rows
@@ -369,7 +369,7 @@ Filtering by row number
 - Use `row_number()` to filter specific rows. This is more useful once you have sorted the data in a particular order, which we will soon see how to do.
 
 
-```r
+``` r
 filter(gtex, row_number()<=3)
 # A tibble: 3 × 6
   Gene  Ind        Blood Heart  Lung Liver
@@ -394,7 +394,7 @@ Arrange rows with arrange()
 - `arrange()` takes a data frame and a column, and sorts the rows by the values in that column (ascending order).
 - Again, the first argument is the data frame and the other arguments tell the function what to do with it
 
-```r
+``` r
 arrange(gtex, Blood)
 # A tibble: 389,922 × 6
    Gene        Ind        Blood  Heart   Lung Liver
@@ -417,7 +417,7 @@ Arrange can sort by more than one column
 - This is useful if there is a tie in sorting by the first column.
 
 
-```r
+``` r
 arrange(gtex, Gene, Blood)
 # A tibble: 389,922 × 6
    Gene  Ind        Blood Heart  Lung Liver
@@ -440,7 +440,7 @@ Use the desc function to arrange by descending values
 ===========================================================
 
 
-```r
+``` r
 arrange(gtex, desc(Blood))
 # A tibble: 389,922 × 6
    Gene       Ind        Blood Heart  Lung Liver
@@ -471,7 +471,7 @@ type:prompt
 Use `arrange()` and `filter()` to get the data for the 5 rows with the highest expression values in blood
 
 
-```r
+``` r
 filter(arrange(gtex, desc(Blood)), row_number()<=5) # "nesting" the calls to filter and arrange
 # A tibble: 5 × 6
   Gene     Ind        Blood Heart  Lung Liver
@@ -484,7 +484,7 @@ filter(arrange(gtex, desc(Blood)), row_number()<=5) # "nesting" the calls to fil
 ```
 or
 
-```r
+``` r
 gtex_by_blood = arrange(gtex, desc(Blood)) # using a temporary variable
 filter(gtex_by_blood, row_number()<=5)
 # A tibble: 5 × 6
@@ -515,7 +515,7 @@ Select columns with select()
 - first argument is a data frame, then columns you want to select
 
 
-```r
+``` r
 select(gtex, Gene, Ind, expression=Blood)
 # A tibble: 389,922 × 3
    Gene  Ind        expression
@@ -540,7 +540,7 @@ Select columns with select()
 - `select()` can also be used with handy helpers like `starts_with()` and `contains()`
 
 
-```r
+``` r
 select(gtex, starts_with("L"))
 # A tibble: 389,922 × 2
     Lung Liver
@@ -562,7 +562,7 @@ select(gtex, starts_with("L"))
 ***
 
 
-```r
+``` r
 select(gtex, contains("N"))
 # A tibble: 389,922 × 3
    Gene  Ind         Lung
@@ -586,7 +586,7 @@ select() subsets columns by name
 =========================================================
 - `select()` can also be used to select everything **except for** certain columns
 
-```r
+``` r
 select(gtex, -starts_with("L"), -Ind)
 # A tibble: 389,922 × 3
    Gene  Blood Heart
@@ -609,7 +609,7 @@ select(gtex, -starts_with("L"), -Ind)
 - or even to select only columns that match a certain condition
 
 
-```r
+``` r
 select(gtex, where(is.numeric))
 # A tibble: 389,922 × 4
    Blood Heart  Lung Liver
@@ -642,7 +642,7 @@ pull() is a friend of select()
 ![](https://www.gastonsanchez.com/intro2cwd/images/eda/dplyr-extract-column.svg)
 
 
-```r
+``` r
 pull(gtex, Gene)
     [1] "A2ML1"              "A2ML1"              "A2ML1"             
     [4] "A2ML1"              "A2ML1"              "A2ML1"             
@@ -653,7 +653,7 @@ pull(gtex, Gene)
 ***
 
 
-```r
+``` r
 select(gtex, Gene)
 # A tibble: 389,922 × 1
    Gene 
@@ -678,7 +678,7 @@ Rename column names with rename()
 =========================================================
 - `select()` can be used to rename variables, but it drops all variables not selected
 
-```r
+``` r
 select(gtex, individual = Ind)
 # A tibble: 389,922 × 1
    individual
@@ -691,7 +691,7 @@ select(gtex, individual = Ind)
 
 - `rename()` is better suited for this because it keeps all the columns
 
-```r
+``` r
 rename(gtex, individual = Ind)
 # A tibble: 389,922 × 6
    Gene  individual Blood Heart  Lung Liver
@@ -720,7 +720,7 @@ Add new variables with mutate()
 - `mutate` creates new columns
 - first argument is a dataframe, second specifies what you want the new columns to be
 
-```r
+``` r
 mutate(gtex, abs_blood = abs(Blood))
 # A tibble: 389,922 × 7
    Gene  Ind        Blood Heart  Lung Liver abs_blood
@@ -734,7 +734,7 @@ mutate(gtex, abs_blood = abs(Blood))
 - The expression on the right of the `=` defines what will go into the new column
 - **Warning!** If the new variable name already exists, `mutate()` will overwrite the existing one
 
-```r
+``` r
 mutate(gtex, Blood = Blood *1000)
 # A tibble: 389,922 × 6
    Gene  Ind        Blood Heart  Lung Liver
@@ -749,7 +749,7 @@ mutate() can create multiple new columns at once
 - `mutate()` can create multiple columns at the same time and use multiple columns to define a single new one
 
 
-```r
+``` r
 mutate(gtex, # the newlines make it more readable
       abs_blood = abs(Blood),
       abs_heart = abs(Heart),
@@ -776,7 +776,7 @@ mutate() for data type conversion
 ===
 - Data is sometimes given to you in a form that makes it difficult to do operations on
 
-```r
+``` r
 df = tibble(number = c("1", "2", "3"))
 df
 # A tibble: 3 × 1
@@ -785,6 +785,9 @@ df
 1 1     
 2 2     
 3 3     
+```
+
+``` r
 mutate(df, number_plus_1 = number + 1)
 Error in `mutate()`:
 ℹ In argument: `number_plus_1 = number + 1`.
@@ -794,7 +797,7 @@ Caused by error in `number + 1`:
 
 - `mutate()` is also useful for converting data types, in this case text to numbers
 
-```r
+``` r
 mutate(df, number = as.numeric(number))
 # A tibble: 3 × 1
   number
@@ -839,14 +842,14 @@ mutate() and if_else()
 - `if_else` is a vectorized if-else statement
 - the first argument is an R expression that evaluates to a logical vector, the second argument is what to replace all of the resulting TRUEs with, and the third argument is what to replace the resulting FALSEs with
 
-```r
+``` r
 x = c(-1, 1/2, 2/3, 5)
 if_else(0<=x & x<=1, "in [0,1]", "not in [0,1]")
 [1] "not in [0,1]" "in [0,1]"     "in [0,1]"     "not in [0,1]"
 ```
 - this is often used in `mutate()`:
 
-```r
+``` r
 mutate(gtex, 
   blood_expression = ifelse(
     Blood < 0, "-", "+"
@@ -879,7 +882,7 @@ mutate() and if_else()
 ```
 
 
-```r
+``` r
 mutate(emails,
   preferred_email = ifelse(preferred=='personal', personal, school)
 )
@@ -903,7 +906,7 @@ Why pipe?
 - In our last exercise, we used a number of different function applications to arrive at our answer. Shown below, we used temporary variables to keep our code clean. 
 
 
-```r
+``` r
 gtex_A2ML1 = filter(gtex, Gene=="A2ML1")
 gtex_diff = mutate(gtex_A2ML1, diff = abs(Heart-Lung))
 gtex_sort = arrange(gtex_diff, desc(diff))
@@ -914,7 +917,7 @@ pull(gtex_top, Ind)
 - Compare that to the same code using nested calls (instead of storing in temporary variables):
 
 
-```r
+``` r
 pull(
   filter(
     arrange(
@@ -936,7 +939,7 @@ The pipe operator
 - R solves these problems with the "pipe" operator `|>`
 
 
-```r
+``` r
 gtex |> 
     filter(Gene == 'A2ML1') |>
     mutate(diff = abs(Heart-Lung)) |>
@@ -952,7 +955,7 @@ The pipe operator
 - Tidyverse solves these problems with the pipe operator `|>`
 
 
-```r
+``` r
 gtex |> 
     filter(Gene == 'A2ML1') |>
     mutate(diff = abs(Heart-Lung)) |>
@@ -964,7 +967,7 @@ gtex |>
 - How does this compare with our code before? What do you notice?
 
 
-```r
+``` r
 gtex_A2ML1 = filter(gtex, Gene=="A2ML1")
 gtex_diff = mutate(gtex_A2ML1, diff = abs(Heart-Lung))
 gtex_sort = arrange(gtex_diff, desc(diff))
@@ -979,14 +982,14 @@ Pipe details: What happens to an object when it gets "piped in"?
 When `df1` is piped into `fun(x)` (`fun` is just some fake function)
 
 
-```r
+``` r
 df1 |> fun(x)
 ```
 
 is converted into:
 
 
-```r
+``` r
 fun(df1, x)
 ```
 
@@ -999,7 +1002,7 @@ Pipe details: What objects can be piped?
 
 Piping a string
 
-```r
+``` r
 # paste("hello", "world")
 "hello" |> paste("world") 
 [1] "hello world"
@@ -1008,7 +1011,7 @@ Piping a string
 Piping a vector
 
 
-```r
+``` r
 # sum(c(1,44,21,0,-4))
 c(1,44,21,0,-4) |> sum()
 [1] 62
@@ -1017,7 +1020,7 @@ c(1,44,21,0,-4) |> sum()
 Piping a data frame
 
 
-```r
+``` r
 # filter(gtex, Gene=="ZZZ3")
 gtex |> filter(Gene=="ZZZ3") 
 # A tibble: 78 × 6
@@ -1031,7 +1034,7 @@ gtex |> filter(Gene=="ZZZ3")
 An assembly line
 ===
 
-```r
+``` r
 gtex |> 
     filter(Gene == 'A2ML1') |>
     mutate(diff = abs(Heart-Lung)) |>
@@ -1057,7 +1060,7 @@ Two Pipes
 
 
 
-```r
+``` r
 filter(gtex, Gene=="ZZZ3")
 gtex |> filter(Gene=="ZZZ3") 
 gtex %>% filter(Gene=="ZZZ3") 
@@ -1070,7 +1073,7 @@ type:prompt
 - Run this code to see what it does. Then rewrite it using the pipe operator and get it to produce the same output.
 
 
-```r
+``` r
 mybl2 = filter(gtex, Gene == 'MYBL2')
 
 outliers = mutate(mybl2, blood_outlier = abs(Blood) > 2)

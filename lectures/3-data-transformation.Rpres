@@ -234,23 +234,20 @@ filter(gtex, !(Gene=="A2ML1"))
 - The exclamation point ` ! ` means "NOT", which negates the logical condition
 - sometimes it's easier to say what you *don't* want!
 
-Exercise: computed conditions
+Exercises: computed conditions, conjunctions, NAs
 ==========================================================
 type: prompt
+
+**Do each of these three exercises separately**
 
 - Filter the GTEX data to keep just the rows where the product of Blood and Heart expression is between 0 and 1.
 
-Exercise: conjunctions
-==========================================================
-type: prompt
 
-Excluding the gene `LAMP3`, does the individual `GTEX-11TT1` have any genes with expression level greater than 4 in their blood?
+- Excluding the gene `LAMP3`, does the individual `GTEX-11TT1` have any genes with expression level greater than 4 in their blood?
 
-Exercise: getting rid of NAs
-==========================================================
-type: prompt
 
 - Filter out any rows where the value for `Heart` is missing (value is `NA`) 
+
 
 Sampling rows
 ==========================================================
