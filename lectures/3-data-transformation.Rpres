@@ -326,6 +326,155 @@ filter(gtex_by_blood, row_number()<=5)
 
 - what happens if we reverse the order in which we did `filter` and `arrange`? Does it still work?
 
+
+Piping
+===
+type:section
+
+Why pipe?
+===
+
+- In our last exercise, we used a number of different function applications to arrive at our answer. Shown below, we used temporary variables to keep our code clean. 
+```{r}
+gtex_by_blood = arrange(gtex, desc(Blood)) # using a temporary variable
+filter(gtex_by_blood, row_number()<=5)
+```
+
+- we can also accompish this by "nesting" the function calls:
+```{r}
+filter(arrange(gtex, desc(Blood)), row_number()<=5) # "nesting" the calls to filter and arrange
+```
+
+- Which do you prefer? Why? What are the sylistic pros and cons to both if you are trying to understand what the code does for the first time?
+
+The pipe operator
+===
+
+- R solves these problems with the "pipe" operator `|>`
+
+```{r, eval=F, tidy=F}
+gtex |> 
+  arrange(desc(Blood)) |>
+  filter(row_number()<=5)
+```
+
+
+The pipe operator
+===
+
+- Tidyverse solves these problems with the pipe operator `|>`
+
+```{r, eval=F, tidy=F}
+gtex |> 
+  arrange(desc(Blood)) |>
+  filter(row_number()<=5)
+```
+
+- How does this compare with our code before? What do you notice?
+
+```{r, eval=F, tidy=F}
+gtex_by_blood = arrange(gtex, desc(Blood)) # using a temporary variable
+filter(gtex_by_blood, row_number()<=5)
+```
+
+
+Pipe details: What happens to an object when it gets "piped in"?
+=================================================================
+
+When `df1` is piped into `fun(x)` (`fun` is just some fake function)
+
+```{r eval=FALSE}
+df1 |> fun(x)
+```
+
+is converted into:
+
+```{r eval=FALSE}
+fun(df1, x)
+```
+
+- That is: the thing being piped in is used as the _first_ argument of `fun`.
+- The tidyverse functions are consistently designed so that the first argument is a data frame, and the result is a data frame, so you can push a dataframe all the way through a series of functions
+
+Pipe details: What objects can be piped?
+=================================================================
+- The pipe works for all variables and functions (not just tidyverse functions)
+
+Piping a string
+```{r}
+# paste("hello", "world")
+"hello" |> paste("world") 
+```
+
+Piping a vector
+
+```{r}
+# sum(c(1,44,21,0,-4))
+c(1,44,21,0,-4) |> sum()
+```
+
+Piping a data frame
+
+```{r, max.lines=5}
+# filter(gtex, Gene=="ZZZ3")
+gtex |> filter(Gene=="ZZZ3") 
+```
+
+An assembly line
+===
+```{r, eval=F, tidy=F}
+gtex |> 
+  arrange(desc(Blood)) |>
+  filter(row_number()<=5)
+
+# same as:
+#   arrange(gtex, desc(Blood)) |>
+#   filter(row_number()<=5)
+
+
+# same as:
+#   filter( arrange(gtex, desc(Blood)), row_number()<=5)
+```
+
+- The pipe represents a "conveyor belt" along which data is passed from function to function ("workers") in an assembly line
+
+Two Pipes
+===
+
+**History**
+- R had no pipe
+- ~2014: introduced by `magrittr` package (as `%>%`)
+- ~2016: tidyverse adoption, proliferated in code
+- ~2021: base language adopted idea, implemented native pipe `|>`
+
+
+- `%>%` and `|>` are (basically) the same
+- you will see both in the wild
+
+
+```{r, max.lines=5, eval=F}
+filter(gtex, Gene=="ZZZ3")
+gtex |> filter(Gene=="ZZZ3") 
+gtex %>% filter(Gene=="ZZZ3") 
+```
+
+Exercise: Pipe to ggplot
+===
+type:prompt
+
+- Run this code to see what it does. Then rewrite it using the pipe operator (get rid of the intermediate variables `mybl2` and `outliers`) and get it to produce the same output.
+
+```{r, eval=F, tidy=F}
+mybl2 = filter(gtex, Gene == 'MYBL2')
+
+# we haven't learned about this function yet, but doesn't matter
+outliers = mutate(mybl2, blood_outlier = abs(Blood) > 2) 
+
+ggplot(outliers) +
+  geom_bar(aes(x=blood_outlier))
+```
+
+
 Select columns with select()
 ===
 type:section
@@ -342,7 +491,8 @@ Select columns with select()
 - first argument is a data frame, then columns you want to select
 
 ```{r}
-select(gtex, Gene, Ind, expression=Blood)
+gtex |>
+  select(Gene, Ind, expression=Blood)
 ```
 
 - you can rename columns in the result with the syntax ` new_name = old_name`
@@ -352,14 +502,16 @@ Select columns with select()
 - `select()` can also be used with handy helpers like `starts_with()` and `contains()`
 
 ```{r}
-select(gtex, starts_with("L"))
+gtex |>
+  select(starts_with("L"))
 ```
 - Use `?select` to see all the possibilities
 
 ***
 
 ```{r}
-select(gtex, contains("N"))
+gtex |>
+  select(contains("N"))
 ```
 - The quotes around the letter `"N"` make it a string. If we did not do this, `R` would think it was looking for a variable called `N` and not just the plain letter.
 - We don't have to quote the names of columns (like `Ind`) because the `tidyverse` functions know that we are working within the dataframe and thus treat the column names like they are variables in their own right
@@ -368,7 +520,8 @@ select() subsets columns by name
 =========================================================
 - `select()` can also be used to select everything **except for** certain columns
 ```{r}
-select(gtex, -starts_with("L"), -Ind)
+gtex |>
+  select(-starts_with("L"), -Ind)
 ```
 
 ***
@@ -376,7 +529,8 @@ select(gtex, -starts_with("L"), -Ind)
 - or even to select only columns that match a certain condition
 
 ```{r}
-select(gtex, where(is.numeric))
+gtex |>
+  select(where(is.numeric))
 ```
 
 Exercise: select and filter
@@ -394,13 +548,14 @@ pull() is a friend of select()
 ![](https://www.gastonsanchez.com/intro2cwd/images/eda/dplyr-extract-column.svg)
 
 ```{r max.lines = 3}
-pull(gtex, Gene)
+# same as gtex$Gene, but pipeable! eg. gtex |> .... |> pull(some_col) 
+gtex |> pull(Gene)
 ```
 
 ***
 
 ```{r}
-select(gtex, Gene)
+gtex |> select(Gene)
 ```
 
 
@@ -410,12 +565,12 @@ Rename column names with rename()
 =========================================================
 - `select()` can be used to rename variables, but it drops all variables not selected
 ```{r max.lines = 6}
-select(gtex, individual = Ind)
+gtex |> select(individual = Ind)
 ```
 
 - `rename()` is better suited for this because it keeps all the columns
 ```{r max.lines = 6}
-rename(gtex, individual = Ind)
+gtex |> rename(individual = Ind)
 ```
 
 Note: `mutate()`, can also change a column name (more on `mutate()` soon)
@@ -436,14 +591,16 @@ Add new variables with mutate()
 - `mutate` creates new columns
 - first argument is a dataframe, second specifies what you want the new columns to be
 ```{r, max.lines = 5}
-mutate(gtex, abs_blood = abs(Blood))
+gtex |>
+  mutate(abs_blood = abs(Blood))
 ```
 - This uses `mutate()` to add a new column to which is the absolute value of `Blood`.
 - The thing on the left of the `=` is a new name that you make up which you would like the new column to be called
 - The expression on the right of the `=` defines what will go into the new column
 - **Warning!** If the new variable name already exists, `mutate()` will overwrite the existing one
 ```{r, max.lines = 5}
-mutate(gtex, Blood = Blood *1000)
+gtex |>
+  mutate(Blood = Blood *1000)
 ```
 
 mutate() can create multiple new columns at once
@@ -451,11 +608,12 @@ mutate() can create multiple new columns at once
 - `mutate()` can create multiple columns at the same time and use multiple columns to define a single new one
 
 ```{r, tidy=F}
-mutate(gtex, # the newlines make it more readable
+gtex |>
+  mutate(  # the newlines make it more readable
       abs_blood = abs(Blood),
       abs_heart = abs(Heart),
       blood_heart_dif = abs_blood - abs_heart
-)
+  )
 ```
 - Note that we have also used two columns simultaneously (`Blood` and `Heart`) to create a new column)
 
@@ -465,12 +623,12 @@ mutate() for data type conversion
 ```{r}
 df = tibble(number = c("1", "2", "3"))
 df
-mutate(df, number_plus_1 = number + 1)
+df |> mutate(number_plus_1 = number + 1)
 ```
 
 - `mutate()` is also useful for converting data types, in this case text to numbers
 ```{r}
-mutate(df, number = as.numeric(number))
+df |> mutate(number = as.numeric(number))
 ```
 
 
@@ -523,7 +681,8 @@ if_else(0<=x & x<=1, "in [0,1]", "not in [0,1]")
 ```
 - this is often used in `mutate()`:
 ```{r, max.lines=10}
-mutate(gtex, 
+gtex |>
+mutate( 
   blood_expression = ifelse(
     Blood < 0, "-", "+"
 ))
@@ -543,176 +702,12 @@ emails
 ```
 
 ```{r}
-mutate(emails,
+emails |> 
+mutate(,
   preferred_email = ifelse(preferred=='personal', personal, school)
 )
 ```
 
-
-Piping
-===
-type:section
-
-Why pipe?
-===
-
-- In our last exercise, we used a number of different function applications to arrive at our answer. Shown below, we used temporary variables to keep our code clean. 
-
-```{r, eval=F, tidy=F}
-gtex_A2ML1 = filter(gtex, Gene=="A2ML1")
-gtex_diff = mutate(gtex_A2ML1, diff = abs(Heart-Lung))
-gtex_sort = arrange(gtex_diff, desc(diff))
-gtex_top = filter(gtex_sort, row_number()<=10)
-pull(gtex_top, Ind)
-```
-
-- Compare that to the same code using nested calls (instead of storing in temporary variables):
-
-```{r, eval=F, tidy=F}
-pull(
-  filter(
-    arrange(
-      mutate(
-        filter(
-          gtex, Gene=="A2ML1"),
-        diff = abs(Heart-Lung)),
-      desc(diff)),
-    row_number()<=10),
-  Ind
-)
-```
-
-- What makes either of these hard to read or understand?
-
-The pipe operator
-===
-
-- R solves these problems with the "pipe" operator `|>`
-
-```{r, eval=F, tidy=F}
-gtex |> 
-    filter(Gene == 'A2ML1') |>
-    mutate(diff = abs(Heart-Lung)) |>
-    arrange(desc(diff)) |>
-    filter(row_number() <= 10) |>
-    pull(Ind)
-```
-
-
-The pipe operator
-===
-
-- Tidyverse solves these problems with the pipe operator `|>`
-
-```{r, eval=F, tidy=F}
-gtex |> 
-    filter(Gene == 'A2ML1') |>
-    mutate(diff = abs(Heart-Lung)) |>
-    arrange(desc(diff)) |>
-    filter(row_number() <= 10) |>
-    pull(Ind)
-```
-
-- How does this compare with our code before? What do you notice?
-
-```{r, eval=F, tidy=F}
-gtex_A2ML1 = filter(gtex, Gene=="A2ML1")
-gtex_diff = mutate(gtex_A2ML1, diff = abs(Heart-Lung))
-gtex_sort = arrange(gtex_diff, desc(diff))
-gtex_top = filter(gtex_sort, row_number()<=10)
-pull(gtex_top, Ind)
-```
-
-
-Pipe details: What happens to an object when it gets "piped in"?
-=================================================================
-
-When `df1` is piped into `fun(x)` (`fun` is just some fake function)
-
-```{r eval=FALSE}
-df1 |> fun(x)
-```
-
-is converted into:
-
-```{r eval=FALSE}
-fun(df1, x)
-```
-
-- That is: the thing being piped in is used as the _first_ argument of `fun`.
-- The tidyverse functions are consistently designed so that the first argument is a data frame, and the result is a data frame, so you can push a dataframe all the way through a series of functions
-
-Pipe details: What objects can be piped?
-=================================================================
-- The pipe works for all variables and functions (not just tidyverse functions)
-
-Piping a string
-```{r}
-# paste("hello", "world")
-"hello" |> paste("world") 
-```
-
-Piping a vector
-
-```{r}
-# sum(c(1,44,21,0,-4))
-c(1,44,21,0,-4) |> sum()
-```
-
-Piping a data frame
-
-```{r, max.lines=5}
-# filter(gtex, Gene=="ZZZ3")
-gtex |> filter(Gene=="ZZZ3") 
-```
-
-An assembly line
-===
-```{r, eval=F, tidy=F}
-gtex |> 
-    filter(Gene == 'A2ML1') |>
-    mutate(diff = abs(Heart-Lung)) |>
-    arrange(desc(diff)) |>
-    filter(row_number() <= 10) |>
-    pull(Ind)
-```
-
-- The pipe represents a "conveyor belt" along which data is passed from function to function ("workers") in an assembly line
-
-Two Pipes
-===
-
-**History**
-- R had no pipe
-- ~2014: introduced by `magrittr` (as `%>%`)
-- ~2016: tidyverse adoption, proliferated in code
-- ~2021: base language adopted idea, implemented native pipe `|>`
-
-
-- `%>%` and `|>` are (basically) the same
-- you will see both in the wild
-
-
-```{r, max.lines=5, eval=F}
-filter(gtex, Gene=="ZZZ3")
-gtex |> filter(Gene=="ZZZ3") 
-gtex %>% filter(Gene=="ZZZ3") 
-```
-
-Exercise: Pipe to ggplot
-===
-type:prompt
-
-- Run this code to see what it does. Then rewrite it using the pipe operator and get it to produce the same output.
-
-```{r, eval=F, tidy=F}
-mybl2 = filter(gtex, Gene == 'MYBL2')
-
-outliers = mutate(mybl2, blood_outlier = abs(Blood) > 2)
-
-ggplot(outliers) +
-  geom_bar(aes(x=blood_outlier))
-```
 
 ============================================================
 <div align="center">
