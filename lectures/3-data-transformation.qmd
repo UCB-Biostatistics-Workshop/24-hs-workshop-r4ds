@@ -1,11 +1,16 @@
-Basic Tabular Data Manipulation	
-========================================================
-author: Alejandro Schuler, adapted from Steve Bagley and based on R for Data Science by Hadley Wickham, updated to include GTEx sample data by Nicole Ferraro
-date: 2022
-transition: none
-width: 1680
-height: 1050
+---
+title: Tabular Data
+author: Alejandro Schuler
+format:
+  revealjs:
+    smaller: true
+    scrollable: false
+    html-math-method: mathjax
+error: true
+echo: true
+---
 
+## Learning Goals
 - filter rows of a dataset based on conditions
 - arrange rows of a dataset based on one or more columns
 - select columns of a dataset
@@ -30,46 +35,16 @@ truncate_to_lines <- function(x, n) {
    }
    x
 }
-
-# save the built-in output hook
-knitr::knit_hooks$set(output = function(x, options) {
-   max.lines <- options$max.lines
-   x <- truncate_to_lines(x, max.lines)
-
-   hook_output_default(x, options)
-})
-#theme_set(theme_grey(base_size = 22))
-opts_chunk$set(collapse=TRUE,tidy=TRUE,prompt=FALSE,comment=NA,cache=FALSE)
-opts_chunk$set(error=TRUE,warning=TRUE,message=TRUE)
 ```
 
-<style>
-.small-code pre code {
-  font-size: 0.5em;
-}
-</style>
 
-
-
-dplyr
-========================================================
-This section shows the basic data frame functions ("verbs") in the `dplyr` package (part of `tidyverse`).
-
-<div align="center">
-  <img src="https://d33wubrfki0l68.cloudfront.net/621a9c8c5d7b47c4b6d72e8f01f28d14310e8370/193fc/css/images/hex/dplyr.png"; style="max-width:500px;"; class="center">
-</div>
-
-dplyr verbs
-========================================================
-Each operation takes a data frame and produces a new data frame.
+## dplyr functions
+This section shows the basic data frame functions in the `dplyr` package (part of `tidyverse`). The basic functions are:
 
 - `filter()` picks out rows according to specified conditions
-- `select()` picks out columns according to their names
 - `arrange()` sorts the row by values in some column(s)
+- `select()` picks out columns according to their names
 - `mutate()` creates new columns, often based on operations on other columns
-- `summarize()` collapses many values in one or more columns down to one value per column
-
-These can all be used in conjunction with `group_by()` which changes the scope of each function from operating on the entire dataset to operating on it group-by-group. These six functions provide the "verbs" for a language of data manipulation.
 
 All work similarly:
 
@@ -79,8 +54,15 @@ All work similarly:
 
 Together these properties make it easy to chain together multiple simple steps to achieve a complex result. 
 
-GTEx data
-===
+***
+
+Later we will also learn
+
+- `summarize()` collapses many values in one or more columns down to one value per column
+
+and `group_by()` which changes the scope of each function from operating on the entire dataset to operating on it group-by-group. 
+
+## GTEx data
 This is a subset of the Genotype Tissue Expression (GTEx) dataset
 
 - **The full dataset.** Includes gene expression data, measured via RNA-sequencing, from 54 post-mortem tissues in ~800 individuals. Whole genome sequencing is also available for these individuals as part of the GTEx v8 release, available through dbGaP. 

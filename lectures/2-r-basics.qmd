@@ -365,10 +365,15 @@ mean(numbers)
 
 ## Exercise: subtract the mean {data-background-color=teal}
 
+A particular class has two quizzes which are taken by the same three students. Thier scores are below:
 ```{r}
-x = c(7, 3, 1, 9)
+quiz_1_scores = c(70, 90, 55)
+quiz_2_scores = c(76, 88, 70)
 ```
-- Subtract the mean of `x` from `x`, and then `sum` the result (it should be 0!)
+
+- Write code to see if the quiz 1 average is higher than or lower than the quiz 2 average
+- Are students improving? Subtract the quiz 1 scores from the quiz 2 scores and take the average of the resulting differences to find out.
+
 
 ## Exercise: a vector of variables [together]  {data-background-color=teal}
 
@@ -396,7 +401,7 @@ a sequence of integers from the first number to the second number
 ## Indexing
 
 ```{r}
-x
+x = c("a", "b", "c", "d")
 x[1] # same as x[c(1)] since 1 is already a vector (of length 1)
 x[2:4]
 x[c(3, 1)]
@@ -413,12 +418,10 @@ the original vector. Assign the result to a new variable to save it if you neeed
 
 What does this code do?
 ```{r, eval=F}
-x = ... # some vector
+x = c("a", "b", "c", "d", "e") # some vector
 x[length(x):1]
 ```
 
-Hints:
-- assign `x` some values and try it to see!
 - read inside out: first figure out what `length(x)` does, then think about what the output of `length(x):1` should do, and then finally `x[length(x):1]`
 
 ## Indexed Assignment
@@ -427,7 +430,7 @@ Hints:
 
 ```{r}
 x
-x[1] = 100
+x[1] = 'Z'
 x
 ```
 
@@ -435,9 +438,9 @@ x
 
 ```{r}
 x
-x[c(1,2)] = c(100, 200)
+x[c(1,2)] = c("Z", "X")
 x
-x[c(1,2)] = -1
+x[c(1,2)] = "Q"
 x
 ```
 
@@ -696,7 +699,7 @@ C = 3
 In the rest of the script, do the following:
 
 - generate an evenly-spaced sequence of 100 values between -5 and 5 (find an R function that does this). Call this `x`
-- generate the corresponding y-values `y` by computing the formula y = Ax^2 + Bx + C
+- generate the corresponding vector of y-values `y` by computing the formula $y = Ax^2 + Bx + C$ elementwise
 - create a data frame with `x` and `y` as columns
 - use ggplot to create a line plot of `x` vs `y`
 

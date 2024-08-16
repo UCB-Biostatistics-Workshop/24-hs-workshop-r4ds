@@ -1,6 +1,6 @@
 ---
 title: Intro and Plotting
-author: Alejandro Schuler, adapted from Steve Bagley and based on R for Data Science by Hadley Wickham
+author: Alejandro Schuler
 format:
   revealjs:
     smaller: true
