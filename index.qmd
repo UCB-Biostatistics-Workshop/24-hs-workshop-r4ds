@@ -1,0 +1,9 @@
+---
+title: R for Data Science Slides
+---
+
+- [Intro and Plotting](lectures/1-intro-plotting.html)
+<!-- - [R Programming](lectures/2-r-basics.html)
+- [Tabluar Data](lectures/3-data-transformation.html)
+- [Advanced Tabular Data](lectures/4-adv-tabular-data.html)
+- [Functional Programming](lectures/5-functional-programming.html) -->
