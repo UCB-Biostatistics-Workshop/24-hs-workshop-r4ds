@@ -38,7 +38,7 @@ By the end of the course, you will be able to:
 * write reusable and readable programs
 * seek out, learn, and integrate new packages and code into your analyses
 
-### Schedule
+### Schedule and Slides
 
 <table>
   <tbody>
@@ -51,7 +51,7 @@ By the end of the course, you will be able to:
     </tr>
     <tr>
         <td>1</td>
-        <td>Rstudio and Visualization</td>
+        <td>[Intro and Plotting](lectures/1-intro-plotting.html)</td>
         <td><ul>
               <li>issue commands to R using the Rstudio REPL interface</li>
               <li>load a package into R</li>
@@ -65,7 +65,7 @@ By the end of the course, you will be able to:
     </tr>
     <tr>
       <td>2</td>
-      <td>R Fundamentals</td>
+      <td>[R Programming](lectures/2-r-basics.html)</td>
       <td>
         <ul>
             <li>save values to variables</li>
@@ -82,7 +82,7 @@ By the end of the course, you will be able to:
     </tr>
     <tr>
       <td>3</td>
-      <td>Basic Tabular Data Manipulation</td>
+      <td>[Tabluar Data](lectures/3-data-transformation.html)</td>
         <td><ul>
             <li>filter rows of a dataset based on conditions</li>
             <li>arrange rows of a dataset based on one or more columns</li>
@@ -97,7 +97,7 @@ By the end of the course, you will be able to:
     </tr>
     <tr>
       <td>4</td>
-      <td>Advanced Tabular Data Manipulation</td>
+      <td>[Advanced Tabular Data](lectures/4-adv-tabular-data.html)</td>
       <td>
         <ul>
             <li>group and summarize data by one or more columns</li>
@@ -112,7 +112,7 @@ By the end of the course, you will be able to:
     </tr>
     <tr>
       <td>5</td>
-      <td>Functional Programming</td>
+      <td>[Functional Programming](lectures/5-functional-programming.html)</td>
         <td><ul>
             <li>write your own functions</li>
             <li>iterate functions over lists of arguments</li>
@@ -132,12 +132,3 @@ Programming, like all things, is something you learn by doing. The lectures incl
 
 ### Textbook
 We will be using parts of the fantastic book [R for Data Science](https://r4ds.hadley.nz/) (R4DS:2e) by [Hadley Wickham](http://hadley.nz/), Mine Çetinkaya-Rundel, and Garrett Grolemund (O'Reilly Media, 2017); it is online and also available in hardcopy.
-
-### Slides
-Slides can be found below:
-
-1. [Intro and Plotting](lectures/1-intro-plotting.html)
-<!-- 2. [R Programming](lectures/2-r-basics.html)
-3. [Tabluar Data](lectures/3-data-transformation.html)
-4. [Advanced Tabular Data](lectures/4-adv-tabular-data.html)
-5. [Functional Programming](lectures/5-functional-programming.html) -->
