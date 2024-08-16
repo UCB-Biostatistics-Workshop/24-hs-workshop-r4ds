@@ -1,9 +1,143 @@
 ---
-title: R for Data Science Slides
+title: R for Data Science
 ---
 
-- [Intro and Plotting](lectures/1-intro-plotting.html)
-<!-- - [R Programming](lectures/2-r-basics.html)
-- [Tabluar Data](lectures/3-data-transformation.html)
-- [Advanced Tabular Data](lectures/4-adv-tabular-data.html)
-- [Functional Programming](lectures/5-functional-programming.html) -->
+### Logistics
+| Person | Role | Contact |
+|---|---|---|
+| Alejandro Schuler | Instructor | alejandro.schuler@berkeley.edu |
+
+- Website: [https://alejandroschuler.github.io/r4ds-courses/](https://alejandroschuler.github.io/r4ds-courses/)
+- Source: [https://github.com/alejandroschuler/r4ds-courses](https://github.com/alejandroschuler/r4ds-courses)
+
+### Overview
+This course will make you an expert at data I/O, transformation, programming, and visualization in R. 
+We will use a consistent set of packages for these tasks called the `tidyverse`.
+
+This is not a traditional programming or computer science course. 
+It is meant to be an *applied* tour of how to actually use R for your data science needs. 
+We also will not cover statistical analysis of data in this course, but the curriculum is a useful prerequisite for subsequent courses on statistics or machine learning.
+
+This course is not graded, nor are there any assignments or homework. The lectures are just to get you started- they will be frequently interrupted by active learning exercises that you will be asked to complete in pairs or small groups. That's where the real learning will happen!
+
+### Prerequisites
+No prior experience with R is expected. Those with experience using R will still likely find much of value in this course since it covers a more modern style of R programming that has gained traction in the past decade.
+
+We will use R through the RStudio interface. The easiest way to access RStudio is through the cloud: [posit.cloud](https://posit.cloud). It's fast and easy- just go the link, click "get started" and create an account. Once you're in, click "new project" near the upper-right and the RStudio interface will open.
+
+Alternatively, you can install R and RStudio on your own computer: 
+[Follow this link](https://cran.rstudio.com/) and click on the appropriate options for your operating system to install R, 
+then do the same to [install RStudio](https://posit.co/download/rstudio-desktop/#download).
+
+### Learning Goals
+By the end of the course, you will be able to:
+
+* comfortably use R through the Rstudio interface
+* read and write tabular data between R and flat files
+* subset, transform, summarize, join, and plot data
+* write reusable and readable programs
+* seek out, learn, and integrate new packages and code into your analyses
+
+### Schedule
+
+<table>
+  <tbody>
+    <tr>
+        <th>Module</th>
+        <th>Topic</th>
+        <th>Learning Goals</th>
+        <th>Packages</th>
+        <th>Reading</th>
+    </tr>
+    <tr>
+        <td>1</td>
+        <td>Rstudio and Visualization</td>
+        <td><ul>
+              <li>issue commands to R using the Rstudio REPL interface</li>
+              <li>load a package into R</li>
+              <li>read some tabluar data into R</li>
+              <li>visualize tabluar data using ggplot geoms, aesthetics, and facets</li>
+        </ul></td>
+        <td><ul>
+            <li><code>ggplot2</code></li>
+        </ul></td>
+        <td>R4DS ch. 1-3</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>R Fundamentals</td>
+      <td>
+        <ul>
+            <li>save values to variables</li>
+            <li>find and call R functions with multiple arguments by position and name</li>
+            <li>recognize and index vectors and lists</li>
+            <li>recognize, import, and inspect data frames</li>
+            <li>issue commands to R using the Rstudio script pane</li>
+        </ul></td>
+        <td><ul>
+            <li><code>tibble</code></li>
+            <li><code>readr</code></li>
+        </ul></td>
+        <td>R4DS ch. 3, 5, 7, 8, 13-19</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Basic Tabular Data Manipulation</td>
+        <td><ul>
+            <li>filter rows of a dataset based on conditions</li>
+            <li>arrange rows of a dataset based on one or more columns</li>
+            <li>select columns of a dataset</li>
+            <li>mutate existing columns to create new columns</li>
+            <li>use the pipe to combine multiple operations</li>          
+        </ul></td>
+        <td><ul>
+            <li><code>dplyr</code></li>
+        </ul></td>
+        <td>R4DS ch. 4</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Advanced Tabular Data Manipulation</td>
+      <td>
+        <ul>
+            <li>group and summarize data by one or more columns</li>
+            <li>transform between long and wide data formats</li>
+            <li>combine multiple data frames using joins on one or more columns</li>
+        </ul></td>
+        <td><ul>
+            <li><code>dplyr</code></li>
+            <li><code>tidyr</code></li>
+        </ul></td>
+        <td>R4DS ch. 4, 6, 20, </td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Functional Programming</td>
+        <td><ul>
+            <li>write your own functions</li>
+            <li>iterate functions over lists of arguments</li>
+        </ul></td>
+        <td><ul>
+            <li><code>purrr</code></li>
+        </ul></td>
+        <td>R4DS ch. 26, 27</td>
+    </tr>
+  </tbody>
+</table>
+
+
+
+### In-class Exercises
+Programming, like all things, is something you learn by doing. The lectures include a lot of in-class group exercises so you can get your hands dirty. When we come upon one of these we will split the class into small groups of 3-4 students each (plus maybe a TA) and you will work together to solve the problem.
+
+### Textbook
+We will be using parts of the fantastic book [R for Data Science](https://r4ds.hadley.nz/) (R4DS:2e) by [Hadley Wickham](http://hadley.nz/), Mine Çetinkaya-Rundel, and Garrett Grolemund (O'Reilly Media, 2017); it is online and also available in hardcopy.
+
+### Slides
+Slides can be found below:
+
+1. [Intro and Plotting](lectures/1-intro-plotting.html)
+<!-- 2. [R Programming](lectures/2-r-basics.html)
+3. [Tabluar Data](lectures/3-data-transformation.html)
+4. [Advanced Tabular Data](lectures/4-adv-tabular-data.html)
+5. [Functional Programming](lectures/5-functional-programming.html) -->
