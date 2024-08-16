@@ -26,14 +26,14 @@ Programming Basics
 - We've seen code like
 
 
-```r
+``` r
 genes = read_csv("https://tinyurl.com/cjkuecnc")
 ```
 
 - We know this reads a .csv from a file and creates something called a "data frame" 
 - We've been using this data frame in code like
 
-```r
+``` r
 ggplot(genes) + 
   geom_bar(aes(x = ancestry, fill = phenotype))
 ```
@@ -49,7 +49,7 @@ Assignment
 - To do complex computations, we need to be able to give
 names to things.
 
-```r
+``` r
 genes = read_csv("https://tinyurl.com/cjkuecnc")
 ```
 - This code *assigns* the result of running `read_csv("https://tinyurl.com/cjkuecnc")` to the name `gene`
@@ -58,7 +58,7 @@ genes = read_csv("https://tinyurl.com/cjkuecnc")
 
 - You can do this with any values and/or functions
 
-```r
+``` r
 x = 1
 ```
 - R prints no result from this assignment, but what you entered
@@ -70,9 +70,12 @@ x and the result of this expression (look at the Environment pane.)
 Using the value of a variable
 ========================================================
 
-```r
+``` r
 x
 [1] 1
+```
+
+``` r
 x / 5
 [1] 0.2
 ```
@@ -95,10 +98,13 @@ to type this using one key combination.
 - You will see both used throughout R and user code.
 
 
-```r
+``` r
 x <- 10
 x
 [1] 10
+```
+
+``` r
 x = 20
 x
 [1] 20
@@ -107,10 +113,13 @@ x
 Assignment has no undo
 ========================================================
 
-```r
+``` r
 x = 10
 x
 [1] 10
+```
+
+``` r
 x = x + 1
 x
 [1] 11
@@ -134,7 +143,7 @@ More about naming
 There are different conventions for constructing compound names. Warning:
 disputes over the right way to do this can get heated.
 
-```r
+``` r
 stringlength
 string.length
 StringLength
@@ -149,7 +158,7 @@ string-length (hyphen)
 Naming rules
 ========================================================
 
-```r
+``` r
 a = 1
 A # this causes an error because A does not have a value
 ```
@@ -160,7 +169,7 @@ Error: object 'A' not found
 - names can't start with numbers
 
 
-```r
+``` r
 for = 7 # this causes an error
 ```
 - `for` is a reserved word in R. (It is used in loop control.)
@@ -185,7 +194,7 @@ Calling built-in functions
 arguments in parentheses. (Use a comma to separate the arguments, if
                            more than one.)
 
-```r
+``` r
 sqrt(2)
 [1] 1.414214
 ```
@@ -194,10 +203,13 @@ sqrt(2)
 Functions and variable assignment
 ========================================================
 
-```r
+``` r
 x = 2
 x^2
 [1] 4
+```
+
+``` r
 x
 [1] 2
 ```
@@ -206,10 +218,13 @@ x
 Functions and variable assignment
 ========================================================
 
-```r
+``` r
 x = 2
 x^2
 [1] 4
+```
+
+``` r
 x
 [1] 2
 ```
@@ -220,11 +235,14 @@ x
 Functions and variable assignment
 ========================================================
 
-```r
+``` r
 x = 2
 y = x
 y
 [1] 2
+```
+
+``` r
 x = 1
 y
 [1] 2
@@ -234,11 +252,14 @@ y
 Functions and variable assignment
 ========================================================
 
-```r
+``` r
 x = 2
 y = x
 y
 [1] 2
+```
+
+``` r
 x = 1
 y
 [1] 2
@@ -281,7 +302,7 @@ variable `=` value.
 - When using names, the order of the named arguments
 does not matter.
 
-```r
+``` r
 ggplot(data=genes) + 
   geom_point(mapping=aes(y=EIF3L, x=VAPA))
 ```
@@ -293,7 +314,7 @@ ggplot(data=genes) +
 - If you leave the names off, R defaults to a **positional** order that is specific to each function (e.g. for `aes()`, `x` comes first, then `y`)
 - you can see the default order of the arguments in the help page for each function
 
-```r
+``` r
 ggplot(genes) + 
   geom_point(aes(VAPA, EIF3L))
 ```
@@ -304,7 +325,7 @@ Optional arguments
 ===
 - Many R functions have arguments that you don't always have to specify. For example:
 
-```r
+``` r
 file_name = "https://tinyurl.com/cjkuecnc"
 genes_10 = read_csv(file_name, n_max=10) # only read in 10 rows
 genes = read_csv(file_name) 
@@ -319,7 +340,7 @@ type: prompt
 Why does this code generate errors?
 
 
-```r
+``` r
 ggplot(the_data=genes) + 
   geom_point(mapping=aes(y_axis=EIF3L, x_axis=VAPA))
 Warning in geom_point(mapping = aes(y_axis = EIF3L, x_axis = VAPA)): Ignoring
@@ -344,7 +365,7 @@ I'm trying to generate this plot:
 But when I use this code, I get:
 
 
-```r
+``` r
 ggplot(data=genes) + 
   geom_point(aes(VAPA, EIF3L))
 ```
@@ -369,7 +390,7 @@ type: section
 Repetitive calculations
 ========================================================
 
-```r
+``` r
 x1 = 1
 x2 = 2
 x3 = 3
@@ -378,7 +399,7 @@ x3 = 3
 Let's say I have these variables and I want to add 1 to all of them and save the result.
 
 
-```r
+``` r
 y1 = 1 + x1
 y2 = 1 + x2
 y3 = 1 + x3
@@ -390,7 +411,7 @@ Vectors
 ====
 - Vectors solve the problem
 
-```r
+``` r
 x = c(1,2,3)
 y = x + 1
 y
@@ -405,18 +426,24 @@ Elementwise operations on a vector
 ========================================================
 - This multiplies each element of `c(1,2,3)` by the corresponding element of `c(4,5,6)`
 
-```r
+``` r
 c(1,2,3) * c(4,5,6)
 [1]  4 10 18
 ```
 - Many basic R functions operate on multi-element vectors as
 easily as on vectors containing a single number.
 
-```r
+``` r
 sqrt(c(1,2,3))
 [1] 1.000000 1.414214 1.732051
+```
+
+``` r
 c(1,2,3)^3
 [1]  1  8 27
+```
+
+``` r
 log(c(1,2,3))
 [1] 0.0000000 0.6931472 1.0986123
 ```
@@ -424,14 +451,23 @@ log(c(1,2,3))
 Some functions operate on vectors and give back a single number
 ========================================================
 
-```r
+``` r
 numbers <- c(9, 12, 6, 10, 10, 16, 8, 4)
 numbers
 [1]  9 12  6 10 10 16  8  4
+```
+
+``` r
 sum(numbers)
 [1] 75
+```
+
+``` r
 sum(numbers)/length(numbers)
 [1] 9.375
+```
+
+``` r
 mean(numbers)
 [1] 9.375
 ```
@@ -442,7 +478,7 @@ Exercise: subtract the mean
 type: prompt
 
 
-```r
+``` r
 x = c(7, 3, 1, 9)
 ```
 - Subtract the mean of `x` from `x`, and then `sum` the result.
@@ -453,7 +489,7 @@ type: prompt
 
 - Predict the output of the following code:
 
-```r
+``` r
 a = 1
 b = 2
 x = c(a,b)
@@ -465,7 +501,7 @@ print(x)
 Ranges
 ===
 
-```r
+``` r
 1:50
  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
 [26] 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50
@@ -482,15 +518,27 @@ with 23, which is the 24^th element of the vector.
 Indexing
 ========================================================
 
-```r
+``` r
 x
 [1] 7 3 1 9
+```
+
+``` r
 x[1] # same as x[c(1)] since 1 is already a vector (of length 1)
 [1] 7
+```
+
+``` r
 x[2:4]
 [1] 3 1 9
+```
+
+``` r
 x[c(3, 1)]
 [1] 1 7
+```
+
+``` r
 x[c(1,1,1,1,1,1,4)]
 [1] 7 7 7 7 7 7 9
 ```
@@ -505,7 +553,7 @@ Exercise
 type:prompt
 What does this code do?
 
-```r
+``` r
 x = ... # some vector
 x[length(x):1]
 ```
@@ -519,9 +567,12 @@ Changing values with indexing
 - you can assign _into_ an indexed position
 
 
-```r
+``` r
 x
 [1] 7 3 1 9
+```
+
+``` r
 x[1] = 100
 x
 [1] 100   3   1   9
@@ -530,12 +581,18 @@ x
 - or multiple
 
 
-```r
+``` r
 x
 [1] 100   3   1   9
+```
+
+``` r
 x[c(1,2)] = c(100, 200)
 x
 [1] 100 200   1   9
+```
+
+``` r
 x[c(1,2)] = -1
 x
 [1] -1 -1  1  9
@@ -549,17 +606,17 @@ Strings
 ===
 - text data in R is called a "string"
 
-```r
+``` r
 my_string = "hello"
 ```
 - when using data that is text in R, you have to refer to it using quotation marks (why?)
 
-```r
+``` r
 my_string = hello # what does this code do?
 ```
 - you can have a vector of strings, and functions can operate on these too:
 
-```r
+``` r
 words = c("hello", "how", "are", "you", "?")
 paste(words, collapse=" ")
 [1] "hello how are you ?"
@@ -568,18 +625,18 @@ paste(words, collapse=" ")
 Factors
 ===
 
-```r
+``` r
 library(forcats)
 ```
 - factors represent categorical data
 
-```r
+``` r
 seasons_str = c("spring", "summer", "fall", "winter") # string vector
 seasons_str
 [1] "spring" "summer" "fall"   "winter"
 ```
 
-```r
+``` r
 seasons_fct = fct(seasons_str) # factor vector
 seasons_fct
 [1] spring summer fall   winter
@@ -588,11 +645,11 @@ Levels: spring summer fall winter
 
 - this is useful to tightly control data and prevent accidents
 
-```r
+``` r
 seasons_str[1] = "Jan"
 ```
 
-```r
+``` r
 seasons_fct[1] = "Jan"
 Warning in `[<-.factor`(`*tmp*`, 1, value = "Jan"): invalid factor level, NA
 generated
@@ -601,9 +658,12 @@ generated
 Logicals
 ========================================================
 
-```r
+``` r
 c(-2, -1, 0, 1, 2) > 0
 [1] FALSE FALSE FALSE  TRUE  TRUE
+```
+
+``` r
 c(TRUE, TRUE, FALSE)
 [1]  TRUE  TRUE FALSE
 ```
@@ -614,13 +674,13 @@ Coercion
 ===
 - If you try to do something to a vector of the wrong data type, R will often do its best to "make it work" by converting to another type
 
-```r
+``` r
 TRUE + 2
 [1] 3
 ```
 
 
-```r
+``` r
 numbers = c(1,2,3)
 numbers[1] = '5'
 numbers + 2
@@ -635,7 +695,7 @@ type: prompt
 What types are each of the following vectors? Are they all fundamentally the same, or are they different?
 
 
-```r
+``` r
 v1 = c(0,1)
 v2 = c(FALSE, TRUE)
 v3 = c("FALSE", "TRUE")
@@ -644,7 +704,7 @@ v4 = fct(v3)
 
 Which of these lines of code will run and which will produce an error?
 
-```r
+``` r
 v1 + 1
 v2 + 1
 v3 + 1
@@ -655,21 +715,21 @@ NA
 ===
 - R has a special value that represents missing data- it's called `NA`
 
-```r
+``` r
 c(1,2,NA,4)
 [1]  1  2 NA  4
 ```
 - NA can appear anywhere that R would expect some other kind of data
 - NA usually ruins computations:
 
-```r
+``` r
 1 + NA + 3
 [1] NA
 ```
 - The result makes sense because if I don't know what I'm adding together, I don't know the result either
 - some functions have options to ignore the missing values in vectors:
 
-```r
+``` r
 mean(c(1,2,NA,4), na.rm=TRUE)
 [1] 2.333333
 ```
@@ -682,7 +742,7 @@ Lists
 ===
 - A `list` is like an atomic vector, except the elements don't have to be the same type of thing
 
-```r
+``` r
 a_vector = c(1,2,4,5)
 maybe_a_vector = c(1,2,"hello",5,TRUE)
 maybe_a_vector # R converted all of these things to strings!
@@ -690,7 +750,7 @@ maybe_a_vector # R converted all of these things to strings!
 ```
 - You make them with list() and you can index them like vectors
 
-```r
+``` r
 a_list = list(1,2,"hello",5,TRUE)
 a_list[3:5]
 [[1]]
@@ -709,7 +769,7 @@ Getting elements from a list
 ===
 - You can also name the elements in a list
 
-```r
+``` r
 a_list = list(
     first_number = 1,
     second_number = 2,
@@ -719,16 +779,25 @@ a_list = list(
 ```
 - and then retrieve elements by name or position 
 
-```r
+``` r
 # returns the element named "thrid_number"
 a_list$a_string  
 [1] "hello"
+```
+
+``` r
 a_list[['a_string']]
 [1] "hello"
+```
+
+``` r
 
 # returns the 3rd element
 a_list[[3]]
 [1] "hello"
+```
+
+``` r
 
 # subsets the list, so returns a list of length 1 that contains a single element (the third)
 a_list[3]
@@ -741,7 +810,7 @@ Exercise: getting things out of a list
 type:prompt
 Create this list in your workspace and write code to extract the element `"b"`.
 
-```r
+``` r
 x = list(
   list("a", "b", "c"), 
   "d", 
@@ -755,7 +824,7 @@ Seeing into lists
 ===
 - Use `str()` to dig into nested lists and other complicated objects
 
-```r
+``` r
 nested_list = lm(hp ~ ., mtcars)
 str(nested_list)
 List of 12
@@ -835,7 +904,7 @@ Making data frames
 ========================================================
 - use `tibble()` to make your own data frames from scratch in R
 
-```r
+``` r
 my_data = tibble(
   person = c("carlos", "nathalie", "christina", "alejandro"),
   age = c(33, 48, 8, 29)
@@ -854,18 +923,24 @@ Data frame properties
 ========================================================
 - `dim()` gives the dimensions of the data frame. `ncol()` and `nrow()` give you the number of columns and the number of rows, respectively.
 
-```r
+``` r
 dim(my_data)
 [1] 4 2
+```
+
+``` r
 ncol(my_data)
 [1] 2
+```
+
+``` r
 nrow(my_data)
 [1] 4
 ```
 
 - `names()` gives you the names of the columns (a vector)
 
-```r
+``` r
 names(my_data)
 [1] "person" "age"   
 ```
@@ -874,12 +949,15 @@ Data frame properties
 ========================================================
 - `glimpse()` shows you a lot of information, `head()` returns the first `n` rows
 
-```r
+``` r
 glimpse(my_data)
 Rows: 4
 Columns: 2
 $ person <chr> "carlos", "nathalie", "christina", "alejandro"
 $ age    <dbl> 33, 48, 8, 29
+```
+
+``` r
 
 head(my_data, n=2)
 # A tibble: 2 × 2
@@ -892,7 +970,7 @@ head(my_data, n=2)
 Writing data frames
 ===
 
-```r
+``` r
 write_csv(my_data, "~/Desktop/my_data.csv")
 ```
 - after running this, you'll see a new file called `my_data.csv` (or whatever you chose to name it) appear in the specified location on your computer (e.g. `Desktop`)
@@ -934,7 +1012,7 @@ commands.
 Adding comments
 ========================================================
 
-```r
+``` r
 ## In this section, we make a vector and reverse its order
 x = 1:3 * 10                # make a vector [10, 20 ... ]
 x_reversed = x[length(x):1] # reverse its order
@@ -964,7 +1042,7 @@ type: prompt
 Write an R script that starts with:
 
 
-```r
+``` r
 A = 1
 B = 2
 C = 3
