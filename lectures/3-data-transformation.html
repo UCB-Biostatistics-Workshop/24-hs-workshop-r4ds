@@ -624,14 +624,22 @@ Alejandro Schuler
 <section id="logical-conjunctions-and" class="slide level2">
 <h2>Logical conjunctions (AND)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a><span class="fu">filter</span>(gtex, Blood <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">5</span> <span class="sc">&amp;</span> Heart <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a><span class="fu">filter</span>(gtex, Blood <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;</span> Heart <span class="sc">&lt;</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 6
-  Gene     Ind        Blood  Heart   Lung Liver
-  &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-1 ATP5A1   GTEX-YFC4  -5.35  -6.05  -7.96 -4.4 
-2 GHITM    GTEX-WK11  -5.7   -7.24  -7.37 -4.06
-3 MTATP6P1 GTEX-1KD5A -9.18 -10.1  -10.3  -9.52</code></pre>
+<pre><code># A tibble: 104,686 × 6
+   Gene  Ind        Blood Heart  Lung Liver
+   &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 A2ML1 GTEX-11DXZ -0.14 -1.08 NA    -0.66
+ 2 A2ML1 GTEX-11NUK -0.08 -0.4  -0.26 -0.13
+ 3 A2ML1 GTEX-11ZUS -1.07 -0.41  0.67  0.06
+ 4 A2ML1 GTEX-11ZVC -0.27 -0.51  0.13 -0.75
+ 5 A2ML1 GTEX-14BIL -0.32 -1.3   0.39 -0.58
+ 6 A2ML1 GTEX-14JG1 -0.59 -0.61 -0.36 -1.94
+ 7 A2ML1 GTEX-14PJO -0.07 -0.96  1.27  0.48
+ 8 A2ML1 GTEX-17EVP -1    -0.18 -0.2  -0.95
+ 9 A2ML1 GTEX-18465 -0.38 -0.4   0.1   0.5 
+10 A2ML1 GTEX-18A7A -1.01 -0.74 -0.72 -0.76
+# ℹ 104,676 more rows</code></pre>
 </div>
 </div>
 <ul>
@@ -652,23 +660,32 @@ Alejandro Schuler
 <pre><code>[1] FALSE</code></pre>
 </div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a><span class="fu">filter</span>(gtex, Blood <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">5</span>, Heart <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 6
-  Gene     Ind        Blood  Heart   Lung Liver
-  &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-1 ATP5A1   GTEX-YFC4  -5.35  -6.05  -7.96 -4.4 
-2 GHITM    GTEX-WK11  -5.7   -7.24  -7.37 -4.06
-3 MTATP6P1 GTEX-1KD5A -9.18 -10.1  -10.3  -9.52</code></pre>
-</div>
-</div>
 </section>
 <section class="slide level2">
 
 <ul>
 <li>For filter, you can do “AND” by passing in two separate conditions as two different arguments, but the comma and ampersand are not generally interchangeable</li>
 </ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a><span class="co"># filter(gtex, Blood &lt; 0 &amp; Heart &lt; 0)</span></span>
+<span id="cb28-2"><a href=""></a><span class="fu">filter</span>(gtex, Blood <span class="sc">&lt;</span> <span class="dv">0</span>, Heart <span class="sc">&lt;</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 104,686 × 6
+   Gene  Ind        Blood Heart  Lung Liver
+   &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 A2ML1 GTEX-11DXZ -0.14 -1.08 NA    -0.66
+ 2 A2ML1 GTEX-11NUK -0.08 -0.4  -0.26 -0.13
+ 3 A2ML1 GTEX-11ZUS -1.07 -0.41  0.67  0.06
+ 4 A2ML1 GTEX-11ZVC -0.27 -0.51  0.13 -0.75
+ 5 A2ML1 GTEX-14BIL -0.32 -1.3   0.39 -0.58
+ 6 A2ML1 GTEX-14JG1 -0.59 -0.61 -0.36 -1.94
+ 7 A2ML1 GTEX-14PJO -0.07 -0.96  1.27  0.48
+ 8 A2ML1 GTEX-17EVP -1    -0.18 -0.2  -0.95
+ 9 A2ML1 GTEX-18465 -0.38 -0.4   0.1   0.5 
+10 A2ML1 GTEX-18A7A -1.01 -0.74 -0.72 -0.76
+# ℹ 104,676 more rows</code></pre>
+</div>
+</div>
 </section>
 <section id="logical-conjunctions-or" class="slide level2">
 <h2>Logical conjunctions (OR)</h2>
@@ -767,13 +784,13 @@ Alejandro Schuler
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="fu">slice_sample</span>(gtex, <span class="at">n=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 6
-  Gene         Ind        Blood Heart  Lung Liver
-  &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 TRPC1        GTEX-ZPU1  -0.8  -1.94 -0.5  -0.29
-2 CASC1        GTEX-Y5V5   0.82 -0.11 -1.32 -0.41
-3 RP11-126K1.2 GTEX-1GN1U -0.53 -0.66  0.46  0.73
-4 FAN1         GTEX-1GN2E -0.21  0.52 -0.55 -1.33
-5 PSME2        GTEX-1GN73 -0.28 -0.4  -0.59  0.75</code></pre>
+  Gene    Ind        Blood Heart  Lung Liver
+  &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 GSDMB   GTEX-14BIL -1.01  0.14 -0.06  0.66
+2 PCDHGA7 GTEX-ZPU1   0.59  0.32 -0.38 -0.88
+3 SBSN    GTEX-17HGU -0.31 -1.04 -0.43 -0.7 
+4 HSBP1L1 GTEX-14BIL -1.53 -0.34 -0.76  0.26
+5 MCM9    GTEX-1B996  0.09  0.1  -1.07 -0.22</code></pre>
 </div>
 </div>
 <ul>
@@ -34660,92 +34677,117 @@ Alejandro Schuler
 </ul>
 <div class="cell" data-max.lines="5">
 <div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
-<span id="cb82-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">abs_blood =</span> <span class="fu">abs</span>(Blood))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 389,922 × 7
-   Gene  Ind        Blood Heart  Lung Liver abs_blood
-   &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;
- 1 A2ML1 GTEX-11DXZ -0.14 -1.08 NA    -0.66      0.14
- 2 A2ML1 GTEX-11GSP -0.5   0.53  0.76 -0.1       0.5 
- 3 A2ML1 GTEX-11NUK -0.08 -0.4  -0.26 -0.13      0.08
- 4 A2ML1 GTEX-11NV4 -0.37  0.11 -0.42 -0.61      0.37
- 5 A2ML1 GTEX-11TT1  0.3  -1.11  0.59 -0.12      0.3 
- 6 A2ML1 GTEX-11TUW  0.02 -0.47  0.29 -0.66      0.02
- 7 A2ML1 GTEX-11ZUS -1.07 -0.41  0.67  0.06      1.07
- 8 A2ML1 GTEX-11ZVC -0.27 -0.51  0.13 -0.75      0.27
- 9 A2ML1 GTEX-1212Z -0.3   0.53  0.1  -0.48      0.3 
-10 A2ML1 GTEX-12696 -0.11  0.24  0.96  0.72      0.11
-# ℹ 389,912 more rows</code></pre>
+<span id="cb82-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">scaled_blood =</span> <span class="dv">100</span><span class="sc">*</span>Blood)<span class="er">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error: &lt;text&gt;:2:35: unexpected ')'
+1: gtex |&gt;
+2:   mutate(scaled_blood = 100*Blood))
+                                     ^</code></pre>
 </div>
 </div>
 <ul>
 <li>This uses <code>mutate()</code> to add a new column to which is the absolute value of <code>Blood</code>.</li>
 <li>The thing on the left of the <code>=</code> is a new name that you make up which you would like the new column to be called</li>
 <li>The expression on the right of the <code>=</code> defines what will go into the new column</li>
-<li><strong>Warning!</strong> If the new variable name already exists, <code>mutate()</code> will overwrite the existing one</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<ul>
+<li><strong>Warning!</strong> If the new variable name already exists, <code>mutate()</code> will overwrite the existing one (<em>in the new dataframe that gets created</em>)</li>
 </ul>
 <div class="cell" data-max.lines="5">
 <div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
-<span id="cb84-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">Blood =</span> Blood <span class="sc">*</span><span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb84-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">Blood =</span> <span class="dv">100</span><span class="sc">*</span>Blood)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 389,922 × 6
    Gene  Ind        Blood Heart  Lung Liver
    &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 A2ML1 GTEX-11DXZ  -140 -1.08 NA    -0.66
- 2 A2ML1 GTEX-11GSP  -500  0.53  0.76 -0.1 
- 3 A2ML1 GTEX-11NUK   -80 -0.4  -0.26 -0.13
- 4 A2ML1 GTEX-11NV4  -370  0.11 -0.42 -0.61
- 5 A2ML1 GTEX-11TT1   300 -1.11  0.59 -0.12
- 6 A2ML1 GTEX-11TUW    20 -0.47  0.29 -0.66
- 7 A2ML1 GTEX-11ZUS -1070 -0.41  0.67  0.06
- 8 A2ML1 GTEX-11ZVC  -270 -0.51  0.13 -0.75
- 9 A2ML1 GTEX-1212Z  -300  0.53  0.1  -0.48
-10 A2ML1 GTEX-12696  -110  0.24  0.96  0.72
+ 1 A2ML1 GTEX-11DXZ   -14 -1.08 NA    -0.66
+ 2 A2ML1 GTEX-11GSP   -50  0.53  0.76 -0.1 
+ 3 A2ML1 GTEX-11NUK    -8 -0.4  -0.26 -0.13
+ 4 A2ML1 GTEX-11NV4   -37  0.11 -0.42 -0.61
+ 5 A2ML1 GTEX-11TT1    30 -1.11  0.59 -0.12
+ 6 A2ML1 GTEX-11TUW     2 -0.47  0.29 -0.66
+ 7 A2ML1 GTEX-11ZUS  -107 -0.41  0.67  0.06
+ 8 A2ML1 GTEX-11ZVC   -27 -0.51  0.13 -0.75
+ 9 A2ML1 GTEX-1212Z   -30  0.53  0.1  -0.48
+10 A2ML1 GTEX-12696   -11  0.24  0.96  0.72
 # ℹ 389,912 more rows</code></pre>
 </div>
 </div>
 </section>
-<section id="multiple-mutates" class="slide level2">
-<h2>Multiple mutates</h2>
+<section class="slide level2">
+
 <ul>
 <li><code>mutate()</code> can create multiple columns at the same time and use multiple columns to define a single new one</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
 <span id="cb86-2"><a href=""></a>  <span class="fu">mutate</span>(  <span class="co"># the newlines make it more readable</span></span>
-<span id="cb86-3"><a href=""></a>      <span class="at">abs_blood =</span> <span class="fu">abs</span>(Blood),</span>
-<span id="cb86-4"><a href=""></a>      <span class="at">abs_heart =</span> <span class="fu">abs</span>(Heart),</span>
-<span id="cb86-5"><a href=""></a>      <span class="at">blood_heart_dif =</span> abs_blood <span class="sc">-</span> abs_heart</span>
+<span id="cb86-3"><a href=""></a>      <span class="at">scaled_blood =</span> <span class="dv">100</span><span class="sc">*</span> Blood,</span>
+<span id="cb86-4"><a href=""></a>      <span class="at">scaled_heart =</span> <span class="dv">100</span><span class="sc">*</span> Heart,</span>
+<span id="cb86-5"><a href=""></a>      <span class="at">scaled_blood_heart_dif =</span> scaled_blood <span class="sc">-</span> scaled_heart</span>
 <span id="cb86-6"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 389,922 × 9
-   Gene  Ind        Blood Heart  Lung Liver abs_blood abs_heart blood_heart_dif
-   &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;           &lt;dbl&gt;
- 1 A2ML1 GTEX-11DXZ -0.14 -1.08 NA    -0.66      0.14      1.08         -0.94  
- 2 A2ML1 GTEX-11GSP -0.5   0.53  0.76 -0.1       0.5       0.53         -0.0300
- 3 A2ML1 GTEX-11NUK -0.08 -0.4  -0.26 -0.13      0.08      0.4          -0.32  
- 4 A2ML1 GTEX-11NV4 -0.37  0.11 -0.42 -0.61      0.37      0.11          0.26  
- 5 A2ML1 GTEX-11TT1  0.3  -1.11  0.59 -0.12      0.3       1.11         -0.81  
- 6 A2ML1 GTEX-11TUW  0.02 -0.47  0.29 -0.66      0.02      0.47         -0.45  
- 7 A2ML1 GTEX-11ZUS -1.07 -0.41  0.67  0.06      1.07      0.41          0.66  
- 8 A2ML1 GTEX-11ZVC -0.27 -0.51  0.13 -0.75      0.27      0.51         -0.24  
- 9 A2ML1 GTEX-1212Z -0.3   0.53  0.1  -0.48      0.3       0.53         -0.23  
-10 A2ML1 GTEX-12696 -0.11  0.24  0.96  0.72      0.11      0.24         -0.13  
-# ℹ 389,912 more rows</code></pre>
+   Gene  Ind        Blood Heart  Lung Liver scaled_blood scaled_heart
+   &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+ 1 A2ML1 GTEX-11DXZ -0.14 -1.08 NA    -0.66          -14         -108
+ 2 A2ML1 GTEX-11GSP -0.5   0.53  0.76 -0.1           -50           53
+ 3 A2ML1 GTEX-11NUK -0.08 -0.4  -0.26 -0.13           -8          -40
+ 4 A2ML1 GTEX-11NV4 -0.37  0.11 -0.42 -0.61          -37           11
+ 5 A2ML1 GTEX-11TT1  0.3  -1.11  0.59 -0.12           30         -111
+ 6 A2ML1 GTEX-11TUW  0.02 -0.47  0.29 -0.66            2          -47
+ 7 A2ML1 GTEX-11ZUS -1.07 -0.41  0.67  0.06         -107          -41
+ 8 A2ML1 GTEX-11ZVC -0.27 -0.51  0.13 -0.75          -27          -51
+ 9 A2ML1 GTEX-1212Z -0.3   0.53  0.1  -0.48          -30           53
+10 A2ML1 GTEX-12696 -0.11  0.24  0.96  0.72          -11           24
+# ℹ 389,912 more rows
+# ℹ 1 more variable: scaled_blood_heart_dif &lt;dbl&gt;</code></pre>
 </div>
 </div>
 <ul>
-<li>Note that we have also used two columns simultaneously (<code>Blood</code> and <code>Heart</code>) to create a new column)</li>
+<li>Note that we have also used two columns simultaneously to create a new column</li>
 </ul>
 </section>
-<section id="mutate-for-type-conversion" class="slide level2">
-<h2>mutate() for type conversion</h2>
+<section class="slide level2">
+
+<ul>
+<li>mutate is used for text data too</li>
+</ul>
+<div class="cell" data-max.lines="5">
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href=""></a><span class="fu">library</span>(stringr)</span>
+<span id="cb88-2"><a href=""></a></span>
+<span id="cb88-3"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
+<span id="cb88-4"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">Ind_ID_suffix =</span> <span class="fu">str_extract</span>(Ind, <span class="st">"(GTEX-)(.*)"</span>, <span class="at">group=</span><span class="dv">2</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb88-5"><a href=""></a>  <span class="fu">select</span>(Ind, Ind_ID_suffix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 389,922 × 2
+   Ind        Ind_ID_suffix
+   &lt;chr&gt;      &lt;chr&gt;        
+ 1 GTEX-11DXZ 11DXZ        
+ 2 GTEX-11GSP 11GSP        
+ 3 GTEX-11NUK 11NUK        
+ 4 GTEX-11NV4 11NV4        
+ 5 GTEX-11TT1 11TT1        
+ 6 GTEX-11TUW 11TUW        
+ 7 GTEX-11ZUS 11ZUS        
+ 8 GTEX-11ZVC 11ZVC        
+ 9 GTEX-1212Z 1212Z        
+10 GTEX-12696 12696        
+# ℹ 389,912 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="type-conversion" class="slide level2">
+<h2>Type conversion</h2>
 <ul>
 <li>Data is sometimes given to you in a form that makes it difficult to do operations on</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href=""></a>df <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">number =</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"2"</span>, <span class="st">"3"</span>))</span>
-<span id="cb88-2"><a href=""></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href=""></a>df <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">number =</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"2"</span>, <span class="st">"3"</span>))</span>
+<span id="cb90-2"><a href=""></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 1
   number
@@ -34754,7 +34796,7 @@ Alejandro Schuler
 2 2     
 3 3     </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href=""></a>df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">number_plus_1 =</span> number <span class="sc">+</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href=""></a>df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">number_plus_1 =</span> number <span class="sc">+</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `mutate()`:
 ℹ In argument: `number_plus_1 = number + 1`.
@@ -34766,7 +34808,7 @@ Caused by error in `number + 1`:
 <li><code>mutate()</code> is also useful for converting data types, in this case text to numbers</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href=""></a>df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">number =</span> <span class="fu">as.numeric</span>(number))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href=""></a>df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">number =</span> <span class="fu">as.numeric</span>(number))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 1
   number
@@ -34785,9 +34827,9 @@ Caused by error in `number + 1`:
 <li><code>mutate()</code> can be used to make logical columns (indicators)</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
-<span id="cb94-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">positive_liver =</span> Liver <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
-<span id="cb94-3"><a href=""></a>  <span class="fu">select</span>(Gene, Ind, Liver, positive_liver)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
+<span id="cb96-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">positive_liver =</span> Liver <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb96-3"><a href=""></a>  <span class="fu">select</span>(Gene, Ind, Liver, positive_liver)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 389,922 × 4
    Gene  Ind        Liver positive_liver
@@ -34810,14 +34852,14 @@ Caused by error in `number + 1`:
 <li>which can be used to make plots</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
-<span id="cb96-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">positive_liver =</span> Liver <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
-<span id="cb96-3"><a href=""></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>positive_liver, <span class="at">y=</span>Blood)) <span class="sc">+</span></span>
-<span id="cb96-4"><a href=""></a>  <span class="fu">geom_violin</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
+<span id="cb98-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">positive_liver =</span> Liver <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb98-3"><a href=""></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>positive_liver, <span class="at">y=</span>Blood)) <span class="sc">+</span></span>
+<span id="cb98-4"><a href=""></a>  <span class="fu">geom_violin</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="3-data-transformation_files/figure-revealjs/unnamed-chunk-49-1.png" width="960"></p>
+<p><img data-src="3-data-transformation_files/figure-revealjs/unnamed-chunk-50-1.png" width="960"></p>
 </figure>
 </div>
 </div>
@@ -34828,12 +34870,12 @@ Caused by error in `number + 1`:
 
 <p>or you can just “mutate” directly in ggplot!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href=""></a>gtex <span class="sc">|&gt;</span>  <span class="co"># mutate(positive_liver = Liver &gt; 0) |&gt;</span></span>
-<span id="cb97-2"><a href=""></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Liver <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="at">y=</span>Blood)) <span class="sc">+</span></span>
-<span id="cb97-3"><a href=""></a>  <span class="fu">geom_violin</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href=""></a>gtex <span class="sc">|&gt;</span>  <span class="co"># mutate(positive_liver = Liver &gt; 0) |&gt;</span></span>
+<span id="cb99-2"><a href=""></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Liver <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="at">y=</span>Blood)) <span class="sc">+</span></span>
+<span id="cb99-3"><a href=""></a>  <span class="fu">geom_violin</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="3-data-transformation_files/figure-revealjs/unnamed-chunk-50-1.png" width="960" class="r-stretch"></section>
+<img data-src="3-data-transformation_files/figure-revealjs/unnamed-chunk-51-1.png" width="960" class="r-stretch"></section>
 <section id="exercise-mutate" class="slide level2" data-background-color="teal">
 <h2>Exercise: mutate()</h2>
 <p><em>Before writing code for each problem , break the problem into steps. Do you have to create new columns? Filter rows? Arrange rows? Select columns? In what order? Once you have a plan, write code, one step at a time.</em></p>
@@ -34851,8 +34893,8 @@ Caused by error in `number + 1`:
 <li>the first argument is an R expression that evaluates to a logical vector, the second argument is what to replace all of the resulting TRUEs with, and the third argument is what to replace the resulting FALSEs with</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href=""></a>x <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">5</span>)</span>
-<span id="cb98-2"><a href=""></a><span class="fu">if_else</span>(<span class="dv">0</span><span class="sc">&lt;=</span>x <span class="sc">&amp;</span> x<span class="sc">&lt;=</span><span class="dv">1</span>, <span class="st">"in [0,1]"</span>, <span class="st">"not in [0,1]"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href=""></a>x <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb100-2"><a href=""></a><span class="fu">if_else</span>(<span class="dv">0</span><span class="sc">&lt;=</span>x <span class="sc">&amp;</span> x<span class="sc">&lt;=</span><span class="dv">1</span>, <span class="st">"in [0,1]"</span>, <span class="st">"not in [0,1]"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "not in [0,1]" "in [0,1]"     "in [0,1]"     "not in [0,1]"</code></pre>
 </div>
@@ -34861,11 +34903,11 @@ Caused by error in `number + 1`:
 <li>this is often used in <code>mutate()</code>:</li>
 </ul>
 <div class="cell" data-max.lines="10">
-<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
-<span id="cb100-2"><a href=""></a><span class="fu">mutate</span>( </span>
-<span id="cb100-3"><a href=""></a>  <span class="at">blood_expression =</span> <span class="fu">ifelse</span>(</span>
-<span id="cb100-4"><a href=""></a>    Blood <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="st">"-"</span>, <span class="st">"+"</span></span>
-<span id="cb100-5"><a href=""></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
+<span id="cb102-2"><a href=""></a><span class="fu">mutate</span>( </span>
+<span id="cb102-3"><a href=""></a>  <span class="at">blood_expression =</span> <span class="fu">ifelse</span>(</span>
+<span id="cb102-4"><a href=""></a>    Blood <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="st">"-"</span>, <span class="st">"+"</span></span>
+<span id="cb102-5"><a href=""></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 389,922 × 7
    Gene  Ind        Blood Heart  Lung Liver blood_expression
@@ -34901,8 +34943,8 @@ Caused by error in `number + 1`:
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href=""></a>emails <span class="sc">|&gt;</span> </span>
-<span id="cb103-2"><a href=""></a><span class="fu">mutate</span>(<span class="at">preferred_email =</span> <span class="fu">ifelse</span>(preferred<span class="sc">==</span><span class="st">'personal'</span>, personal, school))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href=""></a>emails <span class="sc">|&gt;</span> </span>
+<span id="cb105-2"><a href=""></a><span class="fu">mutate</span>(<span class="at">preferred_email =</span> <span class="fu">ifelse</span>(preferred<span class="sc">==</span><span class="st">'personal'</span>, personal, school))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 5
   name  school             personal            preferred preferred_email    

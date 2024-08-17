@@ -159,7 +159,7 @@ nrow(gtex)
 
 ## Logical conjunctions (AND)
 ```{r}
-filter(gtex, Blood <= -5 & Heart <= -5)
+filter(gtex, Blood < 0 & Heart < 0)
 ```
 
 - This filters by the **conjunction** of the two constraints---both must be satisfied.
@@ -171,12 +171,14 @@ TRUE & TRUE
 FALSE & TRUE
 ```
 
+*** 
+
+- For filter, you can do "AND" by passing in two separate conditions as two different arguments, but the comma and ampersand are not generally interchangeable
 ```{r}
-filter(gtex, Blood <= -5, Heart <= -5)
+# filter(gtex, Blood < 0 & Heart < 0)
+filter(gtex, Blood < 0, Heart < 0)
 ```
 
-*** 
-- For filter, you can do "AND" by passing in two separate conditions as two different arguments, but the comma and ampersand are not generally interchangeable
 
 ## Logical conjunctions (OR)
 
@@ -515,31 +517,45 @@ gtex |> rename(individual = Ind)
 - first argument is a dataframe, second specifies what you want the new columns to be
 ```{r, max.lines = 5}
 gtex |>
-  mutate(abs_blood = abs(Blood))
+  mutate(scaled_blood = 100*Blood))
 ```
 - This uses `mutate()` to add a new column to which is the absolute value of `Blood`.
 - The thing on the left of the `=` is a new name that you make up which you would like the new column to be called
 - The expression on the right of the `=` defines what will go into the new column
-- **Warning!** If the new variable name already exists, `mutate()` will overwrite the existing one
+
+***
+- **Warning!** If the new variable name already exists, `mutate()` will overwrite the existing one (*in the new dataframe that gets created*)
 ```{r, max.lines = 5}
 gtex |>
-  mutate(Blood = Blood *1000)
+  mutate(Blood = 100*Blood)
 ```
 
-## Multiple mutates
+***
 - `mutate()` can create multiple columns at the same time and use multiple columns to define a single new one
 
 ```{r, tidy=F}
 gtex |>
   mutate(  # the newlines make it more readable
-      abs_blood = abs(Blood),
-      abs_heart = abs(Heart),
-      blood_heart_dif = abs_blood - abs_heart
+      scaled_blood = 100* Blood,
+      scaled_heart = 100* Heart,
+      scaled_blood_heart_dif = scaled_blood - scaled_heart
   )
 ```
-- Note that we have also used two columns simultaneously (`Blood` and `Heart`) to create a new column)
+- Note that we have also used two columns simultaneously to create a new column
 
-## mutate() for type conversion
+
+***
+- mutate is used for text data too
+```{r, max.lines = 5}
+library(stringr)
+
+gtex |>
+  mutate(Ind_ID_suffix = str_extract(Ind, "(GTEX-)(.*)", group=2)) |>
+  select(Ind, Ind_ID_suffix)
+```
+
+
+## Type conversion
 - Data is sometimes given to you in a form that makes it difficult to do operations on
 ```{r}
 df = tibble(number = c("1", "2", "3"))
