@@ -412,24 +412,15 @@ Alejandro Schuler
 <li>use the pipe to combine multiple operations</li>
 </ul>
 </section>
-<section id="dplyr" class="slide level2">
-<h2>dplyr</h2>
-<p>This section shows the basic data frame functions in the <code>dplyr</code> package (part of <code>tidyverse</code>).</p>
-<div data-align="center">
-<p>&lt;img src=“https://d33wubrfki0l68.cloudfront.net/621a9c8c5d7b47c4b6d72e8f01f28d14310e8370/193fc/css/images/hex/dplyr.png”; style=“max-width:500px;”; class=“center”&gt;</p>
-</div>
-</section>
-<section class="slide level2">
-
-<p>Each function takes a data frame and produces a new data frame.</p>
+<section id="dplyr-functions" class="slide level2">
+<h2>dplyr functions</h2>
+<p>This section shows the basic data frame functions in the <code>dplyr</code> package (part of <code>tidyverse</code>). The basic functions are:</p>
 <ul>
-<li><p><code>filter()</code> picks out rows according to specified conditions</p></li>
-<li><p><code>select()</code> picks out columns according to their names</p></li>
-<li><p><code>arrange()</code> sorts the row by values in some column(s)</p></li>
-<li><p><code>mutate()</code> creates new columns, often based on operations on other columns</p></li>
-<li><p><code>summarize()</code> collapses many values in one or more columns down to one value per column</p></li>
+<li><code>filter()</code> picks out rows according to specified conditions</li>
+<li><code>arrange()</code> sorts the row by values in some column(s)</li>
+<li><code>select()</code> picks out columns according to their names</li>
+<li><code>mutate()</code> creates new columns, often based on operations on other columns</li>
 </ul>
-<p>These can all be used in conjunction with <code>group_by()</code> which changes the scope of each function from operating on the entire dataset to operating on it group-by-group.</p>
 <p>All work similarly:</p>
 <ol type="1">
 <li>The first argument is a data frame.</li>
@@ -438,8 +429,16 @@ Alejandro Schuler
 </ol>
 <p>Together these properties make it easy to chain together multiple simple steps to achieve a complex result.</p>
 </section>
-<section id="gtex-data" class="title-slide slide level1 center">
-<h1>GTEx data</h1>
+<section class="slide level2">
+
+<p>Later we will also learn</p>
+<ul>
+<li><code>summarize()</code> collapses many values in one or more columns down to one value per column</li>
+</ul>
+<p>and <code>group_by()</code> which changes the scope of each function from operating on the entire dataset to operating on it group-by-group.</p>
+</section>
+<section id="gtex-data" class="slide level2">
+<h2>GTEx data</h2>
 <p>This is a subset of the Genotype Tissue Expression (GTEx) dataset</p>
 <ul>
 <li><strong>The full dataset.</strong> Includes gene expression data, measured via RNA-sequencing, from 54 post-mortem tissues in ~800 individuals. Whole genome sequencing is also available for these individuals as part of the GTEx v8 release, available through dbGaP.</li>
@@ -447,7 +446,6 @@ Alejandro Schuler
 <li><strong>Data processing</strong> The expression values have been normalized and corrected for technical covariates and are now in the form of “Z-scores”, which indicate the distance of a given expression value from the mean across all measurements of that gene in that tissue.</li>
 <li><strong>Goal.</strong> We will use the data here to illustrate different functions for data transformation, often focused on extracting individuals with extremely high or low expression values for a given gene as compared to the distribution across all samples.</li>
 </ul>
-<p><strong>NOTE</strong>: If copying the code, make sure there are no spaces in the download link (where it wraps to a new line).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="co"># Read subsetted data from online file - make sure there are no spaces</span></span>
 <span id="cb1-2"><a href=""></a>gtex <span class="ot">=</span> <span class="fu">read_tsv</span>(<span class="st">'https://tinyurl.com/342rhdc2'</span>)</span>
@@ -459,22 +457,20 @@ Alejandro Schuler
 </div>
 </div>
 </section>
-
-<section id="filter-rows-with-filter" class="title-slide slide level1 center">
+<section>
+<section id="filter-rows-with-filter" class="title-slide slide level1 center" data-background-color="black">
 <h1>Filter rows with filter()</h1>
-<p>type: section</p>
+
 </section>
-
-<section id="filter-rows-with-filter-1" class="title-slide slide level1 center">
-<h1>Filter rows with filter()</h1>
+<section id="filter-rows-with-filter-1" class="slide level2">
+<h2>Filter rows with filter()</h2>
 <ul>
 <li><code>filter()</code> lets you filter out rows of a dataset that meet a certain condition</li>
 </ul>
 
 <img data-src="http://ohi-science.org/data-science-training/img/rstudio-cheatsheet-filter.png" class="r-stretch"></section>
+<section class="slide level2">
 
-<section id="filter-rows-with-filter-2" class="title-slide slide level1 center">
-<h1>Filter rows with filter()</h1>
 <ul>
 <li><code>filter()</code> lets you filter out rows of a dataset that meet a certain condition</li>
 <li>It takes two arguments: the dataset and the condition</li>
@@ -500,9 +496,8 @@ Alejandro Schuler
 </div>
 </div>
 </section>
-
-<section id="comparison-operators" class="title-slide slide level1 center">
-<h1>Comparison operators</h1>
+<section id="comparisons" class="slide level2">
+<h2>Comparisons</h2>
 <ul>
 <li><code>==</code> and <code>!=</code> test for equality and inequality (do not use <code>=</code> for equality)</li>
 <li><code>&gt;</code> and <code>&lt;</code> test for greater-than and less-than</li>
@@ -514,17 +509,20 @@ Alejandro Schuler
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  TRUE  TRUE FALSE  TRUE</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a><span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>) <span class="sc">==</span> <span class="st">"b"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE  TRUE FALSE</code></pre>
+</div>
 </div>
 </section>
-
-<section id="comparing-to-na" class="title-slide slide level1 center">
-<h1>Comparing to NA</h1>
+<section id="comparing-to-na" class="slide level2">
+<h2>Comparing to NA</h2>
 <ul>
 <li>A common “gotcha” is that <code>==</code> cannot be used to compare to <code>NA</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a>x <span class="ot">=</span> <span class="cn">NA</span></span>
-<span id="cb7-2"><a href=""></a>x <span class="sc">==</span> <span class="cn">NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a>x <span class="ot">=</span> <span class="cn">NA</span></span>
+<span id="cb9-2"><a href=""></a>x <span class="sc">==</span> <span class="cn">NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] NA</code></pre>
 </div>
@@ -534,22 +532,21 @@ Alejandro Schuler
 <li>To check if something is <code>NA</code>, use <code>is.na()</code></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a>x <span class="ot">=</span> <span class="cn">NA</span></span>
-<span id="cb9-2"><a href=""></a><span class="fu">is.na</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a>x <span class="ot">=</span> <span class="cn">NA</span></span>
+<span id="cb11-2"><a href=""></a><span class="fu">is.na</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] TRUE</code></pre>
 </div>
 </div>
 </section>
-
-<section id="equality-on-strings" class="title-slide slide level1 center">
-<h1>Equality on Strings</h1>
+<section id="equality-on-strings" class="slide level2">
+<h2>Equality on Strings</h2>
 <ul>
 <li>you can use <code>==</code> to test whether a string variable matches given text</li>
 <li>but remember to quote the text you want to compare to</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">filter</span>(gtex, Gene <span class="sc">==</span> <span class="st">"ZZZ3"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="fu">filter</span>(gtex, Gene <span class="sc">==</span> <span class="st">"ZZZ3"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 78 × 6
    Gene  Ind        Blood Heart  Lung Liver
@@ -572,54 +569,36 @@ Alejandro Schuler
 <li>why doesn’t <code>"Gene" == "ZZZ3"</code> make sense?</li>
 </ul>
 </section>
-
-<section id="filtering-on-computed-values" class="title-slide slide level1 center">
-<h1>Filtering on computed values</h1>
+<section id="filtering-on-computed-values" class="slide level2">
+<h2>Filtering on computed values</h2>
 <ul>
 <li>the condition can contain computed values</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="fu">filter</span>(gtex, <span class="fu">exp</span>(Blood) <span class="sc">&gt;</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="fu">filter</span>(gtex, Blood <span class="sc">+</span> Heart <span class="sc">&gt;</span> <span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 185,698 × 6
+<pre><code># A tibble: 185,944 × 6
    Gene  Ind        Blood Heart  Lung Liver
    &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 A2ML1 GTEX-11TT1  0.3  -1.11  0.59 -0.12
- 2 A2ML1 GTEX-11TUW  0.02 -0.47  0.29 -0.66
- 3 A2ML1 GTEX-12WSD  0.53  0.36  0.2   0.51
- 4 A2ML1 GTEX-12WSG  0.03 -0.64 -1.02  0.07
- 5 A2ML1 GTEX-131XE  0.3   0.05  0.53 -0.87
- 6 A2ML1 GTEX-132NY  0.42 -0.14 -0.27  1.47
- 7 A2ML1 GTEX-13OW6  0.15 -0.13  1.06  0.24
- 8 A2ML1 GTEX-147F4  0.2  -0.26  0.11 -0.76
- 9 A2ML1 GTEX-147JS  0.36 -0.45 -0.34 -1.39
+ 1 A2ML1 GTEX-11GSP -0.5   0.53  0.76 -0.1 
+ 2 A2ML1 GTEX-1212Z -0.3   0.53  0.1  -0.48
+ 3 A2ML1 GTEX-12696 -0.11  0.24  0.96  0.72
+ 4 A2ML1 GTEX-12WSD  0.53  0.36  0.2   0.51
+ 5 A2ML1 GTEX-12WSI  0     0.2  -0.21 -0.07
+ 6 A2ML1 GTEX-131XE  0.3   0.05  0.53 -0.87
+ 7 A2ML1 GTEX-132NY  0.42 -0.14 -0.27  1.47
+ 8 A2ML1 GTEX-13FTZ -0.11  1.12  0.49  1.43
+ 9 A2ML1 GTEX-13OW6  0.15 -0.13  1.06  0.24
 10 A2ML1 GTEX-14DAQ  0.1   0.69  0.99 -0.79
-# ℹ 185,688 more rows</code></pre>
+# ℹ 185,934 more rows</code></pre>
 </div>
 </div>
 <ul>
-<li>note that we didn’t actually do anything to the values in the blood column</li>
+<li>note that we didn’t actually do anything to the values in the data</li>
 </ul>
 </section>
-
-<section id="filtering-out-all-rows" class="title-slide slide level1 center">
-<h1>Filtering out all rows</h1>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="fu">filter</span>(gtex, Blood <span class="sc">&gt;</span> <span class="dv">10000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 0 × 6
-# ℹ 6 variables: Gene &lt;chr&gt;, Ind &lt;chr&gt;, Blood &lt;dbl&gt;, Heart &lt;dbl&gt;, Lung &lt;dbl&gt;,
-#   Liver &lt;dbl&gt;</code></pre>
-</div>
-</div>
-<ul>
-<li>If you ever get a data frame of length zero, it’s because no rows satisfy the condition you asked for</li>
-</ul>
-</section>
-
-<section id="exercise-together" class="title-slide slide level1 center">
-<h1>Exercise [together]</h1>
-<p>type:prompt</p>
+<section id="exercise-together" class="slide level2" data-background-color="teal">
+<h2>Exercise [together]</h2>
 <ul>
 <li>What is the result of running this code?</li>
 </ul>
@@ -635,18 +614,15 @@ Alejandro Schuler
 <span id="cb19-3"><a href=""></a><span class="fu">nrow</span>(gtex)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-
-<section id="exercise" class="title-slide slide level1 center">
-<h1>Exercise</h1>
-<p>type:prompt</p>
+<section id="exercise" class="slide level2">
+<h2>Exercise</h2>
 <ul>
 <li><p>Without using the internet, think of how you can use <code>filter</code> multiple times to create a dataset where blood expression is positive (&gt;0) <strong>and</strong> heart expression is negative (&lt;0)</p></li>
 <li><p>Using any resources you like, figure out how to use <code>filter</code> to create a dataset where <strong>either</strong> blood expression is positive (&gt;0) <strong>or</strong> heart expression is negative (&lt;0)</p></li>
 </ul>
 </section>
-
-<section id="logical-conjunctions-and" class="title-slide slide level1 center">
-<h1>Logical conjunctions (AND)</h1>
+<section id="logical-conjunctions-and" class="slide level2">
+<h2>Logical conjunctions (AND)</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a><span class="fu">filter</span>(gtex, Blood <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">5</span> <span class="sc">&amp;</span> Heart <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -663,7 +639,21 @@ Alejandro Schuler
 <li>The ampersand sign <code>&amp;</code> stands for “AND”</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a><span class="fu">filter</span>(gtex, Blood <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">5</span>, Heart <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a><span class="cn">TRUE</span> <span class="sc">&amp;</span> <span class="cn">FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a><span class="cn">TRUE</span> <span class="sc">&amp;</span> <span class="cn">TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a><span class="cn">FALSE</span> <span class="sc">&amp;</span> <span class="cn">TRUE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a><span class="fu">filter</span>(gtex, Blood <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">5</span>, Heart <span class="sc">&lt;=</span> <span class="sc">-</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 6
   Gene     Ind        Blood  Heart   Lung Liver
@@ -673,15 +663,17 @@ Alejandro Schuler
 3 MTATP6P1 GTEX-1KD5A -9.18 -10.1  -10.3  -9.52</code></pre>
 </div>
 </div>
+</section>
+<section class="slide level2">
+
 <ul>
 <li>For filter, you can do “AND” by passing in two separate conditions as two different arguments, but the comma and ampersand are not generally interchangeable</li>
 </ul>
 </section>
-
-<section id="logical-conjunctions-or" class="title-slide slide level1 center">
-<h1>Logical conjunctions (OR)</h1>
+<section id="logical-conjunctions-or" class="slide level2">
+<h2>Logical conjunctions (OR)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a><span class="fu">filter</span>(gtex, Gene <span class="sc">==</span> <span class="st">"A2ML1"</span> <span class="sc">|</span> Gene <span class="sc">==</span> <span class="st">"A4GALT"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href=""></a><span class="fu">filter</span>(gtex, Gene <span class="sc">==</span> <span class="st">"A2ML1"</span> <span class="sc">|</span> Gene <span class="sc">==</span> <span class="st">"A4GALT"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 156 × 6
    Gene  Ind        Blood Heart  Lung Liver
@@ -704,11 +696,10 @@ Alejandro Schuler
 <li>Multiple conjunctions can describe complex logical conditions</li>
 </ul>
 </section>
+<section class="slide level2">
 
-<section id="logical-conjunctions-or-1" class="title-slide slide level1 center">
-<h1>Logical conjunctions (OR)</h1>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href=""></a><span class="fu">filter</span>(gtex, Gene <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"ZZZ3"</span>,<span class="st">"A2ML1"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a><span class="fu">filter</span>(gtex, Gene <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"ZZZ3"</span>,<span class="st">"A2ML1"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 156 × 6
    Gene  Ind        Blood Heart  Lung Liver
@@ -725,18 +716,17 @@ Alejandro Schuler
 10 A2ML1 GTEX-12696 -0.11  0.24  0.96  0.72
 # ℹ 146 more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href=""></a><span class="co"># equivalent to </span></span>
-<span id="cb28-2"><a href=""></a><span class="co"># filter(gtex, Gene=="ZZZ3" | Gene=="A2ML1")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a><span class="co"># equivalent to </span></span>
+<span id="cb34-2"><a href=""></a><span class="co"># filter(gtex, Gene=="ZZZ3" | Gene=="A2ML1")</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li><code>%in%</code> returns true for all elements of the thing on the left that are also elements of the thing on the right. This is actually shorthand for a match function (use <code>help('%in%')</code> to learn more)</li>
 </ul>
 </section>
-
-<section id="negation-not" class="title-slide slide level1 center">
-<h1>Negation (NOT)</h1>
+<section id="negation-not" class="slide level2">
+<h2>Negation (NOT)</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href=""></a><span class="fu">filter</span>(gtex, <span class="sc">!</span>(Gene<span class="sc">==</span><span class="st">"A2ML1"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a><span class="fu">filter</span>(gtex, <span class="sc">!</span>(Gene<span class="sc">==</span><span class="st">"A2ML1"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 389,844 × 6
    Gene    Ind        Blood Heart  Lung Liver
@@ -759,10 +749,8 @@ Alejandro Schuler
 <li>sometimes it’s easier to say what you <em>don’t</em> want!</li>
 </ul>
 </section>
-
-<section id="exercises-computed-conditions-conjunctions-nas" class="title-slide slide level1 center">
-<h1>Exercises: computed conditions, conjunctions, NAs</h1>
-<p>type: prompt</p>
+<section id="exercises-computed-conditions-conjunctions-nas" class="slide level2" data-background-color="teal">
+<h2>Exercises: computed conditions, conjunctions, NAs</h2>
 <p><strong>Do each of these three exercises separately</strong></p>
 <ul>
 <li><p>Filter the GTEX data to keep just the rows where the product of Blood and Heart expression is between 0 and 1.</p></li>
@@ -770,23 +758,22 @@ Alejandro Schuler
 <li><p>Filter out any rows where the value for <code>Heart</code> is missing (value is <code>NA</code>)</p></li>
 </ul>
 </section>
-
-<section id="sampling-rows" class="title-slide slide level1 center">
-<h1>Sampling rows</h1>
+<section id="sampling-rows" class="slide level2">
+<h2>Sampling rows</h2>
 <ul>
 <li>You can use <code>slice_sample()</code> to get <code>n</code> randomly selected rows if you don’t have a particular condition you would like to filter on.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href=""></a><span class="fu">slice_sample</span>(gtex, <span class="at">n=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="fu">slice_sample</span>(gtex, <span class="at">n=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 6
-  Gene          Ind        Blood Heart  Lung Liver
-  &lt;chr&gt;         &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 RP13-890H12.2 GTEX-17EVP -0.82 -0.45  1.07  1.02
-2 FCER2         GTEX-14E7W -0.77  2.12  0.35 -1.34
-3 FAM192BP      GTEX-ZPU1  -0.95 -0.77 -1.14 -0.92
-4 RPL32         GTEX-14E1K  0.5  -0.49 -0.46  0.84
-5 CTC-487M23.5  GTEX-1EWIQ -0.79  0.23  0.77 -0.14</code></pre>
+  Gene         Ind        Blood Heart  Lung Liver
+  &lt;chr&gt;        &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 TRPC1        GTEX-ZPU1  -0.8  -1.94 -0.5  -0.29
+2 CASC1        GTEX-Y5V5   0.82 -0.11 -1.32 -0.41
+3 RP11-126K1.2 GTEX-1GN1U -0.53 -0.66  0.46  0.73
+4 FAN1         GTEX-1GN2E -0.21  0.52 -0.55 -1.33
+5 PSME2        GTEX-1GN73 -0.28 -0.4  -0.59  0.75</code></pre>
 </div>
 </div>
 <ul>
@@ -794,14 +781,14 @@ Alejandro Schuler
 <li>Do <code>?slice_sample()</code> to see how you can sample with replacement or with weights</li>
 </ul>
 </section>
-
-<section id="filtering-by-row-number" class="title-slide slide level1 center">
-<h1>Filtering by row number</h1>
+<section id="filtering-by-row-number" class="slide level2">
+<h2>Filtering by row number</h2>
 <ul>
-<li>Use <code>row_number()</code> to filter specific rows. This is more useful once you have sorted the data in a particular order, which we will soon see how to do.</li>
+<li>Data frames typically don’t have a <code>row_number</code> column that you can reference, but you can invisibly create one for filter to operate on with <code>row_number()</code></li>
+<li>This is more useful once you have sorted the data in a particular order, which we will soon see how to do.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a><span class="fu">filter</span>(gtex, <span class="fu">row_number</span>()<span class="sc">&lt;=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a><span class="fu">filter</span>(gtex, <span class="fu">row_number</span>()<span class="sc">&lt;=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 6
   Gene  Ind        Blood Heart  Lung Liver
@@ -811,29 +798,27 @@ Alejandro Schuler
 3 A2ML1 GTEX-11NUK -0.08 -0.4  -0.26 -0.13</code></pre>
 </div>
 </div>
-</section>
+</section></section>
+<section>
+<section id="sort-rows-with-arrange" class="title-slide slide level1 center" data-background-color="black">
+<h1>Sort rows with arrange()</h1>
 
-<section id="sort-rows-by-a-column-with-arrange" class="title-slide slide level1 center">
-<h1>Sort rows by a column with arrange()</h1>
-<p>type:section</p>
 </section>
-
-<section id="arrange-rows-with-arrange" class="title-slide slide level1 center">
-<h1>Arrange rows with arrange()</h1>
+<section id="sort-rows-with-arrange-1" class="slide level2">
+<h2>Sort rows with arrange()</h2>
 <ul>
 <li><code>arrange()</code> takes a data frame and a column, and sorts the rows by the values in that column (ascending order).</li>
 </ul>
 
 <img data-src="https://rstudio-education.github.io/tidyverse-cookbook/images/dplyr-arrange.png" class="r-stretch"></section>
+<section class="slide level2">
 
-<section id="arrange-rows-with-arrange-1" class="title-slide slide level1 center">
-<h1>Arrange rows with arrange()</h1>
 <ul>
 <li><code>arrange()</code> takes a data frame and a column, and sorts the rows by the values in that column (ascending order).</li>
 <li>Again, the first argument is the data frame and the other arguments tell the function what to do with it</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href=""></a><span class="fu">arrange</span>(gtex, Blood)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a><span class="fu">arrange</span>(gtex, Blood)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 389,922 × 6
    Gene        Ind        Blood  Heart   Lung Liver
@@ -852,37 +837,13 @@ Alejandro Schuler
 </div>
 </div>
 </section>
-
-<section id="arrange-can-sort-by-more-than-one-column" class="title-slide slide level1 center">
-<h1>Arrange can sort by more than one column</h1>
+<section id="descending-sort" class="slide level2">
+<h2>Descending sort</h2>
 <ul>
-<li>This is useful if there is a tie in sorting by the first column.</li>
+<li>Use the desc function to arrange by descending values</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="fu">arrange</span>(gtex, Gene, Blood)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 389,922 × 6
-   Gene  Ind        Blood Heart  Lung Liver
-   &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 A2ML1 GTEX-1B8L1 -1.4   0.37 -1.05  0.07
- 2 A2ML1 GTEX-ZVT3  -1.35  1.01  2.91 -0.28
- 3 A2ML1 GTEX-1AX9I -1.29 -0.19 -0.41 -0.78
- 4 A2ML1 GTEX-1A32A -1.16  0.44 -0.41 -0.39
- 5 A2ML1 GTEX-1GN73 -1.13 -0.05 -0.21 -0.82
- 6 A2ML1 GTEX-11ZUS -1.07 -0.41  0.67  0.06
- 7 A2ML1 GTEX-18A7A -1.01 -0.74 -0.72 -0.76
- 8 A2ML1 GTEX-17EVP -1    -0.18 -0.2  -0.95
- 9 A2ML1 GTEX-U8XE  -0.88 -0.91 NA    -0.86
-10 A2ML1 GTEX-131YS -0.78 NA     0.17 -1.5 
-# ℹ 389,912 more rows</code></pre>
-</div>
-</div>
-</section>
-
-<section id="use-the-desc-function-to-arrange-by-descending-values" class="title-slide slide level1 center">
-<h1>Use the desc function to arrange by descending values</h1>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href=""></a><span class="fu">arrange</span>(gtex, <span class="fu">desc</span>(Blood))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href=""></a><span class="fu">arrange</span>(gtex, <span class="fu">desc</span>(Blood))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 389,922 × 6
    Gene       Ind        Blood Heart  Lung Liver
@@ -901,63 +862,48 @@ Alejandro Schuler
 </div>
 </div>
 </section>
-
-<section id="exercise-top-5-high-expression-instances" class="title-slide slide level1 center">
-<h1>Exercise: top 5 high expression instances</h1>
-<p>type:prompt</p>
-<p>Use <code>arrange()</code> and <code>filter()</code> to get the data for the 5 rows with the highest expression values in blood</p>
-</section>
-
-<section id="exercise-top-5-high-expression-instances-1" class="title-slide slide level1 center">
-<h1>Exercise: top 5 high expression instances</h1>
-<p>type:prompt</p>
-<p>Use <code>arrange()</code> and <code>filter()</code> to get the data for the 5 rows with the highest expression values in blood</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href=""></a><span class="fu">filter</span>(<span class="fu">arrange</span>(gtex, <span class="fu">desc</span>(Blood)), <span class="fu">row_number</span>()<span class="sc">&lt;=</span><span class="dv">5</span>) <span class="co"># "nesting" the calls to filter and arrange</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 6
-  Gene     Ind        Blood Heart  Lung Liver
-  &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 REN      GTEX-U8XE   18.9 -0.57 NA     0.09
-2 KLK3     GTEX-147F4  15.7 -0.74 -0.44 -0.02
-3 DNASE2B  GTEX-12696  14.4 -0.82 -0.92  0.35
-4 GAPDHP33 GTEX-UPK5   13.8  1.52 -1.48 -1.84
-5 DCSTAMP  GTEX-12696  13.6 NA    -0.57 -0.91</code></pre>
-</div>
-</div>
-<p>or</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href=""></a>gtex_by_blood <span class="ot">=</span> <span class="fu">arrange</span>(gtex, <span class="fu">desc</span>(Blood)) <span class="co"># using a temporary variable</span></span>
-<span id="cb43-2"><a href=""></a><span class="fu">filter</span>(gtex_by_blood, <span class="fu">row_number</span>()<span class="sc">&lt;=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 6
-  Gene     Ind        Blood Heart  Lung Liver
-  &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-1 REN      GTEX-U8XE   18.9 -0.57 NA     0.09
-2 KLK3     GTEX-147F4  15.7 -0.74 -0.44 -0.02
-3 DNASE2B  GTEX-12696  14.4 -0.82 -0.92  0.35
-4 GAPDHP33 GTEX-UPK5   13.8  1.52 -1.48 -1.84
-5 DCSTAMP  GTEX-12696  13.6 NA    -0.57 -0.91</code></pre>
-</div>
-</div>
+<section id="multisort" class="slide level2">
+<h2>Multisort</h2>
 <ul>
-<li>what happens if we reverse the order in which we did <code>filter</code> and <code>arrange</code>? Does it still work?</li>
+<li>This is useful if there is a tie in sorting by the first column.</li>
 </ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a><span class="fu">arrange</span>(gtex, Gene, Blood)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 389,922 × 6
+   Gene  Ind        Blood Heart  Lung Liver
+   &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 A2ML1 GTEX-1B8L1 -1.4   0.37 -1.05  0.07
+ 2 A2ML1 GTEX-ZVT3  -1.35  1.01  2.91 -0.28
+ 3 A2ML1 GTEX-1AX9I -1.29 -0.19 -0.41 -0.78
+ 4 A2ML1 GTEX-1A32A -1.16  0.44 -0.41 -0.39
+ 5 A2ML1 GTEX-1GN73 -1.13 -0.05 -0.21 -0.82
+ 6 A2ML1 GTEX-11ZUS -1.07 -0.41  0.67  0.06
+ 7 A2ML1 GTEX-18A7A -1.01 -0.74 -0.72 -0.76
+ 8 A2ML1 GTEX-17EVP -1    -0.18 -0.2  -0.95
+ 9 A2ML1 GTEX-U8XE  -0.88 -0.91 NA    -0.86
+10 A2ML1 GTEX-131YS -0.78 NA     0.17 -1.5 
+# ℹ 389,912 more rows</code></pre>
+</div>
+</div>
 </section>
-
-<section id="piping" class="title-slide slide level1 center">
+<section id="exercise-top-5-high-expression-instances" class="slide level2" data-background-color="teal">
+<h2>Exercise: top 5 high expression instances</h2>
+<p>Use <code>arrange()</code> and <code>filter()</code> to get the data for the 5 rows with the highest expression values in blood</p>
+</section></section>
+<section>
+<section id="piping" class="title-slide slide level1 center" data-background-color="black">
 <h1>Piping</h1>
-<p>type:section</p>
-</section>
 
-<section id="why-pipe" class="title-slide slide level1 center">
-<h1>Why pipe?</h1>
+</section>
+<section id="nesting-and-temporary-variables" class="slide level2">
+<h2>Nesting and Temporary Variables</h2>
 <ul>
-<li>In our last exercise, we used a number of different function applications to arrive at our answer. Shown below, we used temporary variables to keep our code clean.</li>
+<li>In our last exercise, we used two function applications to arrive at our answer. Shown below, we used temporary variables to keep our code clean.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a>gtex_by_blood <span class="ot">=</span> <span class="fu">arrange</span>(gtex, <span class="fu">desc</span>(Blood)) <span class="co"># using a temporary variable</span></span>
-<span id="cb45-2"><a href=""></a><span class="fu">filter</span>(gtex_by_blood, <span class="fu">row_number</span>()<span class="sc">&lt;=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a>gtex_by_blood <span class="ot">=</span> <span class="fu">arrange</span>(gtex, <span class="fu">desc</span>(Blood)) <span class="co"># using a temporary variable</span></span>
+<span id="cb47-2"><a href=""></a><span class="fu">filter</span>(gtex_by_blood, <span class="fu">row_number</span>()<span class="sc">&lt;=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 6
   Gene     Ind        Blood Heart  Lung Liver
@@ -973,7 +919,7 @@ Alejandro Schuler
 <li>we can also accompish this by “nesting” the function calls:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href=""></a><span class="fu">filter</span>(<span class="fu">arrange</span>(gtex, <span class="fu">desc</span>(Blood)), <span class="fu">row_number</span>()<span class="sc">&lt;=</span><span class="dv">5</span>) <span class="co"># "nesting" the calls to filter and arrange</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href=""></a><span class="fu">filter</span>(<span class="fu">arrange</span>(gtex, <span class="fu">desc</span>(Blood)), <span class="fu">row_number</span>()<span class="sc">&lt;=</span><span class="dv">5</span>) <span class="co"># "nesting" the calls to filter and arrange</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 6
   Gene     Ind        Blood Heart  Lung Liver
@@ -989,79 +935,85 @@ Alejandro Schuler
 <li>Which do you prefer? Why? What are the sylistic pros and cons to both if you are trying to understand what the code does for the first time?</li>
 </ul>
 </section>
-
-<section id="the-pipe-operator" class="title-slide slide level1 center">
-<h1>The pipe operator</h1>
+<section id="the-pipe" class="slide level2">
+<h2>The pipe</h2>
 <ul>
 <li>R solves these problems with the “pipe” operator <code>|&gt;</code></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href=""></a>gtex <span class="sc">|&gt;</span> </span>
-<span id="cb49-2"><a href=""></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Blood)) <span class="sc">|&gt;</span></span>
-<span id="cb49-3"><a href=""></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>()<span class="sc">&lt;=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href=""></a>gtex <span class="sc">|&gt;</span> </span>
+<span id="cb51-2"><a href=""></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Blood)) <span class="sc">|&gt;</span></span>
+<span id="cb51-3"><a href=""></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>()<span class="sc">&lt;=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-
-<section id="the-pipe-operator-1" class="title-slide slide level1 center">
-<h1>The pipe operator</h1>
-<ul>
-<li>Tidyverse solves these problems with the pipe operator <code>|&gt;</code></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href=""></a>gtex <span class="sc">|&gt;</span> </span>
-<span id="cb50-2"><a href=""></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Blood)) <span class="sc">|&gt;</span></span>
-<span id="cb50-3"><a href=""></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>()<span class="sc">&lt;=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
+<div class="fragment">
 <ul>
 <li>How does this compare with our code before? What do you notice?</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href=""></a>gtex_by_blood <span class="ot">=</span> <span class="fu">arrange</span>(gtex, <span class="fu">desc</span>(Blood)) <span class="co"># using a temporary variable</span></span>
-<span id="cb51-2"><a href=""></a><span class="fu">filter</span>(gtex_by_blood, <span class="fu">row_number</span>()<span class="sc">&lt;=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href=""></a>gtex_by_blood <span class="ot">=</span> <span class="fu">arrange</span>(gtex, <span class="fu">desc</span>(Blood)) <span class="co"># using a temporary variable</span></span>
+<span id="cb52-2"><a href=""></a><span class="fu">filter</span>(gtex_by_blood, <span class="fu">row_number</span>()<span class="sc">&lt;=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 </section>
-
-<section id="pipe-details-what-happens-to-an-object-when-it-gets-piped-in" class="title-slide slide level1 center">
-<h1>Pipe details: What happens to an object when it gets “piped in”?</h1>
+<section id="pipe-syntax" class="slide level2">
+<h2>Pipe syntax</h2>
 <p>When <code>df1</code> is piped into <code>fun(x)</code> (<code>fun</code> is just some fake function)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href=""></a>df1 <span class="sc">|&gt;</span> <span class="fu">fun</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href=""></a>df1 <span class="sc">|&gt;</span> <span class="fu">fun</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>is converted into:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href=""></a><span class="fu">fun</span>(df1, x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href=""></a><span class="fu">fun</span>(df1, x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>That is: the thing being piped in is used as the <em>first</em> argument of <code>fun</code>.</li>
 <li>The tidyverse functions are consistently designed so that the first argument is a data frame, and the result is a data frame, so you can push a dataframe all the way through a series of functions</li>
 </ul>
 </section>
+<section class="slide level2">
 
-<section id="pipe-details-what-objects-can-be-piped" class="title-slide slide level1 center">
-<h1>Pipe details: What objects can be piped?</h1>
+<ul>
+<li>The pipe represents a “conveyor belt” along which data is passed from function to function (“workers”) in an assembly line</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href=""></a>gtex <span class="sc">|&gt;</span> </span>
+<span id="cb55-2"><a href=""></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Blood)) <span class="sc">|&gt;</span></span>
+<span id="cb55-3"><a href=""></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>()<span class="sc">&lt;=</span><span class="dv">5</span>)</span>
+<span id="cb55-4"><a href=""></a></span>
+<span id="cb55-5"><a href=""></a><span class="co"># same as:</span></span>
+<span id="cb55-6"><a href=""></a><span class="co">#   arrange(gtex, desc(Blood)) |&gt;</span></span>
+<span id="cb55-7"><a href=""></a><span class="co">#   filter(row_number()&lt;=5)</span></span>
+<span id="cb55-8"><a href=""></a></span>
+<span id="cb55-9"><a href=""></a></span>
+<span id="cb55-10"><a href=""></a><span class="co"># same as:</span></span>
+<span id="cb55-11"><a href=""></a><span class="co">#   filter( arrange(gtex, desc(Blood)), row_number()&lt;=5)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section class="slide level2">
+
 <ul>
 <li>The pipe works for all variables and functions (not just tidyverse functions)</li>
 </ul>
 <p>Piping a string</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href=""></a><span class="co"># paste("hello", "world")</span></span>
-<span id="cb54-2"><a href=""></a><span class="st">"hello"</span> <span class="sc">|&gt;</span> <span class="fu">paste</span>(<span class="st">"world"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href=""></a><span class="co"># paste("hello", "world")</span></span>
+<span id="cb56-2"><a href=""></a><span class="st">"hello"</span> <span class="sc">|&gt;</span> <span class="fu">paste</span>(<span class="st">"world"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "hello world"</code></pre>
 </div>
 </div>
 <p>Piping a vector</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href=""></a><span class="co"># sum(c(1,44,21,0,-4))</span></span>
-<span id="cb56-2"><a href=""></a><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">44</span>,<span class="dv">21</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">4</span>) <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href=""></a><span class="co"># sum(c(1,44,21,0,-4))</span></span>
+<span id="cb58-2"><a href=""></a><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">44</span>,<span class="dv">21</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">4</span>) <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 62</code></pre>
 </div>
 </div>
 <p>Piping a data frame</p>
 <div class="cell" data-max.lines="5">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href=""></a><span class="co"># filter(gtex, Gene=="ZZZ3")</span></span>
-<span id="cb58-2"><a href=""></a>gtex <span class="sc">|&gt;</span> <span class="fu">filter</span>(Gene<span class="sc">==</span><span class="st">"ZZZ3"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href=""></a><span class="co"># filter(gtex, Gene=="ZZZ3")</span></span>
+<span id="cb60-2"><a href=""></a>gtex <span class="sc">|&gt;</span> <span class="fu">filter</span>(Gene<span class="sc">==</span><span class="st">"ZZZ3"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 78 × 6
    Gene  Ind        Blood Heart  Lung Liver
@@ -1080,80 +1032,55 @@ Alejandro Schuler
 </div>
 </div>
 </section>
-
-<section id="an-assembly-line" class="title-slide slide level1 center">
-<h1>An assembly line</h1>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href=""></a>gtex <span class="sc">|&gt;</span> </span>
-<span id="cb60-2"><a href=""></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Blood)) <span class="sc">|&gt;</span></span>
-<span id="cb60-3"><a href=""></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>()<span class="sc">&lt;=</span><span class="dv">5</span>)</span>
-<span id="cb60-4"><a href=""></a></span>
-<span id="cb60-5"><a href=""></a><span class="co"># same as:</span></span>
-<span id="cb60-6"><a href=""></a><span class="co">#   arrange(gtex, desc(Blood)) |&gt;</span></span>
-<span id="cb60-7"><a href=""></a><span class="co">#   filter(row_number()&lt;=5)</span></span>
-<span id="cb60-8"><a href=""></a></span>
-<span id="cb60-9"><a href=""></a></span>
-<span id="cb60-10"><a href=""></a><span class="co"># same as:</span></span>
-<span id="cb60-11"><a href=""></a><span class="co">#   filter( arrange(gtex, desc(Blood)), row_number()&lt;=5)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li>The pipe represents a “conveyor belt” along which data is passed from function to function (“workers”) in an assembly line</li>
-</ul>
-</section>
-
-<section id="two-pipes" class="title-slide slide level1 center">
-<h1>Two Pipes</h1>
+<section id="two-pipes" class="slide level2">
+<h2>Two Pipes</h2>
 <p><strong>History</strong> - R had no pipe - ~2014: introduced by <code>magrittr</code> package (as <code>%&gt;%</code>) - ~2016: tidyverse adoption, proliferated in code - ~2021: base language adopted idea, implemented native pipe <code>|&gt;</code></p>
 <ul>
 <li><code>%&gt;%</code> and <code>|&gt;</code> are (basically) the same</li>
 <li>you will see both in the wild</li>
 </ul>
 <div class="cell" data-max.lines="5">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href=""></a><span class="fu">filter</span>(gtex, Gene<span class="sc">==</span><span class="st">"ZZZ3"</span>)</span>
-<span id="cb61-2"><a href=""></a>gtex <span class="sc">|&gt;</span> <span class="fu">filter</span>(Gene<span class="sc">==</span><span class="st">"ZZZ3"</span>) </span>
-<span id="cb61-3"><a href=""></a>gtex <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Gene<span class="sc">==</span><span class="st">"ZZZ3"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href=""></a><span class="fu">filter</span>(gtex, Gene<span class="sc">==</span><span class="st">"ZZZ3"</span>)</span>
+<span id="cb62-2"><a href=""></a>gtex <span class="sc">|&gt;</span> <span class="fu">filter</span>(Gene<span class="sc">==</span><span class="st">"ZZZ3"</span>) </span>
+<span id="cb62-3"><a href=""></a>gtex <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Gene<span class="sc">==</span><span class="st">"ZZZ3"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-
-<section id="exercise-pipe-to-ggplot" class="title-slide slide level1 center">
-<h1>Exercise: Pipe to ggplot</h1>
-<p>type:prompt</p>
+<section id="exercise-pipe-to-ggplot" class="slide level2" data-background-color="teal">
+<h2>Exercise: Pipe to ggplot</h2>
 <ul>
 <li>Run this code to see what it does. Then rewrite it using the pipe operator (get rid of the intermediate variables <code>mybl2</code> and <code>outliers</code>) and get it to produce the same output.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href=""></a>mybl2 <span class="ot">=</span> <span class="fu">filter</span>(gtex, Gene <span class="sc">==</span> <span class="st">'MYBL2'</span>)</span>
-<span id="cb62-2"><a href=""></a></span>
-<span id="cb62-3"><a href=""></a><span class="co"># we haven't learned about this function yet, but doesn't matter</span></span>
-<span id="cb62-4"><a href=""></a>outliers <span class="ot">=</span> <span class="fu">mutate</span>(mybl2, <span class="at">blood_outlier =</span> <span class="fu">abs</span>(Blood) <span class="sc">&gt;</span> <span class="dv">2</span>) </span>
-<span id="cb62-5"><a href=""></a></span>
-<span id="cb62-6"><a href=""></a><span class="fu">ggplot</span>(outliers) <span class="sc">+</span></span>
-<span id="cb62-7"><a href=""></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x=</span>blood_outlier))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href=""></a>mybl2 <span class="ot">=</span> <span class="fu">filter</span>(gtex, Gene <span class="sc">==</span> <span class="st">'MYBL2'</span>)</span>
+<span id="cb63-2"><a href=""></a></span>
+<span id="cb63-3"><a href=""></a><span class="co"># we haven't learned about this function yet, but doesn't matter</span></span>
+<span id="cb63-4"><a href=""></a>outliers <span class="ot">=</span> <span class="fu">mutate</span>(mybl2, <span class="at">blood_outlier =</span> <span class="fu">abs</span>(Blood) <span class="sc">&gt;</span> <span class="dv">2</span>) </span>
+<span id="cb63-5"><a href=""></a></span>
+<span id="cb63-6"><a href=""></a><span class="fu">ggplot</span>(outliers) <span class="sc">+</span></span>
+<span id="cb63-7"><a href=""></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x=</span>blood_outlier))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-
-<section id="select-columns-with-select" class="title-slide slide level1 center">
+</section></section>
+<section>
+<section id="select-columns-with-select" class="title-slide slide level1 center" data-background-color="black">
 <h1>Select columns with select()</h1>
-<p>type:section</p>
-</section>
 
-<section id="select-columns-with-select-1" class="title-slide slide level1 center">
-<h1>Select columns with select()</h1>
+</section>
+<section id="select-columns-with-select-1" class="slide level2">
+<h2>Select columns with select()</h2>
 <ul>
 <li>The select function will return a subset of the tibble, using only the requested columns in the order specified.</li>
 </ul>
 
 <img data-src="http://ohi-science.org/data-science-training/img/rstudio-cheatsheet-select.png" class="r-stretch"></section>
+<section class="slide level2">
 
-<section id="select-columns-with-select-2" class="title-slide slide level1 center">
-<h1>Select columns with select()</h1>
 <ul>
 <li>The select function will return a subset of the tibble, using only the requested columns in the order specified.</li>
 <li>first argument is a data frame, then columns you want to select</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
-<span id="cb63-2"><a href=""></a>  <span class="fu">select</span>(Gene, Ind, <span class="at">expression=</span>Blood)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
+<span id="cb64-2"><a href=""></a>  <span class="fu">select</span>(Gene, Ind, <span class="at">expression=</span>Blood)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 389,922 × 3
    Gene  Ind        expression
@@ -1175,16 +1102,14 @@ Alejandro Schuler
 <li>you can rename columns in the result with the syntax <code>new_name = old_name</code></li>
 </ul>
 </section>
-
-<section>
-<section id="select-columns-with-select-3" class="title-slide slide level1 center">
-<h1>Select columns with select()</h1>
+<section id="helpers" class="slide level2">
+<h2>Helpers</h2>
 <ul>
 <li><code>select()</code> can also be used with handy helpers like <code>starts_with()</code> and <code>contains()</code></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
-<span id="cb65-2"><a href=""></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"L"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
+<span id="cb66-2"><a href=""></a>  <span class="fu">select</span>(<span class="fu">starts_with</span>(<span class="st">"L"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 389,922 × 2
     Lung Liver
@@ -1209,8 +1134,8 @@ Alejandro Schuler
 <section class="slide level2">
 
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
-<span id="cb67-2"><a href=""></a>  <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">"N"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
+<span id="cb68-2"><a href=""></a>  <span class="fu">select</span>(<span class="fu">contains</span>(<span class="st">"N"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 389,922 × 3
    Gene  Ind         Lung
@@ -1232,16 +1157,41 @@ Alejandro Schuler
 <li>The quotes around the letter <code>"N"</code> make it a string. If we did not do this, <code>R</code> would think it was looking for a variable called <code>N</code> and not just the plain letter.</li>
 <li>We don’t have to quote the names of columns (like <code>Ind</code>) because the <code>tidyverse</code> functions know that we are working within the dataframe and thus treat the column names like they are variables in their own right</li>
 </ul>
-</section></section>
-<section>
-<section id="select-subsets-columns-by-name" class="title-slide slide level1 center">
-<h1>select() subsets columns by name</h1>
+</section>
+<section class="slide level2">
+
+<ul>
+<li>we can even select columns based on metadata (but not values!)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
+<span id="cb70-2"><a href=""></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 389,922 × 4
+   Blood Heart  Lung Liver
+   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+ 1 -0.14 -1.08 NA    -0.66
+ 2 -0.5   0.53  0.76 -0.1 
+ 3 -0.08 -0.4  -0.26 -0.13
+ 4 -0.37  0.11 -0.42 -0.61
+ 5  0.3  -1.11  0.59 -0.12
+ 6  0.02 -0.47  0.29 -0.66
+ 7 -1.07 -0.41  0.67  0.06
+ 8 -0.27 -0.51  0.13 -0.75
+ 9 -0.3   0.53  0.1  -0.48
+10 -0.11  0.24  0.96  0.72
+# ℹ 389,912 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="negation" class="slide level2">
+<h2>Negation</h2>
 <ul>
 <li><code>select()</code> can also be used to select everything <strong>except for</strong> certain columns</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
-<span id="cb69-2"><a href=""></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">starts_with</span>(<span class="st">"L"</span>), <span class="sc">-</span>Ind)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
+<span id="cb72-2"><a href=""></a>  <span class="fu">select</span>(<span class="sc">-</span><span class="fu">starts_with</span>(<span class="st">"L"</span>), <span class="sc">-</span>Ind)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 389,922 × 3
    Gene  Blood Heart
@@ -1260,49 +1210,26 @@ Alejandro Schuler
 </div>
 </div>
 </section>
-<section class="slide level2">
-
-<ul>
-<li>or even to select only columns that match a certain condition</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
-<span id="cb71-2"><a href=""></a>  <span class="fu">select</span>(<span class="fu">where</span>(is.numeric))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 389,922 × 4
-   Blood Heart  Lung Liver
-   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
- 1 -0.14 -1.08 NA    -0.66
- 2 -0.5   0.53  0.76 -0.1 
- 3 -0.08 -0.4  -0.26 -0.13
- 4 -0.37  0.11 -0.42 -0.61
- 5  0.3  -1.11  0.59 -0.12
- 6  0.02 -0.47  0.29 -0.66
- 7 -1.07 -0.41  0.67  0.06
- 8 -0.27 -0.51  0.13 -0.75
- 9 -0.3   0.53  0.1  -0.48
-10 -0.11  0.24  0.96  0.72
-# ℹ 389,912 more rows</code></pre>
-</div>
-</div>
-</section></section>
-<section id="exercise-select-and-filter" class="title-slide slide level1 center">
-<h1>Exercise: select and filter</h1>
-<p>type:prompt</p>
+<section id="exercise-select-and-filter" class="slide level2" data-background-color="teal">
+<h2>Exercise: select and filter</h2>
 <p>A colleague wants to see the blood expression for the gene A2ML1 for each person. Use select and filter to produce a dataframe for her that has just two columns: <code>individual</code> and <code>expression</code>, where the expression values are the blood expression values for each person for the gene A2ML1.</p>
 <p>Before writing any code, break the problem down conceptually into steps. Figure out how to do each step independently before you put them together.</p>
 </section>
-
-<section>
-<section id="pull-is-a-friend-of-select" class="title-slide slide level1 center">
-<h1>pull() is a friend of select()</h1>
+<section id="pull" class="slide level2">
+<h2>pull()</h2>
 <ul>
 <li><code>select()</code> has a friend called <code>pull()</code> which returns a vector instead of a (one-column) data frame</li>
 </ul>
 
-<img data-src="https://www.gastonsanchez.com/intro2cwd/images/eda/dplyr-extract-column.svg" class="r-stretch"><div class="cell" data-max.lines="3">
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href=""></a><span class="co"># same as gtex$Gene, but pipeable! eg. gtex |&gt; .... |&gt; pull(some_col) </span></span>
-<span id="cb73-2"><a href=""></a>gtex <span class="sc">|&gt;</span> <span class="fu">pull</span>(Gene)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<img data-src="https://www.gastonsanchez.com/intro2cwd/images/eda/dplyr-extract-column.svg" class="r-stretch"></section>
+<section class="slide level2">
+
+<div class="columns">
+<div class="column">
+<div class="cell" data-max.lines="3">
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href=""></a><span class="co"># same as gtex$Gene, but pipeable!</span></span>
+<span id="cb74-2"><a href=""></a><span class="co"># eg. gtex |&gt; .... |&gt; pull(some_col) </span></span>
+<span id="cb74-3"><a href=""></a>gtex <span class="sc">|&gt;</span> <span class="fu">pull</span>(Gene)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    [1] "A2ML1"              "A2ML1"              "A2ML1"             
     [4] "A2ML1"              "A2ML1"              "A2ML1"             
@@ -34640,11 +34567,9 @@ Alejandro Schuler
  [ reached getOption("max.print") -- omitted 289923 entries ]</code></pre>
 </div>
 </div>
-</section>
-<section class="slide level2">
-
+</div><div class="column">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href=""></a>gtex <span class="sc">|&gt;</span> <span class="fu">select</span>(Gene)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href=""></a>gtex <span class="sc">|&gt;</span> <span class="fu">select</span>(Gene)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 389,922 × 1
    Gene 
@@ -34662,14 +34587,17 @@ Alejandro Schuler
 # ℹ 389,912 more rows</code></pre>
 </div>
 </div>
-</section></section>
-<section id="rename-column-names-with-rename" class="title-slide slide level1 center">
-<h1>Rename column names with rename()</h1>
+</div></div>
+</section>
+<section id="rename-columns" class="slide level2">
+<h2>Rename columns</h2>
+<div class="columns">
+<div class="column">
 <ul>
 <li><code>select()</code> can be used to rename variables, but it drops all variables not selected</li>
 </ul>
 <div class="cell" data-max.lines="6">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href=""></a>gtex <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="at">individual =</span> Ind)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href=""></a>gtex <span class="sc">|&gt;</span> <span class="fu">select</span>(<span class="at">individual =</span> Ind)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 389,922 × 1
    individual
@@ -34687,11 +34615,12 @@ Alejandro Schuler
 # ℹ 389,912 more rows</code></pre>
 </div>
 </div>
+</div><div class="column">
 <ul>
 <li><code>rename()</code> is better suited for this because it keeps all the columns</li>
 </ul>
 <div class="cell" data-max.lines="6">
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href=""></a>gtex <span class="sc">|&gt;</span> <span class="fu">rename</span>(<span class="at">individual =</span> Ind)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href=""></a>gtex <span class="sc">|&gt;</span> <span class="fu">rename</span>(<span class="at">individual =</span> Ind)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 389,922 × 6
    Gene  individual Blood Heart  Lung Liver
@@ -34709,31 +34638,29 @@ Alejandro Schuler
 # ℹ 389,912 more rows</code></pre>
 </div>
 </div>
-<p>Note: <code>mutate()</code>, can also change a column name (more on <code>mutate()</code> soon)</p>
-</section>
-
-<section id="add-new-variables-with-mutate" class="title-slide slide level1 center">
+</div></div>
+</section></section>
+<section>
+<section id="add-new-variables-with-mutate" class="title-slide slide level1 center" data-background-color="black">
 <h1>Add new variables with mutate()</h1>
-<p>type:section</p>
-</section>
 
-<section id="add-new-variables-with-mutate-1" class="title-slide slide level1 center">
-<h1>Add new variables with mutate()</h1>
+</section>
+<section id="add-new-variables-with-mutate-1" class="slide level2">
+<h2>Add new variables with mutate()</h2>
 <ul>
 <li><code>mutate</code> creates new columns</li>
 </ul>
 
 <img data-src="https://ohi-science.org/data-science-training/img/rstudio-cheatsheet-mutate.png" class="r-stretch"></section>
+<section class="slide level2">
 
-<section id="add-new-variables-with-mutate-2" class="title-slide slide level1 center">
-<h1>Add new variables with mutate()</h1>
 <ul>
 <li><code>mutate</code> creates new columns</li>
 <li>first argument is a dataframe, second specifies what you want the new columns to be</li>
 </ul>
 <div class="cell" data-max.lines="5">
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
-<span id="cb81-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">abs_blood =</span> <span class="fu">abs</span>(Blood))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
+<span id="cb82-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">abs_blood =</span> <span class="fu">abs</span>(Blood))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 389,922 × 7
    Gene  Ind        Blood Heart  Lung Liver abs_blood
@@ -34758,8 +34685,8 @@ Alejandro Schuler
 <li><strong>Warning!</strong> If the new variable name already exists, <code>mutate()</code> will overwrite the existing one</li>
 </ul>
 <div class="cell" data-max.lines="5">
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
-<span id="cb83-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">Blood =</span> Blood <span class="sc">*</span><span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
+<span id="cb84-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">Blood =</span> Blood <span class="sc">*</span><span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 389,922 × 6
    Gene  Ind        Blood Heart  Lung Liver
@@ -34778,19 +34705,18 @@ Alejandro Schuler
 </div>
 </div>
 </section>
-
-<section id="mutate-can-create-multiple-new-columns-at-once" class="title-slide slide level1 center">
-<h1>mutate() can create multiple new columns at once</h1>
+<section id="multiple-mutates" class="slide level2">
+<h2>Multiple mutates</h2>
 <ul>
 <li><code>mutate()</code> can create multiple columns at the same time and use multiple columns to define a single new one</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
-<span id="cb85-2"><a href=""></a>  <span class="fu">mutate</span>(  <span class="co"># the newlines make it more readable</span></span>
-<span id="cb85-3"><a href=""></a>      <span class="at">abs_blood =</span> <span class="fu">abs</span>(Blood),</span>
-<span id="cb85-4"><a href=""></a>      <span class="at">abs_heart =</span> <span class="fu">abs</span>(Heart),</span>
-<span id="cb85-5"><a href=""></a>      <span class="at">blood_heart_dif =</span> abs_blood <span class="sc">-</span> abs_heart</span>
-<span id="cb85-6"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
+<span id="cb86-2"><a href=""></a>  <span class="fu">mutate</span>(  <span class="co"># the newlines make it more readable</span></span>
+<span id="cb86-3"><a href=""></a>      <span class="at">abs_blood =</span> <span class="fu">abs</span>(Blood),</span>
+<span id="cb86-4"><a href=""></a>      <span class="at">abs_heart =</span> <span class="fu">abs</span>(Heart),</span>
+<span id="cb86-5"><a href=""></a>      <span class="at">blood_heart_dif =</span> abs_blood <span class="sc">-</span> abs_heart</span>
+<span id="cb86-6"><a href=""></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 389,922 × 9
    Gene  Ind        Blood Heart  Lung Liver abs_blood abs_heart blood_heart_dif
@@ -34812,15 +34738,14 @@ Alejandro Schuler
 <li>Note that we have also used two columns simultaneously (<code>Blood</code> and <code>Heart</code>) to create a new column)</li>
 </ul>
 </section>
-
-<section id="mutate-for-data-type-conversion" class="title-slide slide level1 center">
-<h1>mutate() for data type conversion</h1>
+<section id="mutate-for-type-conversion" class="slide level2">
+<h2>mutate() for type conversion</h2>
 <ul>
 <li>Data is sometimes given to you in a form that makes it difficult to do operations on</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href=""></a>df <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">number =</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"2"</span>, <span class="st">"3"</span>))</span>
-<span id="cb87-2"><a href=""></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href=""></a>df <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">number =</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"2"</span>, <span class="st">"3"</span>))</span>
+<span id="cb88-2"><a href=""></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 1
   number
@@ -34829,7 +34754,7 @@ Alejandro Schuler
 2 2     
 3 3     </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href=""></a>df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">number_plus_1 =</span> number <span class="sc">+</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href=""></a>df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">number_plus_1 =</span> number <span class="sc">+</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `mutate()`:
 ℹ In argument: `number_plus_1 = number + 1`.
@@ -34841,7 +34766,7 @@ Caused by error in `number + 1`:
 <li><code>mutate()</code> is also useful for converting data types, in this case text to numbers</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href=""></a>df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">number =</span> <span class="fu">as.numeric</span>(number))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href=""></a>df <span class="sc">|&gt;</span> <span class="fu">mutate</span>(<span class="at">number =</span> <span class="fu">as.numeric</span>(number))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 1
   number
@@ -34852,36 +34777,82 @@ Caused by error in `number + 1`:
 </div>
 </div>
 </section>
-
-<section>
-<section id="exercise-mutate" class="title-slide slide level1 center">
-<h1>Exercise: mutate()</h1>
-<p>type:prompt</p>
-<p><strong>Problem 1</strong></p>
-<p>I want to see if certain genes are generally more highly expressed in certain individuals, irrespective of tissue type.</p>
-<p>Using the GTEX data, create a new column containing the sum of the four expression measurements in the different tissues.</p>
-<p><strong>Problem 2</strong></p>
-<p>Filter <code>gtex</code> to only include measurements of the MYL1 gene.</p>
-<p>Then, use mutate to mark which individuals have greater than average (positive) expression in liver tissue.</p>
-<p>Finally, produce a plot showing blood vs heart expression and color the liver expression outliers in a different color than the other points.</p>
+<section id="indicators" class="slide level2">
+<h2>Indicators</h2>
+<div class="columns">
+<div class="column">
+<ul>
+<li><code>mutate()</code> can be used to make logical columns (indicators)</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
+<span id="cb94-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">positive_liver =</span> Liver <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb94-3"><a href=""></a>  <span class="fu">select</span>(Gene, Ind, Liver, positive_liver)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 389,922 × 4
+   Gene  Ind        Liver positive_liver
+   &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt; &lt;lgl&gt;         
+ 1 A2ML1 GTEX-11DXZ -0.66 FALSE         
+ 2 A2ML1 GTEX-11GSP -0.1  FALSE         
+ 3 A2ML1 GTEX-11NUK -0.13 FALSE         
+ 4 A2ML1 GTEX-11NV4 -0.61 FALSE         
+ 5 A2ML1 GTEX-11TT1 -0.12 FALSE         
+ 6 A2ML1 GTEX-11TUW -0.66 FALSE         
+ 7 A2ML1 GTEX-11ZUS  0.06 TRUE          
+ 8 A2ML1 GTEX-11ZVC -0.75 FALSE         
+ 9 A2ML1 GTEX-1212Z -0.48 FALSE         
+10 A2ML1 GTEX-12696  0.72 TRUE          
+# ℹ 389,912 more rows</code></pre>
+</div>
+</div>
+</div><div class="column">
+<ul>
+<li>which can be used to make plots</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
+<span id="cb96-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">positive_liver =</span> Liver <span class="sc">&gt;</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb96-3"><a href=""></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>positive_liver, <span class="at">y=</span>Blood)) <span class="sc">+</span></span>
+<span id="cb96-4"><a href=""></a>  <span class="fu">geom_violin</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="3-data-transformation_files/figure-revealjs/unnamed-chunk-49-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></div>
 </section>
 <section class="slide level2">
 
-<p>Plot for problem 2:</p>
+<p>or you can just “mutate” directly in ggplot!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href=""></a>gtex <span class="sc">|&gt;</span>  <span class="co"># mutate(positive_liver = Liver &gt; 0) |&gt;</span></span>
+<span id="cb97-2"><a href=""></a><span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>Liver <span class="sc">&gt;</span> <span class="dv">0</span>, <span class="at">y=</span>Blood)) <span class="sc">+</span></span>
+<span id="cb97-3"><a href=""></a>  <span class="fu">geom_violin</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
-<img data-src="3-data-transformation_files/figure-revealjs/unnamed-chunk-51-1.png" width="1440" class="r-stretch"><p><strong>Problem 3</strong></p>
-<p>Produce a vector containing the ten individual IDs (<code>Ind</code>) with the biggest absolute difference in their heart and lung expression for the A2ML1 gene.</p>
-<p>Before writing code, break the problem into steps. Do you have to create new columns? Filter rows? Arrange rows? Select columns? In what order? Once you have a plan, write code, one step at a time.</p>
-</section></section>
-<section id="mutate-and-if_else" class="title-slide slide level1 center">
-<h1>mutate() and if_else()</h1>
+</div>
+<img data-src="3-data-transformation_files/figure-revealjs/unnamed-chunk-50-1.png" width="960" class="r-stretch"></section>
+<section id="exercise-mutate" class="slide level2" data-background-color="teal">
+<h2>Exercise: mutate()</h2>
+<p><em>Before writing code for each problem , break the problem into steps. Do you have to create new columns? Filter rows? Arrange rows? Select columns? In what order? Once you have a plan, write code, one step at a time.</em></p>
+<p><strong>Problem 1</strong></p>
+<p>I want to see if certain genes are generally more highly expressed in certain individuals, irrespective of tissue type. Using the GTEX data, create a new column containing the sum of the four expression measurements in the different tissues.</p>
+<p><strong>Problem 2</strong></p>
+<p>Produce a plot showing blood vs heart expression of the MYL1 gene only and assign color based on positive vs.&nbsp;negative expression of that gene in liver tissue.</p>
+<p><strong>Problem 3</strong></p>
+<p>Produce a vector containing the ten individual IDs (<code>Ind</code>) with the biggest difference in their heart and lung expression for the A2ML1 gene.</p>
+</section>
+<section id="mutate-and-if_else" class="slide level2">
+<h2>mutate() and if_else()</h2>
 <ul>
 <li><code>if_else</code> is a vectorized if-else statement</li>
 <li>the first argument is an R expression that evaluates to a logical vector, the second argument is what to replace all of the resulting TRUEs with, and the third argument is what to replace the resulting FALSEs with</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href=""></a>x <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">5</span>)</span>
-<span id="cb93-2"><a href=""></a><span class="fu">if_else</span>(<span class="dv">0</span><span class="sc">&lt;=</span>x <span class="sc">&amp;</span> x<span class="sc">&lt;=</span><span class="dv">1</span>, <span class="st">"in [0,1]"</span>, <span class="st">"not in [0,1]"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href=""></a>x <span class="ot">=</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span>, <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>, <span class="dv">5</span>)</span>
+<span id="cb98-2"><a href=""></a><span class="fu">if_else</span>(<span class="dv">0</span><span class="sc">&lt;=</span>x <span class="sc">&amp;</span> x<span class="sc">&lt;=</span><span class="dv">1</span>, <span class="st">"in [0,1]"</span>, <span class="st">"not in [0,1]"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "not in [0,1]" "in [0,1]"     "in [0,1]"     "not in [0,1]"</code></pre>
 </div>
@@ -34890,11 +34861,11 @@ Caused by error in `number + 1`:
 <li>this is often used in <code>mutate()</code>:</li>
 </ul>
 <div class="cell" data-max.lines="10">
-<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
-<span id="cb95-2"><a href=""></a><span class="fu">mutate</span>( </span>
-<span id="cb95-3"><a href=""></a>  <span class="at">blood_expression =</span> <span class="fu">ifelse</span>(</span>
-<span id="cb95-4"><a href=""></a>    Blood <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="st">"-"</span>, <span class="st">"+"</span></span>
-<span id="cb95-5"><a href=""></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href=""></a>gtex <span class="sc">|&gt;</span></span>
+<span id="cb100-2"><a href=""></a><span class="fu">mutate</span>( </span>
+<span id="cb100-3"><a href=""></a>  <span class="at">blood_expression =</span> <span class="fu">ifelse</span>(</span>
+<span id="cb100-4"><a href=""></a>    Blood <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="st">"-"</span>, <span class="st">"+"</span></span>
+<span id="cb100-5"><a href=""></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 389,922 × 7
    Gene  Ind        Blood Heart  Lung Liver blood_expression
@@ -34913,9 +34884,8 @@ Caused by error in `number + 1`:
 </div>
 </div>
 </section>
+<section class="slide level2">
 
-<section id="mutate-and-if_else-1" class="title-slide slide level1 center">
-<h1>mutate() and if_else()</h1>
 <ul>
 <li>this is useful to “interleave” columns:</li>
 </ul>
@@ -34931,10 +34901,8 @@ Caused by error in `number + 1`:
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href=""></a>emails <span class="sc">|&gt;</span> </span>
-<span id="cb98-2"><a href=""></a><span class="fu">mutate</span>(,</span>
-<span id="cb98-3"><a href=""></a>  <span class="at">preferred_email =</span> <span class="fu">ifelse</span>(preferred<span class="sc">==</span><span class="st">'personal'</span>, personal, school)</span>
-<span id="cb98-4"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href=""></a>emails <span class="sc">|&gt;</span> </span>
+<span id="cb103-2"><a href=""></a><span class="fu">mutate</span>(<span class="at">preferred_email =</span> <span class="fu">ifelse</span>(preferred<span class="sc">==</span><span class="st">'personal'</span>, personal, school))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 5
   name  school             personal            preferred preferred_email    
@@ -34945,17 +34913,12 @@ Caused by error in `number + 1`:
 4 diego diego@duke.edu     diego@dodo.com.au   school    diego@duke.edu     </code></pre>
 </div>
 </div>
-============================================================
-<div data-align="center">
-<p>&lt;img src=“https://miro.medium.com/max/1200/1*O4LZwd_rTEGY2zMyDkvR9A.png”; style=“max-width:1500;”; class=“center”&gt;</p>
-</div>
-<p>Source: <a href="https://www.google.com/search?client=safari&amp;rls=en&amp;q=data+transformation+with+dplyr+cheat+sheet&amp;ie=UTF-8&amp;oe=UTF-8">Rstudio Cheat Sheets</a>. Download the <a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=&amp;ved=2ahUKEwiP_KO4m9_xAhVYOs0KHfRUCfgQFnoECAQQAA&amp;url=https%3A%2F%2Fraw.githubusercontent.com%2Frstudio%2Fcheatsheets%2Fmaster%2Fdata-transformation.pdf&amp;usg=AOvVaw3vYk678LtmDz7gbHCvDeM0">full dplyr cheat sheet here.</a> <!-- ^^  COMPLETE   ^^ --></p>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
 </div>
 </div>
-</section>
+</section></section>
     </div>
   </div>
 
