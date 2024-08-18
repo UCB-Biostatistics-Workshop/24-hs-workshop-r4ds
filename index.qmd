@@ -61,7 +61,7 @@ By the end of the course, you will be able to:
         <td><ul>
             <li><code>ggplot2</code></li>
         </ul></td>
-        <td>R4DS ch. 1-3</td>
+        <td>R4DS ch. 1, 9-11</td>
     </tr>
     <tr>
       <td>2</td>
@@ -78,7 +78,7 @@ By the end of the course, you will be able to:
             <li><code>tibble</code></li>
             <li><code>readr</code></li>
         </ul></td>
-        <td>R4DS ch. 3, 5, 7, 8, 13-19</td>
+        <td>R4DS ch. 2, 4, 6, 8, 20/td>
     </tr>
     <tr>
       <td>3</td>
@@ -93,7 +93,7 @@ By the end of the course, you will be able to:
         <td><ul>
             <li><code>dplyr</code></li>
         </ul></td>
-        <td>R4DS ch. 4</td>
+        <td>R4DS ch. 3, 12-16, 18</td>
     </tr>
     <tr>
       <td>4</td>
@@ -108,7 +108,7 @@ By the end of the course, you will be able to:
             <li><code>dplyr</code></li>
             <li><code>tidyr</code></li>
         </ul></td>
-        <td>R4DS ch. 4, 6, 20, </td>
+        <td>R4DS ch. 3, 5, 19 </td>
     </tr>
     <tr>
       <td>5</td>
@@ -120,7 +120,7 @@ By the end of the course, you will be able to:
         <td><ul>
             <li><code>purrr</code></li>
         </ul></td>
-        <td>R4DS ch. 26, 27</td>
+        <td>R4DS ch. 25, 26</td>
     </tr>
   </tbody>
 </table>
