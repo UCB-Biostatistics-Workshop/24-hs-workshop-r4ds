@@ -287,6 +287,28 @@ data_frames = list(
 1. the number of rows of each data frame
 2. the number of columns of each data frame
 
+## Why not for loops?
+- R also provides something called a `for` loop, which is common to many other languages as well. It looks like this:
+```{r, eval=F}
+data_frames = list(NA, NA, NA)
+for (i in 1:3) {
+  data_frames[[i]] = read_csv(urls[[i]])
+}
+```
+- The `for` loop is very flexible and you can do a lot with it
+- `for` loops are unavoidable when the result of one iteration depends on the result of the last iteration
+
+***
+
+- Compare to the `map()`-style solution:
+```{r, eval=F}
+data_frames = urls |>
+  map(read_csv)
+```
+- Compared to the `for` loop, the `map()` syntax is much more concise and eliminates much of the "admin" code in the loop (setting up indices, initializing the list that will be filled in, indexing into the data structures)
+- The `map()` syntax also encourages you to write a function for whatever is happening inside the loop. This means you have something that's reusable and easily testable, and your code will look cleaner
+- Loops in R can be catastrophically slow due to the complexities of [copy-on-modify semantics](https://adv-r.hadley.nz/names-values.html). 
+
 ## Anonymous function syntax
 - up until now we had to define our functions outside of map and then pass them in as an argument:
 ```{r, eval=F}
@@ -511,24 +533,3 @@ map(\(f){
 })
 ```
 
-## Why not for loops?
-- R also provides something called a `for` loop, which is common to many other languages as well. It looks like this:
-```{r, eval=F}
-data_frames = list(NA, NA, NA)
-for (i in 1:3) {
-  data_frames[[i]] = read_csv(urls[[i]])
-}
-```
-- The `for` loop is very flexible and you can do a lot with it
-- `for` loops are unavoidable when the result of one iteration depends on the result of the last iteration
-
-***
-
-- Compare to the `map()`-style solution:
-```{r, eval=F}
-data_frames = urls |>
-  map(read_csv)
-```
-- Compared to the `for` loop, the `map()` syntax is much more concise and eliminates much of the "admin" code in the loop (setting up indices, initializing the list that will be filled in, indexing into the data structures)
-- The `map()` syntax also encourages you to write a function for whatever is happening inside the loop. This means you have something that's reusable and easily testable, and your code will look cleaner
-- Loops in R can be catastrophically slow due to the complexities of [copy-on-modify semantics](https://adv-r.hadley.nz/names-values.html). 
