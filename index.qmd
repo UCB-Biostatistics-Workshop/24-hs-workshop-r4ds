@@ -20,8 +20,6 @@ We also will not cover statistical analysis of data in this course, but the curr
 
 This course is not graded, nor are there any assignments or homework. The lectures are just to get you started- they will be frequently interrupted by active learning exercises that you will be asked to complete in pairs or small groups. That's where the real learning will happen!
 
-Programming, like all things, is something you learn by doing. The lectures include a lot of in-class group exercises so you can get your hands dirty. When we come upon one of these we will split the class into small groups of 3-4 students each (plus maybe a TA) and you will work together to solve the problem.
-
 ### Prerequisites
 No prior experience with R is expected. Those with experience using R will still likely find much of value in this course since it covers a more modern style of R programming that has gained traction in the past decade.
 
