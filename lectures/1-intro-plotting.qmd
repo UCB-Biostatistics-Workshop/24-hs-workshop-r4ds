@@ -33,7 +33,7 @@ called a REPL.
 
 - The box contains an expression that will be evaluated by R, followed by the result of evaluating that expression.
 ```{r}
-1 + 2
+2 + 1
 ```
 - `3` is the answer
 - Ignore the `[1]` for now. 
