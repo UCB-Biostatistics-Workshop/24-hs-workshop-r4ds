@@ -6,7 +6,7 @@ title: R for Data Science
 | Person | Role | Contact |
 |---|---|---|
 | Alejandro Schuler | Instructor | alejandro.schuler@berkeley.edu |
-| Kaitlyn Lee | Instructor | kaitlyn_lee@berkeley.edu|
+| Kaitlyn Lee | Instructor | |
 
 - Website: [https://alejandroschuler.github.io/r4ds-courses/](https://alejandroschuler.github.io/r4ds-courses/)
 - Source: [https://github.com/alejandroschuler/r4ds-courses](https://github.com/alejandroschuler/r4ds-courses)
