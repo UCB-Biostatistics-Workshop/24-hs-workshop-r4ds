@@ -1,6 +1,6 @@
 ---
 title: Tabular Data
-author: Alejandro Schuler
+author: Emily Hou
 format:
   revealjs:
     smaller: true
