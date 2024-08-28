@@ -11,10 +11,10 @@ echo: true
 ---
 
 ## Learning Goals
-- filter rows of a dataset based on conditions
-- arrange rows of a dataset based on one or more columns
-- select columns of a dataset
-- mutate existing columns to create new columns
+- **Filter** rows of a dataset based on conditions
+- **Arrange** rows of a dataset based on one or more columns
+- **Select** columns of a dataset
+- **Mutate** existing columns to create new columns
 - use the pipe to combine multiple operations
 
 ```{r include=FALSE}
@@ -62,16 +62,18 @@ Later we will also learn
 
 and `group_by()` which changes the scope of each function from operating on the entire dataset to operating on it group-by-group. 
 
-## GTEx data
-This is a subset of the Genotype Tissue Expression (GTEx) dataset
+## Sleep, Health, and Lifestyle Data
+This dataset consists of collected survey results from 373 individuals. The following data points were collected for each individual:
+- Identity information: gender, age, occupation
+- Sleep information: sleep duration (hours), quality of sleep (scale from 1-10), sleep disorder (none, insomnia, sleep apnea)
+- Other health and lifestyle information: physical activity level (minutes/day), stress level (scale 1-10), BMI category (underweight, normal, overweight), blood pressure (systolic/diastolic), heart rate (bpm), daily steps (number of steps walked per day)
 
-- **The full dataset.** Includes gene expression data, measured via RNA-sequencing, from 54 post-mortem tissues in ~800 individuals. Whole genome sequencing is also available for these individuals as part of the GTEx v8 release, available through dbGaP. 
-- **The subsetted dataset.** We are looking at expression data for just 78 individuals here, in four tissues including blood, heart, lung and liver. 
-- **Data processing** The expression values have been normalized and corrected for technical covariates and are now in the form of "Z-scores", which indicate the distance of a given expression value from the mean across all measurements of that gene in that tissue. 
-- **Goal.** We will use the data here to illustrate different functions for data transformation, often focused on extracting individuals with extremely high or low expression values for a given gene as compared to the distribution across all samples.
+- **Goal.** We will use the data here to illustrate different functions for data transformation. #needs updating
+
 
 ```{r, message=F}
 # Read subsetted data from online file - make sure there are no spaces
+# need to update
 gtex = read_tsv('https://tinyurl.com/342rhdc2')
 
 # Check number of rows
@@ -91,6 +93,7 @@ nrow(gtex)
 
 ```{r, message=F}
 filter(gtex, Blood >= 12)
+#filter(sleep, Sleep.Duration < 6)
 ```
 
 ## Comparisons
@@ -110,7 +113,7 @@ x = NA
 x == NA
 ```
 
-- The result actually makes sense though, because I'm asking if "I don't know" is the same as "I don't know". Since either side could be any value, the right answer is "I don't know".
+- The result actually makes sense though, because I'm asking if [an unknown value] is the same as [another unknown value]. Since either side could be any value, the right answer is "I don't know".
 - To check if something is `NA`, use `is.na()`
 ```{r}
 x = NA
@@ -122,19 +125,22 @@ is.na(x)
 - but remember to quote the text you want to compare to
 ```{r}
 filter(gtex, Gene == "ZZZ3")
+#filter(sleep, Occupation == "Teacher")
 ```
 
-- why doesn't `Gene == ZZZ3` work?
-- why doesn't `"Gene" == "ZZZ3"` make sense?
+- why doesn't `Occupation == Teacher` work?
+- why doesn't `Occupation == teacher` work?
+- why doesn't `"Occupation" == "Teacher"` make sense?
 
 ## Filtering on computed values
 - the condition can contain computed values
 
 ```{r, message=F}
 filter(gtex, Blood + Heart > 0)
+#filter(sleep, Sleep.Duration * Quality.of.Sleep > 75)
 ```
 
-- note that we didn't actually do anything to the values in the data
+- note that we didn't actually do anything to the values in the data. the values in the sleep duration and quality of sleep columns remain the same as before, and no new column was created either (stay tuned!)
 
 ## Exercise [together] {data-background-color=teal}
 
