@@ -1,6 +1,6 @@
 ---
 title: Tabular Data
-author: Emily Hou
+author: Emily Hou, Lauren Liao
 format:
   revealjs:
     smaller: true
