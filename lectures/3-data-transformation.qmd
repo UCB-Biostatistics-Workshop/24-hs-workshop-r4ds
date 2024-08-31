@@ -21,6 +21,7 @@ echo: true
 ## better font size for slides
 library(tidyverse)
 library(knitr)
+library(readr)
 
 hook_output_default <- knitr::knit_hooks$get('output')
 
@@ -54,13 +55,6 @@ All work similarly:
 
 Together these properties make it easy to chain together multiple simple steps to achieve a complex result. 
 
-***
-
-Later we will also learn
-
-- `summarize()` collapses many values in one or more columns down to one value per column
-
-and `group_by()` which changes the scope of each function from operating on the entire dataset to operating on it group-by-group. 
 
 ## Sleep, Health, and Lifestyle Data
 This dataset consists of collected survey results from 373 individuals. The following data points were collected for each individual:
@@ -74,10 +68,10 @@ This dataset consists of collected survey results from 373 individuals. The foll
 ```{r, message=F}
 # Read subsetted data from online file - make sure there are no spaces
 # need to update
-gtex = read_tsv('https://tinyurl.com/342rhdc2')
+sleep = read_csv('https://bit.ly/ucb_biostat_data')
 
 # Check number of rows
-nrow(gtex)
+nrow(sleep)
 ```
 
 # Filter rows with filter() {data-background-color=black}
@@ -92,8 +86,7 @@ nrow(gtex)
 - It takes two arguments: the dataset and the condition
 
 ```{r, message=F}
-filter(gtex, Blood >= 12)
-#filter(sleep, Sleep.Duration < 6)
+filter(sleep, Sleep.Duration < 6)
 ```
 
 ## Comparisons
@@ -124,8 +117,7 @@ is.na(x)
 - you can use `==` to test whether a string variable matches given text
 - but remember to quote the text you want to compare to
 ```{r}
-filter(gtex, Gene == "ZZZ3")
-#filter(sleep, Occupation == "Teacher")
+filter(sleep, Occupation == "Teacher")
 ```
 
 - why doesn't `Occupation == Teacher` work?
@@ -136,24 +128,24 @@ filter(gtex, Gene == "ZZZ3")
 - the condition can contain computed values
 
 ```{r, message=F}
-filter(gtex, Blood + Heart > 0)
-#filter(sleep, Sleep.Duration * Quality.of.Sleep > 75)
+filter(sleep, Sleep.Duration * Quality.of.Sleep > 75)
 ```
 
-- note that we didn't actually do anything to the values in the data. the values in the sleep duration and quality of sleep columns remain the same as before, and no new column was created either (stay tuned!)
+- note that we didn't actually do anything to the values in the data. 
+- the values in the sleep duration and quality of sleep columns remain the same as before, and no new column was created either (stay tuned!)
 
 ## Exercise [together] {data-background-color=teal}
 
 - What is the result of running this code?
 
 ```{r}
-nrow(gtex)
+nrow(sleep)
 ```
 
 ```{r, eval=F}
-filter(gtex, Gene == "ZZZ3")
-filter(gtex, Heart <= -5)
-nrow(gtex)
+filter(sleep, Gene == "ZZZ3")
+filter(sleep, Heart <= -5)
+nrow(sleep)
 ```
 
 
@@ -165,7 +157,7 @@ nrow(gtex)
 
 ## Logical conjunctions (AND)
 ```{r}
-filter(gtex, Blood < 0 & Heart < 0)
+filter(sleep, Blood < 0 & Heart < 0)
 ```
 
 - This filters by the **conjunction** of the two constraints---both must be satisfied.
@@ -181,15 +173,15 @@ FALSE & TRUE
 
 - For filter, you can do "AND" by passing in two separate conditions as two different arguments, but the comma and ampersand are not generally interchangeable
 ```{r}
-# filter(gtex, Blood < 0 & Heart < 0)
-filter(gtex, Blood < 0, Heart < 0)
+# filter(sleep, Blood < 0 & Heart < 0)
+filter(sleep, Blood < 0, Heart < 0)
 ```
 
 
 ## Logical conjunctions (OR)
 
 ```{r}
-filter(gtex, Gene == "A2ML1" | Gene == "A4GALT")
+filter(sleep, Gene == "A2ML1" | Gene == "A4GALT")
 ```
 
 - The pipe sign ` | ` stands for "OR" 
@@ -197,16 +189,16 @@ filter(gtex, Gene == "A2ML1" | Gene == "A4GALT")
 
 ***
 ```{r}
-filter(gtex, Gene %in% c("ZZZ3","A2ML1")) 
+filter(sleep, Gene %in% c("ZZZ3","A2ML1")) 
 # equivalent to 
-# filter(gtex, Gene=="ZZZ3" | Gene=="A2ML1")
+# filter(sleep, Gene=="ZZZ3" | Gene=="A2ML1")
 ```
 
 - ` %in% ` returns true for all elements of the thing on the left that are also elements of the thing on the right. This is actually shorthand for a match function (use `help('%in%')` to learn more)
 
 ## Negation (NOT)
 ```{r}
-filter(gtex, !(Gene=="A2ML1"))
+filter(sleep, !(Gene=="A2ML1"))
 ```
 - The exclamation point ` ! ` means "NOT", which negates the logical condition
 - sometimes it's easier to say what you *don't* want!
@@ -215,10 +207,10 @@ filter(gtex, !(Gene=="A2ML1"))
 
 **Do each of these three exercises separately**
 
-- Filter the GTEX data to keep just the rows where the product of Blood and Heart expression is between 0 and 1.
+- Filter the sleep data to keep just the rows where the product of Blood and Heart expression is between 0 and 1.
 
 
-- Excluding the gene `LAMP3`, does the individual `GTEX-11TT1` have any genes with expression level greater than 4 in their blood?
+- Excluding the gene `LAMP3`, does the individual `sleep-11TT1` have any genes with expression level greater than 4 in their blood?
 
 
 - Filter out any rows where the value for `Heart` is missing (value is `NA`) 
@@ -229,7 +221,7 @@ filter(gtex, !(Gene=="A2ML1"))
 - You can use `slice_sample()` to get `n` randomly selected rows if you don't have a particular condition you would like to filter on.
 
 ```{r}
-slice_sample(gtex, n=5)
+slice_sample(sleep, n=5)
 ```
 
 - the named argument `prop` allows you to sample a proportion of rows
@@ -241,7 +233,7 @@ slice_sample(gtex, n=5)
 - This is more useful once you have sorted the data in a particular order, which we will soon see how to do.
 
 ```{r}
-filter(gtex, row_number()<=3)
+filter(sleep, row_number()<=3)
 ```
 
 # Sort rows with arrange() {data-background-color=black}
@@ -256,13 +248,13 @@ filter(gtex, row_number()<=3)
 - `arrange()` takes a data frame and a column, and sorts the rows by the values in that column (ascending order).
 - Again, the first argument is the data frame and the other arguments tell the function what to do with it
 ```{r}
-arrange(gtex, Blood)
+arrange(sleep, Blood)
 ```
 
 ## Descending sort
 - Use the desc function to arrange by descending values
 ```{r}
-arrange(gtex, desc(Blood))
+arrange(sleep, desc(Blood))
 ```
 
 ## Multisort
@@ -270,7 +262,7 @@ arrange(gtex, desc(Blood))
 - This is useful if there is a tie in sorting by the first column.
 
 ```{r}
-arrange(gtex, Gene, Blood)
+arrange(sleep, Gene, Blood)
 ```
 
 
@@ -284,13 +276,13 @@ Use `arrange()` and `filter()` to get the data for the 5 rows with the highest e
 
 - In our last exercise, we used two function applications to arrive at our answer. Shown below, we used temporary variables to keep our code clean. 
 ```{r}
-gtex_by_blood = arrange(gtex, desc(Blood)) # using a temporary variable
-filter(gtex_by_blood, row_number()<=5)
+sleep_by_blood = arrange(sleep, desc(Blood)) # using a temporary variable
+filter(sleep_by_blood, row_number()<=5)
 ```
 
 - we can also accompish this by "nesting" the function calls:
 ```{r}
-filter(arrange(gtex, desc(Blood)), row_number()<=5) # "nesting" the calls to filter and arrange
+filter(arrange(sleep, desc(Blood)), row_number()<=5) # "nesting" the calls to filter and arrange
 ```
 
 - Which do you prefer? Why? What are the sylistic pros and cons to both if you are trying to understand what the code does for the first time?
@@ -300,7 +292,7 @@ filter(arrange(gtex, desc(Blood)), row_number()<=5) # "nesting" the calls to fil
 - R solves these problems with the "pipe" operator `|>`
 
 ```{r, eval=F, tidy=F}
-gtex |> 
+sleep |> 
   arrange(desc(Blood)) |>
   filter(row_number()<=5)
 ```
@@ -310,8 +302,8 @@ gtex |>
 - How does this compare with our code before? What do you notice?
 
 ```{r, eval=F, tidy=F}
-gtex_by_blood = arrange(gtex, desc(Blood)) # using a temporary variable
-filter(gtex_by_blood, row_number()<=5)
+sleep_by_blood = arrange(sleep, desc(Blood)) # using a temporary variable
+filter(sleep_by_blood, row_number()<=5)
 ```
 
 
@@ -337,17 +329,17 @@ fun(df1, x)
 - The pipe represents a "conveyor belt" along which data is passed from function to function ("workers") in an assembly line
 
 ```{r, eval=F, tidy=F}
-gtex |> 
+sleep |> 
   arrange(desc(Blood)) |>
   filter(row_number()<=5)
 
 # same as:
-#   arrange(gtex, desc(Blood)) |>
+#   arrange(sleep, desc(Blood)) |>
 #   filter(row_number()<=5)
 
 
 # same as:
-#   filter( arrange(gtex, desc(Blood)), row_number()<=5)
+#   filter( arrange(sleep, desc(Blood)), row_number()<=5)
 ```
 
 *** 
@@ -369,8 +361,8 @@ c(1,44,21,0,-4) |> sum()
 Piping a data frame
 
 ```{r, max.lines=5}
-# filter(gtex, Gene=="ZZZ3")
-gtex |> filter(Gene=="ZZZ3") 
+# filter(sleep, Gene=="ZZZ3")
+sleep |> filter(Gene=="ZZZ3") 
 ```
 
 
@@ -388,9 +380,9 @@ gtex |> filter(Gene=="ZZZ3")
 
 
 ```{r, max.lines=5, eval=F}
-filter(gtex, Gene=="ZZZ3")
-gtex |> filter(Gene=="ZZZ3") 
-gtex %>% filter(Gene=="ZZZ3") 
+filter(sleep, Gene=="ZZZ3")
+sleep |> filter(Gene=="ZZZ3") 
+sleep %>% filter(Gene=="ZZZ3") 
 ```
 
 ## Exercise: Pipe to ggplot {data-background-color=teal}
@@ -398,7 +390,7 @@ gtex %>% filter(Gene=="ZZZ3")
 - Run this code to see what it does. Then rewrite it using the pipe operator (get rid of the intermediate variables `mybl2` and `outliers`) and get it to produce the same output.
 
 ```{r, eval=F, tidy=F}
-mybl2 = filter(gtex, Gene == 'MYBL2')
+mybl2 = filter(sleep, Gene == 'MYBL2')
 
 # we haven't learned about this function yet, but doesn't matter
 outliers = mutate(mybl2, blood_outlier = abs(Blood) > 2) 
@@ -420,7 +412,7 @@ ggplot(outliers) +
 - first argument is a data frame, then columns you want to select
 
 ```{r}
-gtex |>
+sleep |>
   select(Gene, Ind, expression=Blood)
 ```
 
@@ -430,7 +422,7 @@ gtex |>
 - `select()` can also be used with handy helpers like `starts_with()` and `contains()`
 
 ```{r}
-gtex |>
+sleep |>
   select(starts_with("L"))
 ```
 - Use `?select` to see all the possibilities
@@ -438,7 +430,7 @@ gtex |>
 ***
 
 ```{r}
-gtex |>
+sleep |>
   select(contains("N"))
 ```
 - The quotes around the letter `"N"` make it a string. If we did not do this, `R` would think it was looking for a variable called `N` and not just the plain letter.
@@ -449,7 +441,7 @@ gtex |>
 - we can even select columns based on metadata (but not values!)
 
 ```{r}
-gtex |>
+sleep |>
   select(where(is.numeric))
 ```
 
@@ -458,7 +450,7 @@ gtex |>
 
 - `select()` can also be used to select everything **except for** certain columns
 ```{r}
-gtex |>
+sleep |>
   select(-starts_with("L"), -Ind)
 ```
 
@@ -478,15 +470,15 @@ Before writing any code, break the problem down conceptually into steps. Figure 
 ::::{.columns}
 :::{.column}
 ```{r max.lines = 3}
-# same as gtex$Gene, but pipeable!
-# eg. gtex |> .... |> pull(some_col) 
-gtex |> pull(Gene)
+# same as sleep$Gene, but pipeable!
+# eg. sleep |> .... |> pull(some_col) 
+sleep |> pull(Gene)
 ```
 
 :::
 :::{.column}
 ```{r}
-gtex |> select(Gene)
+sleep |> select(Gene)
 ```
 
 :::
@@ -497,14 +489,14 @@ gtex |> select(Gene)
 :::{.column}
 - `select()` can be used to rename variables, but it drops all variables not selected
 ```{r max.lines = 6}
-gtex |> select(individual = Ind)
+sleep |> select(individual = Ind)
 ```
 
 :::
 :::{.column}
 - `rename()` is better suited for this because it keeps all the columns
 ```{r max.lines = 6}
-gtex |> rename(individual = Ind)
+sleep |> rename(individual = Ind)
 ```
 
 :::
@@ -522,7 +514,7 @@ gtex |> rename(individual = Ind)
 - `mutate` creates new columns
 - first argument is a dataframe, second specifies what you want the new columns to be
 ```{r, max.lines = 5}
-gtex |>
+sleep |>
   mutate(scaled_blood = 100*Blood))
 ```
 - This uses `mutate()` to add a new column to which is the absolute value of `Blood`.
@@ -532,7 +524,7 @@ gtex |>
 ***
 - **Warning!** If the new variable name already exists, `mutate()` will overwrite the existing one (*in the new dataframe that gets created*)
 ```{r, max.lines = 5}
-gtex |>
+sleep |>
   mutate(Blood = 100*Blood)
 ```
 
@@ -540,7 +532,7 @@ gtex |>
 - `mutate()` can create multiple columns at the same time and use multiple columns to define a single new one
 
 ```{r, tidy=F}
-gtex |>
+sleep |>
   mutate(  # the newlines make it more readable
       scaled_blood = 100* Blood,
       scaled_heart = 100* Heart,
@@ -555,8 +547,8 @@ gtex |>
 ```{r, max.lines = 5}
 library(stringr)
 
-gtex |>
-  mutate(Ind_ID_suffix = str_extract(Ind, "(GTEX-)(.*)", group=2)) |>
+sleep |>
+  mutate(Ind_ID_suffix = str_extract(Ind, "(sleep-)(.*)", group=2)) |>
   select(Ind, Ind_ID_suffix)
 ```
 
@@ -580,7 +572,7 @@ df |> mutate(number = as.numeric(number))
 :::{.column}
 - `mutate()` can be used to make logical columns (indicators)
 ```{r, tidy=F}
-gtex |>
+sleep |>
   mutate(positive_liver = Liver > 0) |>
   select(Gene, Ind, Liver, positive_liver)
 ```
@@ -589,7 +581,7 @@ gtex |>
 :::{.column}
 - which can be used to make plots
 ```{r, tidy=F}
-gtex |>
+sleep |>
   mutate(positive_liver = Liver > 0) |>
 ggplot(aes(x=positive_liver, y=Blood)) +
   geom_violin()
@@ -601,7 +593,7 @@ ggplot(aes(x=positive_liver, y=Blood)) +
 ***
 or you can just "mutate" directly in ggplot!
 ```{r, tidy=F}
-gtex |>  # mutate(positive_liver = Liver > 0) |>
+sleep |>  # mutate(positive_liver = Liver > 0) |>
 ggplot(aes(x=Liver > 0, y=Blood)) +
   geom_violin()
 ```
@@ -613,7 +605,7 @@ ggplot(aes(x=Liver > 0, y=Blood)) +
 
 **Problem 1** 
 
-I want to see if certain genes are generally more highly expressed in certain individuals, irrespective of tissue type. Using the GTEX data, create a new column containing the sum of the four expression measurements in the different tissues.
+I want to see if certain genes are generally more highly expressed in certain individuals, irrespective of tissue type. Using the sleep data, create a new column containing the sum of the four expression measurements in the different tissues.
 
 **Problem 2** 
 
@@ -634,7 +626,7 @@ if_else(0<=x & x<=1, "in [0,1]", "not in [0,1]")
 ```
 - this is often used in `mutate()`:
 ```{r, max.lines=10}
-gtex |>
+sleep |>
 mutate( 
   blood_expression = ifelse(
     Blood < 0, "-", "+"
