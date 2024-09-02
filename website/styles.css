@@ -13,3 +13,15 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.group-pic {
+    display: flex;
+    justify-content: center;
+}
+
+.group-pic img {
+    width: 400px;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+}

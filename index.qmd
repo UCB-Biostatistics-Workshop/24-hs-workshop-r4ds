@@ -36,6 +36,14 @@ In addition, the workshop provides:
 
 ::: {.panel-tabset .tabset-fade .tabset-pills}
 
+## Team
+
+::: group-pic
+<img src="website/assets/last_year_workshop.jpg" alt="Photo of last year's workshop"/>
+:::
+
+Click through the tabs to meet our instructor team for the weekend!
+
 ## Kaitlyn Lee
 
 ::: profile-pic
