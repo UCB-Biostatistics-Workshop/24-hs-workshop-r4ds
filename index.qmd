@@ -47,7 +47,7 @@ Kaitlyn is a PhD student studying Biostatistics. She is also the Diversity, Equi
 ## Alissa Gordon
 
 ::: profile-pic
-<img src="website/assets/alissa.jpg" alt="Alissa Gordon"/>
+<img src="website/assets/alissa.jpeg" alt="Alissa Gordon"/>
 :::
 
 Alissa is a second year MA-PhD Biostatistics student. She is interested in causal inference and machine learning methods that influence the design and analysis of various trial designs in the clinical setting. In her free time, she likes to explore the outdoors and watch movies with friends.
