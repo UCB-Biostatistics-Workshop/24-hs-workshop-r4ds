@@ -44,13 +44,13 @@ In addition, the workshop provides:
 
 Kaitlyn is a PhD student studying Biostatistics. She is also the Diversity, Equity, Inclusion, and Belonging (DEIB) Student Fellow in the Division. Kaitlyn is interested in developing methods that use machine learning and statistics to answer questions pertaining to health and social policy. Outside of school, she likes to bake for her friends and go on hikes with her dog, Lulu.
 
-## Instructor 2
+## Alissa Gordon
 
 ::: profile-pic
-<img src="website/assets/kaitlyn.jpeg" alt="Kaitlyn Lee"/>
+<img src="website/assets/alissa.jpg" alt="Alissa Gordon"/>
 :::
 
-Bio here
+Alissa is a second year MA-PhD Biostatistics student. She is interested in causal inference and machine learning methods that influence the design and analysis of various trial designs in the clinical setting. In her free time, she likes to explore the outdoors and watch movies with friends.
 
 ## Instructor 3
 ::: profile-pic
