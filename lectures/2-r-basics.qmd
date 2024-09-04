@@ -1,6 +1,6 @@
 ---
 title: R Programming
-author: Alejandro Schuler
+author: Alejandro Schuler, Yutine Wu
 format:
   revealjs:
     smaller: true
