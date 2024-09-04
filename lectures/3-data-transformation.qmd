@@ -128,7 +128,7 @@ filter(sleep, Occupation == "Teacher")
 - the condition can contain computed values
 
 ```{r, message=F}
-filter(sleep, Sleep.Duration * Quality.of.Sleep > 75)
+filter(sleep, `Sleep Duration` * `Quality of Sleep` > 75)
 ```
 
 - note that we didn't actually do anything to the values in the data. 
@@ -143,21 +143,21 @@ nrow(sleep)
 ```
 
 ```{r, eval=F}
-filter(sleep, Gene == "ZZZ3")
-filter(sleep, Heart <= -5)
+filter(sleep, Occupation == "Teacher")
+filter(sleep, `Sleep Duration` <= 6)
 nrow(sleep)
 ```
 
 
 ## Exercise
 
-- Without using the internet, think of how you can use `filter` multiple times to create a dataset where blood expression is positive (>0) **and** heart expression is negative (<0)
+- Without using the internet, think of how you can use `filter` multiple times to create a dataset where quality of sleep is greater than or equal to 8 **and** stress level is less than or equal to 3
 
-- Using any resources you like, figure out how to use `filter` to create a dataset where **either** blood expression is positive (>0) **or** heart expression is negative (<0)
+- Using any resources you like, figure out how to use `filter` to create a dataset where **either** quality of sleep is greater than or equal to 8 **or** stress level is less than or equal to 3
 
 ## Logical conjunctions (AND)
 ```{r}
-filter(sleep, Blood < 0 & Heart < 0)
+filter(sleep, `Quality of Sleep` >=8 & `Stress Level` <= 3)
 ```
 
 - This filters by the **conjunction** of the two constraints---both must be satisfied.
@@ -173,47 +173,36 @@ FALSE & TRUE
 
 - For filter, you can do "AND" by passing in two separate conditions as two different arguments, but the comma and ampersand are not generally interchangeable
 ```{r}
-# filter(sleep, Blood < 0 & Heart < 0)
-filter(sleep, Blood < 0, Heart < 0)
+# filter(sleep, `Quality of Sleep` >=8 & `Stress Level` <= 3)
+filter(sleep, `Quality of Sleep` >=8, `Stress Level` <= 3)
 ```
 
 
 ## Logical conjunctions (OR)
 
 ```{r}
-filter(sleep, Gene == "A2ML1" | Gene == "A4GALT")
+filter(sleep, Occupation == "Teacher" | Occupation == "Lawyer")
 ```
 
 - The pipe sign ` | ` stands for "OR" 
 - Multiple conjunctions can describe complex logical conditions
 
-***
-```{r}
-filter(sleep, Gene %in% c("ZZZ3","A2ML1")) 
-# equivalent to 
-# filter(sleep, Gene=="ZZZ3" | Gene=="A2ML1")
-```
-
-- ` %in% ` returns true for all elements of the thing on the left that are also elements of the thing on the right. This is actually shorthand for a match function (use `help('%in%')` to learn more)
 
 ## Negation (NOT)
 ```{r}
-filter(sleep, !(Gene=="A2ML1"))
+filter(sleep, !(Occupation=="Teacher"))
 ```
 - The exclamation point ` ! ` means "NOT", which negates the logical condition
 - sometimes it's easier to say what you *don't* want!
 
 ## Exercises: computed conditions, conjunctions, NAs {data-background-color=teal}
 
-**Do each of these three exercises separately**
+**Do these two exercises separately**
 
-- Filter the sleep data to keep just the rows where the product of Blood and Heart expression is between 0 and 1.
-
-
-- Excluding the gene `LAMP3`, does the individual `sleep-11TT1` have any genes with expression level greater than 4 in their blood?
+- Filter the sleep data to keep just the rows where the product of Sleep Duration and Quality of Sleep is between 36 and 40.
 
 
-- Filter out any rows where the value for `Heart` is missing (value is `NA`) 
+- How many people with normal BMI have sleep apnea? (Note: The sleep dataset has two different values to represent normal BMI. You can also use parentheses to indicate order of logical conjunctions)
 
 
 ## Sampling rows
@@ -229,7 +218,7 @@ slice_sample(sleep, n=5)
 
 ## Filtering by row number
 
-- Data frames typically don't have a `row_number` column that you can reference, but you can invisibly create one for filter to operate on with  `row_number()` 
+- Data frames typically don't have a `row_number` column that you can reference, (though this sleep dataset does have a 'Person ID' column to identify each person), but you can invisibly create one for filter to operate on with  `row_number()` 
 - This is more useful once you have sorted the data in a particular order, which we will soon see how to do.
 
 ```{r}
@@ -248,13 +237,13 @@ filter(sleep, row_number()<=3)
 - `arrange()` takes a data frame and a column, and sorts the rows by the values in that column (ascending order).
 - Again, the first argument is the data frame and the other arguments tell the function what to do with it
 ```{r}
-arrange(sleep, Blood)
+arrange(sleep, `Stress Level`)
 ```
 
 ## Descending sort
 - Use the desc function to arrange by descending values
 ```{r}
-arrange(sleep, desc(Blood))
+arrange(sleep, desc(`Stress Level`))
 ```
 
 ## Multisort
@@ -262,13 +251,13 @@ arrange(sleep, desc(Blood))
 - This is useful if there is a tie in sorting by the first column.
 
 ```{r}
-arrange(sleep, Gene, Blood)
+arrange(sleep, `Stress Level`, `Physical Activity Level`)
 ```
 
 
-## Exercise: top 5 high expression instances {data-background-color=teal}
+## Exercise: top 5 highest daily steps {data-background-color=teal}
 
-Use `arrange()` and `filter()` to get the data for the 5 rows with the highest expression values in blood
+Use `arrange()` and `filter()` to get the data for the 5 rows with the highest daily steps
 
 # Piping {data-background-color=black}
 
