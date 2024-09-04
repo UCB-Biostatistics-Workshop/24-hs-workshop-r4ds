@@ -60,12 +60,12 @@ Kaitlyn is a PhD student studying Biostatistics. She is also the Diversity, Equi
 
 Alissa is a second year MA-PhD Biostatistics student. She is interested in causal inference and machine learning methods that influence the design and analysis of various trial designs in the clinical setting. In her free time, she likes to explore the outdoors and watch movies with friends.
 
-## Instructor 3
+## Emily Hou
 ::: profile-pic
-<img src="website/assets/kaitlyn.jpeg" alt="Kaitlyn Lee"/>
+<img src="website/assets/emily.jpeg" alt="Emily Hou"/>
 :::
 
-Bio here
+Emily is a first year M.A. student in Biostatistics at UC Berkeley. She is interested in precision medicine, which uses a patient's genetics, lifestyle, and environment to determine which medical treatments will suit them best. Outside of school, Emily enjoys rock climbing, knitting, doing escape rooms with friends, and playing the New York Times games.
 
 ## Instructor 4
 ::: profile-pic
@@ -126,8 +126,9 @@ By the end of the course, you will be able to:
 | 12:45 - 1:15 PM     | Lunch Break                                  |
 | 1:15 - 1:30 PM      | Lecture: [Data Visualization](presentations/data_visualization.html)|
 | 1:30 - 2:15 PM      | R workshop ([Penguins and Data Visualization](https://biostat-workshop-s23.fly.dev/penguins/){target="_blank"}) |
-| 2:15 - 3 PM         | [Brainstorming and Creativity](group.html)                 |
+| 2:15 - 3 PM         | [Brainstorming and Creativity](group.html)  |
 
+[Intro to Shiny](lectures/4-r-shiny-basics.html)
 
 # Schedule and Slides
 
