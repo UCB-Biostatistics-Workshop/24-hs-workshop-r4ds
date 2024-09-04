@@ -22,7 +22,7 @@ Historically underrepresented minority (URM) students often face significant obs
 With this in mind, the long-term goal of our Biostatistics Workshop is to offer URM students an opportunity for equitable exposure to programming and data analysis. By doing so, we aim to showcase how data science and biostatistics can be both engaging and valuable as potential career options. Importantly, this workshop is dedicated to addressing educational inequality, rather than simply increasing the number of URM applicants in our department.
 
 # Workshop Overview
-This two-day workshop provides an immersive experience in basic data analysis using R, a popular programming language in data science. Most lecutres are largely based on the wonderful lectures prepared by Prof. Alejandro Schuler for his [R for Data Science course](https://alejandroschuler.github.io/r4ds-courses/). Participants will gain experience at data I/O, transformation, programming, and visualization in R. We will use a consistent set of packages for these tasks called the `tidyverse`.
+This two-day workshop provides an immersive experience in basic data analysis using R, a popular programming language in data science. Most lecutres are largely based on the wonderful lectures prepared by Prof. Alejandro Schuler for his [R for Data Science course](https://alejandroschuler.github.io/r4ds-courses/){target="_blank"}. Participants will gain experience at data I/O, transformation, programming, and visualization in R. We will use a consistent set of packages for these tasks called the `tidyverse`.
 
 In addition, the workshop provides:
 
@@ -86,11 +86,11 @@ Bio here
 
 
 # Prerequisites
-No prior experience with R or coding is needed nor expected. We will use R through the RStudio interface. The easiest way to access RStudio is through the cloud: [posit.cloud](https://posit.cloud). It's fast, easy, and free - just go the link, click "get started" and create an account. Once you're in, click "new project" near the upper-right and the RStudio interface will open.
+No prior experience with R or coding is needed nor expected. We will use R through the RStudio interface. The easiest way to access RStudio is through the cloud: [posit.cloud](https://posit.cloud){target="_blank"}. It's fast, easy, and free - just go the link, click "get started" and create an account. Once you're in, click "new project" near the upper-right and the RStudio interface will open.
 
 Alternatively, you can install R and RStudio on your own computer: 
-[Follow this link](https://cran.rstudio.com/) and click on the appropriate options for your operating system to install R, 
-then do the same to [install RStudio](https://posit.co/download/rstudio-desktop/#download).
+[Follow this link](https://cran.rstudio.com/){target="_blank"} and click on the appropriate options for your operating system to install R, 
+then do the same to [install RStudio](https://posit.co/download/rstudio-desktop/#download){target="_blank"}.
 
 # Learning Goals
 By the end of the course, you will be able to:
@@ -143,7 +143,7 @@ By the end of the course, you will be able to:
     </tr>
     <tr>
         <td>1</td>
-        <td>[Intro and Plotting](lectures/1-intro-plotting.html)</td>
+        <td>[Intro and Plotting](lectures/1-intro-plotting.html){target="_blank"}</td>
         <td><ul>
               <li>issue commands to R using the Rstudio REPL interface</li>
               <li>load a package into R</li>
@@ -157,7 +157,7 @@ By the end of the course, you will be able to:
     </tr>
     <tr>
       <td>2</td>
-      <td>[R Programming](lectures/2-r-basics.html)</td>
+      <td>[R Programming](lectures/2-r-basics.html){target="_blank"}</td>
       <td>
         <ul>
             <li>save values to variables</li>
@@ -174,7 +174,7 @@ By the end of the course, you will be able to:
     </tr>
     <tr>
       <td>3</td>
-      <td>[Tabluar Data](lectures/3-data-transformation.html)</td>
+      <td>[Tabluar Data](lectures/3-data-transformation.html){target="_blank"}</td>
         <td><ul>
             <li>filter rows of a dataset based on conditions</li>
             <li>arrange rows of a dataset based on one or more columns</li>
@@ -187,35 +187,8 @@ By the end of the course, you will be able to:
         </ul></td>
         <td>R4DS ch. 3, 12-16, 18</td>
     </tr>
-    <tr>
-      <td>4</td>
-      <td>[Advanced Tabular Data](lectures/4-adv-tabular-data.html)</td>
-      <td>
-        <ul>
-            <li>group and summarize data by one or more columns</li>
-            <li>transform between long and wide data formats</li>
-            <li>combine multiple data frames using joins on one or more columns</li>
-        </ul></td>
-        <td><ul>
-            <li><code>dplyr</code></li>
-            <li><code>tidyr</code></li>
-        </ul></td>
-        <td>R4DS ch. 3, 5, 19 </td>
-    </tr>
-    <tr>
-      <td>5</td>
-      <td>[Functional Programming](lectures/5-functional-programming.html)</td>
-        <td><ul>
-            <li>write your own functions</li>
-            <li>iterate functions over lists of arguments</li>
-        </ul></td>
-        <td><ul>
-            <li><code>purrr</code></li>
-        </ul></td>
-        <td>R4DS ch. 25, 26</td>
-    </tr>
   </tbody>
 </table>
 
 # Further learning
-If you are interested in a deeper dive on the topics we will be discussing, Prof. Schuler recommends the fantastic book [R for Data Science](https://r4ds.hadley.nz/) (R4DS:2e) by [Hadley Wickham](http://hadley.nz/), Mine Çetinkaya-Rundel, and Garrett Grolemund (O'Reilly Media, 2017); it is online for free and also available in hardcopy. 
+If you are interested in a deeper dive on the topics we will be discussing, Prof. Schuler recommends the fantastic book [R for Data Science](https://r4ds.hadley.nz/){target="_blank"} (R4DS:2e) by [Hadley Wickham](http://hadley.nz/){target="_blank"}, Mine Çetinkaya-Rundel, and Garrett Grolemund (O'Reilly Media, 2017); it is online for free and also available in hardcopy. 
