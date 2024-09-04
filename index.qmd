@@ -67,7 +67,7 @@ Alissa is a second year MA-PhD Biostatistics student. She is interested in causa
 
 Emily is a first year M.A. student in Biostatistics at UC Berkeley. She is interested in precision medicine, which uses a patient's genetics, lifestyle, and environment to determine which medical treatments will suit them best. Outside of school, Emily enjoys rock climbing, knitting, doing escape rooms with friends, and playing the New York Times games.
 
-## Instructor 4
+## Yoyo Wu
 ::: profile-pic
 <img src="website/assets/kaitlyn.jpeg" alt="Kaitlyn Lee"/>
 :::
