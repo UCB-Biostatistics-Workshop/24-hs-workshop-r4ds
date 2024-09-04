@@ -1,4 +1,4 @@
-Person ID,Gender,Age,Occupation,Sleep Duration,Quality of Sleep,Physical Activity Level,Stress Level,BMI Category,Blood Pressure,Heart Rate,Daily Steps,Sleep Disorder
+person_id,gender,age,occuplation,sleep_duration,quality_of_sleep,physical_activity_level,stress_level,bmi_category,blood_pressure,heart_rate,daily_steps,sleep_dsorder
 1,Male,27,Software Engineer,6.1,6,42,6,Overweight,126/83,77,4200,None
 2,Male,28,Doctor,6.2,6,60,8,Normal,125/80,75,10000,None
 3,Male,28,Doctor,6.2,6,60,8,Normal,125/80,75,10000,None
@@ -15,9 +15,9 @@ Person ID,Gender,Age,Occupation,Sleep Duration,Quality of Sleep,Physical Activit
 14,Male,29,Doctor,6,6,30,8,Normal,120/80,70,8000,None
 15,Male,29,Doctor,6,6,30,8,Normal,120/80,70,8000,None
 16,Male,29,Doctor,6,6,30,8,Normal,120/80,70,8000,None
-17,Female,29,Nurse,6.5,5,40,7,Normal Weight,132/87,80,4000,Sleep Apnea
+17,Female,29,Nurse,6.5,5,40,7,Normal,132/87,80,4000,Sleep Apnea
 18,Male,29,Doctor,6,6,30,8,Normal,120/80,70,8000,Sleep Apnea
-19,Female,29,Nurse,6.5,5,40,7,Normal Weight,132/87,80,4000,Insomnia
+19,Female,29,Nurse,6.5,5,40,7,Normal,132/87,80,4000,Insomnia
 20,Male,30,Doctor,7.6,7,75,6,Normal,120/80,70,8000,None
 21,Male,30,Doctor,7.7,7,75,6,Normal,120/80,70,8000,None
 22,Male,30,Doctor,7.7,7,75,6,Normal,120/80,70,8000,None
@@ -29,9 +29,9 @@ Person ID,Gender,Age,Occupation,Sleep Duration,Quality of Sleep,Physical Activit
 28,Male,30,Doctor,7.9,7,75,6,Normal,120/80,70,8000,None
 29,Male,30,Doctor,7.9,7,75,6,Normal,120/80,70,8000,None
 30,Male,30,Doctor,7.9,7,75,6,Normal,120/80,70,8000,None
-31,Female,30,Nurse,6.4,5,35,7,Normal Weight,130/86,78,4100,Sleep Apnea
-32,Female,30,Nurse,6.4,5,35,7,Normal Weight,130/86,78,4100,Insomnia
-33,Female,31,Nurse,7.9,8,75,4,Normal Weight,117/76,69,6800,None
+31,Female,30,Nurse,6.4,5,35,7,Normal,130/86,78,4100,Sleep Apnea
+32,Female,30,Nurse,6.4,5,35,7,Normal,130/86,78,4100,Insomnia
+33,Female,31,Nurse,7.9,8,75,4,Normal,117/76,69,6800,None
 34,Male,31,Doctor,6.1,6,30,8,Normal,125/80,72,5000,None
 35,Male,31,Doctor,7.7,7,75,6,Normal,120/80,70,8000,None
 36,Male,31,Doctor,6.1,6,30,8,Normal,125/80,72,5000,None
@@ -65,7 +65,7 @@ Person ID,Gender,Age,Occupation,Sleep Duration,Quality of Sleep,Physical Activit
 64,Male,32,Doctor,6.2,6,30,8,Normal,125/80,72,5000,None
 65,Male,32,Doctor,6.2,6,30,8,Normal,125/80,72,5000,None
 66,Male,32,Doctor,6.2,6,30,8,Normal,125/80,72,5000,None
-67,Male,32,Accountant,7.2,8,50,6,Normal Weight,118/76,68,7000,None
+67,Male,32,Accountant,7.2,8,50,6,Normal,118/76,68,7000,None
 68,Male,33,Doctor,6,6,30,8,Normal,125/80,72,5000,Insomnia
 69,Female,33,Scientist,6.2,6,50,6,Overweight,128/85,76,5500,None
 70,Female,33,Scientist,6.2,6,50,6,Overweight,128/85,76,5500,None
@@ -83,7 +83,7 @@ Person ID,Gender,Age,Occupation,Sleep Duration,Quality of Sleep,Physical Activit
 82,Female,34,Scientist,5.8,4,32,8,Overweight,131/86,81,5200,Sleep Apnea
 83,Male,35,Teacher,6.7,7,40,5,Overweight,128/84,70,5600,None
 84,Male,35,Teacher,6.7,7,40,5,Overweight,128/84,70,5600,None
-85,Male,35,Software Engineer,7.5,8,60,5,Normal Weight,120/80,70,8000,None
+85,Male,35,Software Engineer,7.5,8,60,5,Normal,120/80,70,8000,None
 86,Female,35,Accountant,7.2,8,60,4,Normal,115/75,68,7000,None
 87,Male,35,Engineer,7.2,8,60,4,Normal,125/80,65,5000,None
 88,Male,35,Engineer,7.2,8,60,4,Normal,125/80,65,5000,None
@@ -91,7 +91,7 @@ Person ID,Gender,Age,Occupation,Sleep Duration,Quality of Sleep,Physical Activit
 90,Male,35,Engineer,7.3,8,60,4,Normal,125/80,65,5000,None
 91,Male,35,Engineer,7.3,8,60,4,Normal,125/80,65,5000,None
 92,Male,35,Engineer,7.3,8,60,4,Normal,125/80,65,5000,None
-93,Male,35,Software Engineer,7.5,8,60,5,Normal Weight,120/80,70,8000,None
+93,Male,35,Software Engineer,7.5,8,60,5,Normal,120/80,70,8000,None
 94,Male,35,Lawyer,7.4,7,60,5,Obese,135/88,84,3300,Sleep Apnea
 95,Female,36,Accountant,7.2,8,60,4,Normal,115/75,68,7000,Insomnia
 96,Female,36,Accountant,7.1,8,60,4,Normal,115/75,68,7000,None
@@ -106,8 +106,8 @@ Person ID,Gender,Age,Occupation,Sleep Duration,Quality of Sleep,Physical Activit
 105,Female,36,Teacher,7.2,8,60,4,Normal,115/75,68,7000,Sleep Apnea
 106,Male,36,Teacher,6.6,5,35,7,Overweight,129/84,74,4800,Insomnia
 107,Female,37,Nurse,6.1,6,42,6,Overweight,126/83,77,4200,None
-108,Male,37,Engineer,7.8,8,70,4,Normal Weight,120/80,68,7000,None
-109,Male,37,Engineer,7.8,8,70,4,Normal Weight,120/80,68,7000,None
+108,Male,37,Engineer,7.8,8,70,4,Normal,120/80,68,7000,None
+109,Male,37,Engineer,7.8,8,70,4,Normal,120/80,68,7000,None
 110,Male,37,Lawyer,7.4,8,60,5,Normal,130/85,68,8000,None
 111,Female,37,Accountant,7.2,8,60,4,Normal,115/75,68,7000,None
 112,Male,37,Lawyer,7.4,8,60,5,Normal,130/85,68,8000,None
@@ -124,7 +124,7 @@ Person ID,Gender,Age,Occupation,Sleep Duration,Quality of Sleep,Physical Activit
 123,Female,37,Accountant,7.2,8,60,4,Normal,115/75,68,7000,None
 124,Female,37,Accountant,7.2,8,60,4,Normal,115/75,68,7000,None
 125,Female,37,Accountant,7.2,8,60,4,Normal,115/75,68,7000,None
-126,Female,37,Nurse,7.5,8,60,4,Normal Weight,120/80,70,8000,None
+126,Female,37,Nurse,7.5,8,60,4,Normal,120/80,70,8000,None
 127,Male,38,Lawyer,7.3,8,60,5,Normal,130/85,68,8000,None
 128,Female,38,Accountant,7.1,8,60,4,Normal,115/75,68,7000,None
 129,Male,38,Lawyer,7.3,8,60,5,Normal,130/85,68,8000,None
@@ -147,9 +147,9 @@ Person ID,Gender,Age,Occupation,Sleep Duration,Quality of Sleep,Physical Activit
 146,Female,38,Lawyer,7.4,7,60,5,Obese,135/88,84,3300,Sleep Apnea
 147,Male,39,Lawyer,7.2,8,60,5,Normal,130/85,68,8000,Insomnia
 148,Male,39,Engineer,6.5,5,40,7,Overweight,132/87,80,4000,Insomnia
-149,Female,39,Lawyer,6.9,7,50,6,Normal Weight,128/85,75,5500,None
-150,Female,39,Accountant,8,9,80,3,Normal Weight,115/78,67,7500,None
-151,Female,39,Accountant,8,9,80,3,Normal Weight,115/78,67,7500,None
+149,Female,39,Lawyer,6.9,7,50,6,Normal,128/85,75,5500,None
+150,Female,39,Accountant,8,9,80,3,Normal,115/78,67,7500,None
+151,Female,39,Accountant,8,9,80,3,Normal,115/78,67,7500,None
 152,Male,39,Lawyer,7.2,8,60,5,Normal,130/85,68,8000,None
 153,Male,39,Lawyer,7.2,8,60,5,Normal,130/85,68,8000,None
 154,Male,39,Lawyer,7.2,8,60,5,Normal,130/85,68,8000,None
@@ -160,12 +160,12 @@ Person ID,Gender,Age,Occupation,Sleep Duration,Quality of Sleep,Physical Activit
 159,Male,39,Lawyer,7.2,8,60,5,Normal,130/85,68,8000,None
 160,Male,39,Lawyer,7.2,8,60,5,Normal,130/85,68,8000,None
 161,Male,39,Lawyer,7.2,8,60,5,Normal,130/85,68,8000,None
-162,Female,40,Accountant,7.2,8,55,6,Normal Weight,119/77,73,7300,None
-163,Female,40,Accountant,7.2,8,55,6,Normal Weight,119/77,73,7300,None
+162,Female,40,Accountant,7.2,8,55,6,Normal,119/77,73,7300,None
+163,Female,40,Accountant,7.2,8,55,6,Normal,119/77,73,7300,None
 164,Male,40,Lawyer,7.9,8,90,5,Normal,130/85,68,8000,None
 165,Male,40,Lawyer,7.9,8,90,5,Normal,130/85,68,8000,None
 166,Male,41,Lawyer,7.6,8,90,5,Normal,130/85,70,8000,Insomnia
-167,Male,41,Engineer,7.3,8,70,6,Normal Weight,121/79,72,6200,None
+167,Male,41,Engineer,7.3,8,70,6,Normal,121/79,72,6200,None
 168,Male,41,Lawyer,7.1,7,55,6,Overweight,125/82,72,6000,None
 169,Male,41,Lawyer,7.1,7,55,6,Overweight,125/82,72,6000,None
 170,Male,41,Lawyer,7.7,8,90,5,Normal,130/85,70,8000,None
@@ -202,7 +202,7 @@ Person ID,Gender,Age,Occupation,Sleep Duration,Quality of Sleep,Physical Activit
 201,Male,43,Salesperson,6.5,6,45,7,Overweight,130/85,72,6000,Insomnia
 202,Male,43,Engineer,7.8,8,90,5,Normal,130/85,70,8000,Insomnia
 203,Male,43,Engineer,7.8,8,90,5,Normal,130/85,70,8000,Insomnia
-204,Male,43,Engineer,6.9,6,47,7,Normal Weight,117/76,69,6800,None
+204,Male,43,Engineer,6.9,6,47,7,Normal,117/76,69,6800,None
 205,Male,43,Engineer,7.6,8,75,4,Overweight,122/80,68,6800,None
 206,Male,43,Engineer,7.7,8,90,5,Normal,130/85,70,8000,None
 207,Male,43,Engineer,7.7,8,90,5,Normal,130/85,70,8000,None
@@ -301,7 +301,7 @@ Person ID,Gender,Age,Occupation,Sleep Duration,Quality of Sleep,Physical Activit
 300,Female,51,Engineer,8.5,9,30,3,Normal,125/80,65,5000,None
 301,Female,51,Engineer,8.5,9,30,3,Normal,125/80,65,5000,None
 302,Female,51,Engineer,8.5,9,30,3,Normal,125/80,65,5000,None
-303,Female,51,Nurse,7.1,7,55,6,Normal Weight,125/82,72,6000,None
+303,Female,51,Nurse,7.1,7,55,6,Normal,125/82,72,6000,None
 304,Female,51,Nurse,6,6,90,8,Overweight,140/95,75,10000,Sleep Apnea
 305,Female,51,Nurse,6.1,6,90,8,Overweight,140/95,75,10000,Sleep Apnea
 306,Female,51,Nurse,6.1,6,90,8,Overweight,140/95,75,10000,Sleep Apnea
@@ -340,8 +340,8 @@ Person ID,Gender,Age,Occupation,Sleep Duration,Quality of Sleep,Physical Activit
 339,Female,54,Engineer,8.5,9,30,3,Normal,125/80,65,5000,None
 340,Female,55,Nurse,8.1,9,75,4,Overweight,140/95,72,5000,Sleep Apnea
 341,Female,55,Nurse,8.1,9,75,4,Overweight,140/95,72,5000,Sleep Apnea
-342,Female,56,Doctor,8.2,9,90,3,Normal Weight,118/75,65,10000,None
-343,Female,56,Doctor,8.2,9,90,3,Normal Weight,118/75,65,10000,None
+342,Female,56,Doctor,8.2,9,90,3,Normal,118/75,65,10000,None
+343,Female,56,Doctor,8.2,9,90,3,Normal,118/75,65,10000,None
 344,Female,57,Nurse,8.1,9,75,3,Overweight,140/95,68,7000,None
 345,Female,57,Nurse,8.2,9,75,3,Overweight,140/95,68,7000,Sleep Apnea
 346,Female,57,Nurse,8.2,9,75,3,Overweight,140/95,68,7000,Sleep Apnea
