@@ -67,12 +67,12 @@ Alissa is a second year MA-PhD Biostatistics student. She is interested in causa
 
 Emily is a first year M.A. student in Biostatistics at UC Berkeley. She is interested in precision medicine, which uses a patient's genetics, lifestyle, and environment to determine which medical treatments will suit them best. Outside of school, Emily enjoys rock climbing, knitting, doing escape rooms with friends, and playing the New York Times games.
 
-## Yoyo Wu
+## Lauren Liao
 ::: profile-pic
-<img src="website/assets/kaitlyn.jpeg" alt="Kaitlyn Lee"/>
+<img src="website/assets/lauren.jpeg" alt="Lauren Liao"/>
 :::
 
-Bio here
+Lauren graduated with her PhD in Biostatistics from UC Berkeley. She enjoys tackling real-world causal inference problems in observational study design and randomized trials. Outside of statistics, she likes to play board games and make art.
 
 ## Instructor 5
 ::: profile-pic
