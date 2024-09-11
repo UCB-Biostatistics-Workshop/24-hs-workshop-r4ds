@@ -421,160 +421,150 @@ Alissa Gordon
 <span id="cb1-2"><a href="#cb1-2"></a><span class="fu">install.packages</span>(<span class="st">'shinyWidgets'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
-<img data-src="../4-r-shiny-basics-figures/shinyscreenshot.png" style="width:80.0%" class="r-stretch"><p><a href="https://alissagordon.shinyapps.io/PHAR_synthetic_data_explorer/">Shiny Example</a></p>
-</section>
-<section id="summarize" class="slide level2">
-<h2>Summarize</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">summarize</span>(gtex, <span class="at">blood_avg=</span><span class="fu">mean</span>(Blood, <span class="at">na.rm=</span>T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'gtex' not found</code></pre>
-</div>
-</div>
-<ul>
-<li><code>summarize()</code> boils down the data frame according to the conditions it gets. In this case, it creates a data frame with a single column called <code>blood_avg</code> that contains the mean of the <code>Blood</code> column</li>
-<li>As with <code>mutate()</code>, the name on the left of the <code>=</code> is something you make up that you would like the new column to be named.</li>
-<li><code>mutate()</code> transforms columns into new columns of the same length, but <code>summarize()</code> collapses down the data frame into a single row</li>
-</ul>
-<div class="columns">
-<div class="column" style="width:70%;">
-<p><img data-src="https://www.sonoshah.com/tutorials/2021-04-07-intro-to-dplyr-tools/summarize1.png"></p>
-</div><div class="column" style="width:30%;">
-<p><img data-src="https://www.sonoshah.com/tutorials/2021-04-07-intro-to-dplyr-tools/summary.png"></p>
-</div>
-</div>
-</section>
-<section class="slide level2">
-
-<ul>
-<li>note that you can also pass in multiple conditions that operate on multiple columns at the same time</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>gtex <span class="sc">|&gt;</span> </span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="fu">summarize</span>( <span class="co"># newlines not necessary, again just increase clarity</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a>  <span class="at">lung_avg =</span> <span class="fu">mean</span>(Lung, <span class="at">na.rm=</span>T),</span>
-<span id="cb4-4"><a href="#cb4-4"></a>  <span class="at">blood_max =</span> <span class="fu">max</span>(Blood, <span class="at">na.rm=</span>T),</span>
-<span id="cb4-5"><a href="#cb4-5"></a>  <span class="at">blood_lung_dif_min =</span> <span class="fu">min</span>(Blood <span class="sc">-</span> Lung, <span class="at">na.rm=</span>T)</span>
-<span id="cb4-6"><a href="#cb4-6"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'gtex' not found</code></pre>
-</div>
-</div>
-</section>
-<section id="exercise-summaries" class="slide level2" data-background-color="teal">
-<h2>Exercise: summaries</h2>
-<p>Find the average, maximum, and minimum expressions of the REN gene in blood. <em>Hint: filter and summarize.</em></p>
+<img data-src="../4-r-shiny-basics-figures/shinyscreenshot.png" style="width:80.0%" class="r-stretch"><p><a href="https://alissagordon.shinyapps.io/PHAR_synthetic_data_explorer/" target="_blank">Shiny Example</a></p>
 </section></section>
 <section>
-<section id="grouping" class="title-slide slide level1 center" data-background-color="black">
-<h1>Grouping</h1>
+<section id="why-are-shiny-apps-useful" class="title-slide slide level1 center" data-background-color="navy">
+<h1>Why are shiny apps useful?</h1>
 
 </section>
-<section id="grouped-summaries" class="slide level2">
-<h2>Grouped summaries</h2>
+<section id="they-are-useful-because" class="slide level2">
+<h2>They are useful because…</h2>
+<ul>
+<li>We can make complex apps without knowledge of languages such as HTML and JavaScript</li>
+<li>We can share them easily through URLs or as R files for local implementation</li>
+<li>They are open source (affordable and accessible)!</li>
+<li>They allow for interactive and quick data exploration</li>
+</ul>
+</section></section>
+<section>
+<section id="what-is-the-basic-structure-of-a-shiny-app" class="title-slide slide level1 center" data-background-color="teal">
+<h1>What is the basic structure of a shiny app?</h1>
+
+</section>
+<section id="shiny-structure" class="slide level2">
+<h2>Shiny structure</h2>
+<ul>
+<li>Shiny apps consist of two key components, both coded in R!</li>
+<li>These components are the User Interface (aka UI) and the Server</li>
+<li>These two work together to create the shiny app through a series of inputs and outputs</li>
+</ul>
+
+<img data-src="https://media.geeksforgeeks.org/wp-content/uploads/20221211154233/Screenshot-(238).png" class="r-stretch"></section>
+<section id="the-ui" class="slide level2">
+<h2>The UI</h2>
+<ul>
+<li>The UI is what the users of shiny app see and interact with</li>
+<li>In the grand scheme of the shiny app, you can think of the shiny app is a restaurant. The user of the shiny app is the restaurant customer, and the UI is the table where the customer sits at! The UI will have input options, like a dinner menu, where users can put in ‘orders’ for how they want to analyze their data.</li>
+<li>Once the output is created in the server, it is shown on the UI. In terms of our analogy, once the order is created, it is brought back to the table for the customer to enjoy!</li>
+</ul>
 <div class="columns">
-<div class="column">
-<ul>
-<li>Summaries are more useful when you apply them to subgroups of the data</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>gtex <span class="sc">|&gt;</span> </span>
-<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">group_by</span>(Gene) <span class="sc">|&gt;</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a>  <span class="fu">summarize</span>(<span class="at">max_blood =</span> <span class="fu">max</span>(Blood))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'gtex' not found</code></pre>
-</div>
-</div>
-<ul>
-<li><code>group_by()</code> is a helper function that “groups” the data according to the unique values in the column(s) it gets passed.</li>
-</ul>
-</div><div class="column">
-<ul>
-<li>Its output is a grouped data frame that looks the same as the original except for some additional metadata that subsequent functions can use</li>
-<li><code>summarize()</code> works the same as before, except now it returns as many rows as there are groups in the data</li>
-<li>The result also always contains colunmns corresponding to the unique values of the grouping variable</li>
-</ul>
-<p><img data-src="https://www.sonoshah.com/tutorials/2021-04-07-intro-to-dplyr-tools/group_summary.png"></p>
+<div class="column" style="width:&quot;70%;">
+<p><img data-src="https://psyteachr.github.io/shiny-tutorials/images/01-first-app/05-app-interface.png"></p>
+</div><div class="column" style="width:30%;">
+<p><img data-src="https://www.shutterstock.com/image-vector/reserved-modern-restaurant-table-tablecloth-candles-754757053.png"></p>
 </div>
 </div>
 </section>
-<section id="group-on-many-columns" class="slide level2">
-<h2>Group on many columns</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>gtex <span class="sc">|&gt;</span> </span>
-<span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Blood) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(Lung)) <span class="sc">|&gt;</span></span>
-<span id="cb8-3"><a href="#cb8-3"></a>  <span class="fu">group_by</span>(</span>
-<span id="cb8-4"><a href="#cb8-4"></a>    <span class="at">pos_blood =</span> Blood<span class="sc">&gt;</span><span class="dv">0</span>, </span>
-<span id="cb8-5"><a href="#cb8-5"></a>    <span class="at">pos_lung =</span> Lung<span class="sc">&gt;</span><span class="dv">0</span></span>
-<span id="cb8-6"><a href="#cb8-6"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a>  <span class="fu">summarize</span>(<span class="at">mean_liver =</span> <span class="fu">mean</span>(Liver, <span class="at">na.rm=</span>T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'gtex' not found</code></pre>
-</div>
-</div>
+<section id="the-server" class="slide level2">
+<h2>The Server</h2>
 <ul>
-<li>The result has the summary value for each unique combination of the grouping variables</li>
+<li>The server is what happens behind the scenes in our shiny app! Most of the actual work goes on here. This typically includes calculations, simulations, data manipulation, and plotting.</li>
+<li>In terms of the restaurant, the server is the kitchen! It takes the orders from the customer and creates the desired output! This output is then relayed back to the UI for the user.</li>
 </ul>
-</section>
-<section id="computing-the-number-of-rows-in-each-group" class="slide level2">
-<h2>Computing the number of rows in each group</h2>
-<ul>
-<li>The <code>n()</code> function counts the number of rows in each group:</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>gtex <span class="sc">|&gt;</span> </span>
-<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Blood)) <span class="sc">|&gt;</span></span>
-<span id="cb10-3"><a href="#cb10-3"></a>  <span class="fu">group_by</span>(Gene) <span class="sc">|&gt;</span></span>
-<span id="cb10-4"><a href="#cb10-4"></a>  <span class="fu">summarize</span>(<span class="at">how_many =</span> <span class="fu">n</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'gtex' not found</code></pre>
-</div>
-</div>
-<ul>
-<li>You can also use <code>count()</code>, which is just a shorthand for the same thing</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>gtex <span class="sc">|&gt;</span> </span>
-<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Blood)) <span class="sc">|&gt;</span></span>
-<span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">group_by</span>(Gene) <span class="sc">|&gt;</span></span>
-<span id="cb12-4"><a href="#cb12-4"></a>  <span class="fu">count</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="exercise-expression-range-per-gene" class="slide level2" data-background-color="teal">
-<h2>Exercise: expression range per gene</h2>
-<p>Ignoring NAs, what are the highest and lowest liver expression values seen for each gene in the <code>gtex</code> dataset?</p>
-<ol type="1">
-<li><p>What steps should you take to solve this problem? When you have a question that asks something about “for each …” that usually indicates that you need to <strong><code>group_by()</code></strong> the data by whatever thing that is. When you are asking about a summary measure (like a mean, max etc.), that usually indicates the use of <strong><code>summarize()</code></strong>. In this problem, what column(s) are you grouping by? What summaries of what columns are you computing?</p></li>
-<li><p>Now that you have a structure, write the code to implement it and solve the problem.</p></li>
-</ol>
-</section>
-<section id="exercise-summarize-and-plot" class="slide level2" data-background-color="teal">
-<h2>Exercise: summarize and plot</h2>
 <div class="columns">
-<div class="column" style="width:70%;">
-<p>Before continuing, run this code to reformat your data and store it as a new data frame <code>gtex_tidy</code> (we’ll see how to do this later today):</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>gtex_tidy <span class="ot">=</span> gtex <span class="sc">|&gt;</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb13-3"><a href="#cb13-3"></a>    Blood<span class="sc">:</span>Liver, </span>
-<span id="cb13-4"><a href="#cb13-4"></a>    <span class="at">names_to=</span><span class="st">"tissue"</span>,</span>
-<span id="cb13-5"><a href="#cb13-5"></a>    <span class="at">values_to=</span><span class="st">"expression"</span></span>
-<span id="cb13-6"><a href="#cb13-6"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'gtex' not found</code></pre>
-</div>
-</div>
-<p>Have a look at the dataframe you created. Use it to recreate this plot:</p>
-<div class="cell">
-<div class="cell-output cell-output-error">
-<pre><code>Error in eval(expr, envir, enclos): object 'gtex_tidy' not found</code></pre>
-</div>
+<div class="column" style="width:&quot;70%;">
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://psyteachr.github.io/shiny-tutorials/images/01-first-app/05-app-interface.png"></p>
+<p></p><figcaption>server pic</figcaption><p></p>
+</figure>
 </div>
 </div><div class="column" style="width:30%;">
-<p>The <code>max_expression</code> variable in the x-axis of the plot indicates the maximum expression across all samples (in whatever grouping we are looking at).</p>
-<p>It’s helpful to think backwards from the output you want. First outline the ggplot code that would generate the given plot. What does the dataset need to look like that is going into <code>ggplot</code> in order to get the plot shown here? How can we get from <code>gtex_tidy</code> to that data?</p>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="https://www.shutterstock.com/image-vector/reserved-modern-restaurant-table-tablecloth-candles-754757053.png"></p>
+<p></p><figcaption>kitchen pic</figcaption><p></p>
+</figure>
 </div>
 </div>
+</div>
+</section>
+<section id="summary" class="slide level2">
+<h2>Summary</h2>
+<ul>
+<li>The UI and the server worker closely together to create our shiny app.</li>
+<li>Users interact with the UI where they can toggle inputs to choose how they want to interact with their data. These inputs are relayed to the server where the output is created in accordance with the chosen inputs. These outputs are then sent back to the UI for users to see.</li>
+<li>The shiny app works like a restaurant in which there are interactions between the customers (the users) and the staff. The UI is the dinner table where the users can order and customize their meals and later enjoy their meals. The server is the kitchen and the restaurant staff that create the customer’s meals! If there is bad communication between the customers and the staff, the correct meal will not be made!</li>
+</ul>
+
+<img data-src="https://www.shutterstock.com/image-vector/reserved-modern-restaurant-table-tablecloth-candles-754757053.png" class="r-stretch quarto-figure-center"><p class="caption">interaction pic</p></section>
+<section id="learning-check" class="slide level2" data-background-color="teal">
+<h2>Learning Check</h2>
+<ol type="1">
+<li><p>What are some good qualities of a shiny app?</p></li>
+<li><p>What are the two main components of a shiny app, and what do they do?</p></li>
+<li><p>Fill in the blanks: The inputs are selected in the _____ by the app users. The outputs are then created in the ________ and later shown back in the _________.</p></li>
+</ol>
+</section></section>
+<section>
+<section id="how-do-we-work-with-inputs-and-outputs" class="title-slide slide level1 center" data-background-color="green">
+<h1>How do we work with inputs and outputs?</h1>
+
+</section>
+<section id="inputs" class="slide level2">
+<h2>Inputs</h2>
+<ul>
+<li>Shiny inputs are displayed on the UI for users to choose different options for their analysis.</li>
+<li>With inputs, we can select variables, filter data, change plot types, and more!</li>
+<li>Luckily, we have ‘widgets’ that are easy functions to implement to use as inputs through shinyWidgets and other similar packages.</li>
+</ul>
+
+<img data-src="https://www.shutterstock.com/image-vector/reserved-modern-restaurant-table-tablecloth-candles-754757053.png" class="r-stretch quarto-figure-center"><p class="caption">Widget examples</p><p><a href="https://shiny.posit.co/r/gallery/widgets/widget-gallery/" target="_blank">Shiny Widget Gallery</a></p>
+</section>
+<section id="input-structure" class="slide level2">
+<h2>Input Structure</h2>
+<p>The basic structure of input functions are similar to each other.</p>
+<ul>
+<li>The key to using inputs is to properly ID them so we can call them throughout our server code. We call them with ‘input$inputId’ in our code.</li>
+</ul>
+
+<img data-src="../4-r-shiny-basics-figures/inputexample.png" style="width:80.0%" class="r-stretch"></section>
+<section id="creating-outputs" class="slide level2">
+<h2>Creating Outputs</h2>
+<ul>
+<li>Outputs are created in the server portion of our code. Outputs can be a range of objects including but not limited to tables, graphs, and text.</li>
+<li>Whenever we create output in the server, we use ‘render’ code. We can think of rendering an object as preparing it to be used as an output. In our restaurant analogy, this equates to cooking our ingredients in the kitchen to create the meal.</li>
+<li>We use these render functions and assign them to a specific output ID using ‘output$outputId’.</li>
+<li>These output IDs can then be called in the UI using output functions</li>
+<li>Example here for labeling</li>
+<li>Can also show tables</li>
+<li>Should this be two separate slides?</li>
+</ul>
+</section>
+<section id="calling-outputs" class="slide level2">
+<h2>Calling Outputs</h2>
+</section>
+<section id="exercises-labeling-our-inputs-and-outputs" class="slide level2" data-background-color="teal">
+<h2>Exercises: Labeling our inputs and outputs!</h2>
+</section></section>
+<section>
+<section id="how-do-we-deploy-our-apps" class="title-slide slide level1 center" data-background-color="blue">
+<h1>How do we deploy our apps?</h1>
+
+</section>
+<section id="local-versus-global" class="slide level2">
+<h2>Local versus Global</h2>
+</section></section>
+<section id="demo-time" class="title-slide slide level1 center" data-background-color="pink">
+<h1>Demo time!</h1>
+
+</section>
+
+<section>
+<section id="project-time" class="title-slide slide level1 center" data-background-color="red">
+<h1>Project time!</h1>
+
 </section>
 <section id="filtering-grouped-data" class="slide level2">
 <h2>Filtering grouped data</h2>
@@ -582,10 +572,10 @@ Alissa Gordon
 <li><code>filter()</code> is aware of grouping. When used on a grouped dataset, it applies the filtering condition separately in each group</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>gtex <span class="sc">|&gt;</span></span>
-<span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">select</span>(Ind, Gene, Lung) <span class="sc">|&gt;</span></span>
-<span id="cb16-3"><a href="#cb16-3"></a>  <span class="fu">group_by</span>(Ind) <span class="sc">|&gt;</span></span>
-<span id="cb16-4"><a href="#cb16-4"></a>  <span class="fu">filter</span>(Lung <span class="sc">==</span> <span class="fu">max</span>(Lung, <span class="at">na.rm=</span>T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>gtex <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="fu">select</span>(Ind, Gene, Lung) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="fu">group_by</span>(Ind) <span class="sc">|&gt;</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>  <span class="fu">filter</span>(Lung <span class="sc">==</span> <span class="fu">max</span>(Lung, <span class="at">na.rm=</span>T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in eval(expr, envir, enclos): object 'gtex' not found</code></pre>
 </div>
@@ -599,12 +589,12 @@ Alissa Gordon
 <div class="columns">
 <div class="column">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>gtex <span class="sc">|&gt;</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">group_by</span>(Gene) <span class="sc">|&gt;</span></span>
-<span id="cb18-3"><a href="#cb18-3"></a>  <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">rank</span>(<span class="sc">-</span>Blood)) <span class="sc">|&gt;</span></span>
-<span id="cb18-4"><a href="#cb18-4"></a>  <span class="fu">select</span>(Gene, Ind, rank, Blood) <span class="sc">|&gt;</span></span>
-<span id="cb18-5"><a href="#cb18-5"></a>  <span class="fu">filter</span>(rank <span class="sc">&lt;=</span> <span class="dv">3</span>) <span class="sc">|&gt;</span></span>
-<span id="cb18-6"><a href="#cb18-6"></a>  <span class="fu">arrange</span>(Gene, rank)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>gtex <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">group_by</span>(Gene) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">rank</span>(<span class="sc">-</span>Blood)) <span class="sc">|&gt;</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="fu">select</span>(Gene, Ind, rank, Blood) <span class="sc">|&gt;</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>  <span class="fu">filter</span>(rank <span class="sc">&lt;=</span> <span class="dv">3</span>) <span class="sc">|&gt;</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a>  <span class="fu">arrange</span>(Gene, rank)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in eval(expr, envir, enclos): object 'gtex' not found</code></pre>
 </div>
@@ -614,11 +604,11 @@ Alissa Gordon
 </ul>
 </div><div class="column">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>gtex <span class="sc">|&gt;</span></span>
-<span id="cb20-2"><a href="#cb20-2"></a>  <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">rank</span>(<span class="sc">-</span>Blood)) <span class="sc">|&gt;</span></span>
-<span id="cb20-3"><a href="#cb20-3"></a>  <span class="fu">select</span>(Gene, Ind, rank, Blood) <span class="sc">|&gt;</span></span>
-<span id="cb20-4"><a href="#cb20-4"></a>  <span class="fu">filter</span>(rank <span class="sc">&lt;=</span> <span class="dv">3</span>) <span class="sc">|&gt;</span></span>
-<span id="cb20-5"><a href="#cb20-5"></a>  <span class="fu">arrange</span>(Gene, rank)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>gtex <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">rank</span>(<span class="sc">-</span>Blood)) <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="fu">select</span>(Gene, Ind, rank, Blood) <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>  <span class="fu">filter</span>(rank <span class="sc">&lt;=</span> <span class="dv">3</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>  <span class="fu">arrange</span>(Gene, rank)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in eval(expr, envir, enclos): object 'gtex' not found</code></pre>
 </div>
@@ -644,9 +634,9 @@ Alissa Gordon
 <li>Sometimes data are organized in a way that makes it difficult to compute in a vector-oriented way. For example, look at this dataset:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>gtex_time_tissue_data <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"https://tinyurl.com/3wd4dcsf"</span>)</span>
-<span id="cb22-2"><a href="#cb22-2"></a></span>
-<span id="cb22-3"><a href="#cb22-3"></a><span class="fu">head</span>(gtex_time_tissue_data, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>gtex_time_tissue_data <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"https://tinyurl.com/3wd4dcsf"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="fu">head</span>(gtex_time_tissue_data, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 8
   tissue         `2011` `2012` `2013` `2014` `2015` `2016` `2017`
@@ -664,11 +654,11 @@ Alissa Gordon
 
 </div>
 
-<img data-src="4-r-shiny-basics_files/figure-revealjs/unnamed-chunk-16-1.png" width="1920" class="r-stretch"></section>
+<img data-src="4-r-shiny-basics_files/figure-revealjs/unnamed-chunk-8-1.png" width="1920" class="r-stretch"></section>
 <section id="messy-data-1" class="slide level2">
 <h2>Messy data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">head</span>(gtex_time_tissue_data, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">head</span>(gtex_time_tissue_data, <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 8
   tissue         `2011` `2012` `2013` `2014` `2015` `2016` `2017`
@@ -713,13 +703,13 @@ Alissa Gordon
 <h2>Tidy data</h2>
 <p>Tidy data is easy to work with.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>tidy <span class="sc">|&gt;</span> </span>
-<span id="cb27-2"><a href="#cb27-2"></a>  <span class="fu">filter</span>(tissue <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Blood"</span>, <span class="st">"Heart"</span>, <span class="st">"Liver"</span>, <span class="st">"Lung"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb27-3"><a href="#cb27-3"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb27-4"><a href="#cb27-4"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> count, <span class="at">fill =</span> tissue), <span class="at">stat =</span> <span class="st">'identity'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>tidy <span class="sc">|&gt;</span> </span>
+<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">filter</span>(tissue <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Blood"</span>, <span class="st">"Heart"</span>, <span class="st">"Liver"</span>, <span class="st">"Lung"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> count, <span class="at">fill =</span> tissue), <span class="at">stat =</span> <span class="st">'identity'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="4-r-shiny-basics_files/figure-revealjs/unnamed-chunk-19-1.png" width="1920" class="r-stretch"></section>
+<img data-src="4-r-shiny-basics_files/figure-revealjs/unnamed-chunk-11-1.png" width="1920" class="r-stretch"></section>
 <section id="tidying-data-with-pivot_longer" class="slide level2">
 <h2>Tidying data with pivot_longer()</h2>
 <ul>
@@ -727,16 +717,16 @@ Alissa Gordon
 <li>the three important arguments are: a) a selection of columns, b) the name of the new key column, and c) the name of the new value column</li>
 </ul>
 
-<img data-src="https://swcarpentry.github.io/r-novice-gapminder/fig/14-tidyr-fig3.png" class="r-stretch"></section>
+<img data-src="https://psyteachr.github.io/shiny-tutorials/images/01-first-app/05-app-interface.png" class="r-stretch"></section>
 <section id="tidying-data-with-pivot_longer-1" class="slide level2">
 <h2>Tidying data with pivot_longer()</h2>
 <ul>
 <li><code>tidyr::pivot_longer()</code> is the function you will most often want to use to tidy your data</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>gtex_time_tissue_data <span class="sc">|&gt;</span></span>
-<span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>tissue, <span class="at">names_to =</span> <span class="st">"year"</span>, <span class="at">values_to =</span> <span class="st">"count"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb28-3"><a href="#cb28-3"></a>  <span class="fu">head</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>gtex_time_tissue_data <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>tissue, <span class="at">names_to =</span> <span class="st">"year"</span>, <span class="at">values_to =</span> <span class="st">"count"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="fu">head</span>(<span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   tissue         year  count
@@ -759,24 +749,24 @@ Alissa Gordon
 <pre><code># A tibble: 4 × 3
   mouse weight_before weight_after
   &lt;dbl&gt;         &lt;dbl&gt;        &lt;dbl&gt;
-1     1          7.31         6.61
-2     2         10.0         13.1 
-3     3          9.69        12.3 
-4     4          8.16        12.8 </code></pre>
+1     1         13.2          9.79
+2     2         10.5         12.4 
+3     3          8.13        15.9 
+4     4         11.1         15.2 </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>wide_mice <span class="sc">|&gt;</span></span>
-<span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">mutate</span>(<span class="at">weight_gain =</span> weight_after <span class="sc">-</span> weight_before) <span class="sc">|&gt;</span></span>
-<span id="cb31-3"><a href="#cb31-3"></a>  <span class="fu">select</span>(mouse, weight_gain)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>wide_mice <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">mutate</span>(<span class="at">weight_gain =</span> weight_after <span class="sc">-</span> weight_before) <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">select</span>(mouse, weight_gain)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 2
   mouse weight_gain
   &lt;dbl&gt;       &lt;dbl&gt;
-1     1      -0.699
-2     2       3.11 
-3     3       2.56 
-4     4       4.61 </code></pre>
+1     1       -3.36
+2     2        1.86
+3     3        7.75
+4     4        4.13</code></pre>
 </div>
 </div>
 </div><div class="column">
@@ -785,31 +775,31 @@ Alissa Gordon
 <pre><code># A tibble: 8 × 3
   mouse time   weight
   &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;
-1     1 before   7.31
-2     1 after    6.61
-3     2 before  10.0 
-4     2 after   13.1 
-5     3 before   9.69
-6     3 after   12.3 
-7     4 before   8.16
-8     4 after   12.8 </code></pre>
+1     1 before  13.2 
+2     1 after    9.79
+3     2 before  10.5 
+4     2 after   12.4 
+5     3 before   8.13
+6     3 after   15.9 
+7     4 before  11.1 
+8     4 after   15.2 </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>long_mice <span class="sc">|&gt;</span></span>
-<span id="cb34-2"><a href="#cb34-2"></a>  <span class="fu">group_by</span>(mouse) <span class="sc">|&gt;</span></span>
-<span id="cb34-3"><a href="#cb34-3"></a>  <span class="fu">mutate</span>(<span class="at">weight_gain =</span> weight <span class="sc">-</span> <span class="fu">lag</span>(weight)) <span class="sc">|&gt;</span></span>
-<span id="cb34-4"><a href="#cb34-4"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(weight_gain)) <span class="sc">|&gt;</span></span>
-<span id="cb34-5"><a href="#cb34-5"></a>  <span class="fu">select</span>(mouse, weight_gain)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>long_mice <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>  <span class="fu">group_by</span>(mouse) <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a>  <span class="fu">mutate</span>(<span class="at">weight_gain =</span> weight <span class="sc">-</span> <span class="fu">lag</span>(weight)) <span class="sc">|&gt;</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(weight_gain)) <span class="sc">|&gt;</span></span>
+<span id="cb20-5"><a href="#cb20-5"></a>  <span class="fu">select</span>(mouse, weight_gain)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 2
 # Groups:   mouse [4]
   mouse weight_gain
   &lt;dbl&gt;       &lt;dbl&gt;
-1     1      -0.699
-2     2       3.11 
-3     3       2.56 
-4     4       4.61 </code></pre>
+1     1       -3.36
+2     2        1.86
+3     3        7.75
+4     4        4.13</code></pre>
 </div>
 </div>
 </div>
@@ -825,36 +815,36 @@ Alissa Gordon
 <div class="columns">
 <div class="column">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>long_mice</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>long_mice</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 3
   mouse time   weight
   &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;
-1     1 before   7.31
-2     1 after    6.61
-3     2 before  10.0 
-4     2 after   13.1 
-5     3 before   9.69
-6     3 after   12.3 
-7     4 before   8.16
-8     4 after   12.8 </code></pre>
+1     1 before  13.2 
+2     1 after    9.79
+3     2 before  10.5 
+4     2 after   12.4 
+5     3 before   8.13
+6     3 after   15.9 
+7     4 before  11.1 
+8     4 after   15.2 </code></pre>
 </div>
 </div>
 </div><div class="column">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>long_mice <span class="sc">|&gt;</span> </span>
-<span id="cb38-2"><a href="#cb38-2"></a>  <span class="fu">pivot_wider</span>(</span>
-<span id="cb38-3"><a href="#cb38-3"></a>    <span class="at">names_from =</span> time, </span>
-<span id="cb38-4"><a href="#cb38-4"></a>    <span class="at">values_from =</span> weight</span>
-<span id="cb38-5"><a href="#cb38-5"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>long_mice <span class="sc">|&gt;</span> </span>
+<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">pivot_wider</span>(</span>
+<span id="cb24-3"><a href="#cb24-3"></a>    <span class="at">names_from =</span> time, </span>
+<span id="cb24-4"><a href="#cb24-4"></a>    <span class="at">values_from =</span> weight</span>
+<span id="cb24-5"><a href="#cb24-5"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 3
   mouse before after
   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;
-1     1   7.31  6.61
-2     2  10.0  13.1 
-3     3   9.69 12.3 
-4     4   8.16 12.8 </code></pre>
+1     1  13.2   9.79
+2     2  10.5  12.4 
+3     3   8.13 15.9 
+4     4  11.1  15.2 </code></pre>
 </div>
 </div>
 </div>
@@ -866,10 +856,10 @@ Alissa Gordon
 <div class="column">
 <p>I have a dataset that records the pollution levels (in ppm) in three cities across five months:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>pollution <span class="ot">=</span> <span class="fu">read_csv</span>(</span>
-<span id="cb40-2"><a href="#cb40-2"></a>  <span class="st">"https://tinyurl.com/yu983bhc"</span></span>
-<span id="cb40-3"><a href="#cb40-3"></a>)</span>
-<span id="cb40-4"><a href="#cb40-4"></a>pollution</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>pollution <span class="ot">=</span> <span class="fu">read_csv</span>(</span>
+<span id="cb26-2"><a href="#cb26-2"></a>  <span class="st">"https://tinyurl.com/yu983bhc"</span></span>
+<span id="cb26-3"><a href="#cb26-3"></a>)</span>
+<span id="cb26-4"><a href="#cb26-4"></a>pollution</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 15 × 3
    city  month smoke_ppm
@@ -943,9 +933,9 @@ Alissa Gordon
 <li>When we get an expression dataset, the data is usually divided into an expression matrix with the expression values of each sample, and table(s) with metadata about the samples themselves.</li>
 </ul>
 <div class="cell" data-max.lines="4">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>gtex_samples <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"https://tinyurl.com/2hy9awda"</span>)</span>
-<span id="cb46-2"><a href="#cb46-2"></a>gtex_subjects <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"https://tinyurl.com/3tfbew8f"</span>)</span>
-<span id="cb46-3"><a href="#cb46-3"></a>gtex_batches <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"https://tinyurl.com/3phsbxsj"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>gtex_samples <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"https://tinyurl.com/2hy9awda"</span>)</span>
+<span id="cb32-2"><a href="#cb32-2"></a>gtex_subjects <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"https://tinyurl.com/3tfbew8f"</span>)</span>
+<span id="cb32-3"><a href="#cb32-3"></a>gtex_batches <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"https://tinyurl.com/3phsbxsj"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
@@ -954,7 +944,7 @@ Alissa Gordon
 <li>The <strong>sample</strong> data has information about the tissue and the subject who contributed the sample, the batch it was processed in, the center the sample was processed at, and the RNA integrity number (RIN score) for the sample.</li>
 </ul>
 <div class="cell" data-max.lines="4">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>gtex_samples <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>gtex_samples <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 6
   subject_id sample_id     batch_id center_id tissue rin_score
@@ -966,7 +956,7 @@ Alissa Gordon
 <li>The <strong>subject</strong> data table contains some subject demographic information.</li>
 </ul>
 <div class="cell" data-max.lines="4">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>gtex_subjects <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>gtex_subjects <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 4
   subject_id sex   age   death     
@@ -978,7 +968,7 @@ Alissa Gordon
 <li>The <strong>batch</strong> data contains the batch type and the dates the batches were run</li>
 </ul>
 <div class="cell" data-max.lines="4">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>gtex_batches <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>gtex_batches <span class="sc">|&gt;</span> <span class="fu">head</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   batch_id batch_type                                         batch_date
@@ -1005,8 +995,8 @@ Alissa Gordon
 <li>We can accomplish that with a <strong>join</strong>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>gtex_samples <span class="sc">|&gt;</span> </span>
-<span id="cb53-2"><a href="#cb53-2"></a>  <span class="fu">inner_join</span>(gtex_subjects, <span class="at">by =</span> <span class="fu">join_by</span>(subject_id))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>gtex_samples <span class="sc">|&gt;</span> </span>
+<span id="cb39-2"><a href="#cb39-2"></a>  <span class="fu">inner_join</span>(gtex_subjects, <span class="at">by =</span> <span class="fu">join_by</span>(subject_id))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 312 × 9
    subject_id sample_id    batch_id center_id tissue rin_score sex   age   death
@@ -1030,22 +1020,22 @@ Alissa Gordon
 <div class="columns">
 <div class="column">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a>x <span class="ot">=</span> <span class="fu">tibble</span>(</span>
-<span id="cb55-2"><a href="#cb55-2"></a>  <span class="at">key =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
-<span id="cb55-3"><a href="#cb55-3"></a>  <span class="at">val_x =</span> <span class="fu">c</span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span>)</span>
-<span id="cb55-4"><a href="#cb55-4"></a>)</span>
-<span id="cb55-5"><a href="#cb55-5"></a></span>
-<span id="cb55-6"><a href="#cb55-6"></a>y <span class="ot">=</span> <span class="fu">tibble</span>(</span>
-<span id="cb55-7"><a href="#cb55-7"></a>  <span class="at">key =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>),</span>
-<span id="cb55-8"><a href="#cb55-8"></a>  <span class="at">val_y =</span> <span class="fu">c</span>(<span class="st">"y1"</span>, <span class="st">"y2"</span>, <span class="st">"y3"</span>)</span>
-<span id="cb55-9"><a href="#cb55-9"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>x <span class="ot">=</span> <span class="fu">tibble</span>(</span>
+<span id="cb41-2"><a href="#cb41-2"></a>  <span class="at">key =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
+<span id="cb41-3"><a href="#cb41-3"></a>  <span class="at">val_x =</span> <span class="fu">c</span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span>)</span>
+<span id="cb41-4"><a href="#cb41-4"></a>)</span>
+<span id="cb41-5"><a href="#cb41-5"></a></span>
+<span id="cb41-6"><a href="#cb41-6"></a>y <span class="ot">=</span> <span class="fu">tibble</span>(</span>
+<span id="cb41-7"><a href="#cb41-7"></a>  <span class="at">key =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>),</span>
+<span id="cb41-8"><a href="#cb41-8"></a>  <span class="at">val_y =</span> <span class="fu">c</span>(<span class="st">"y1"</span>, <span class="st">"y2"</span>, <span class="st">"y3"</span>)</span>
+<span id="cb41-9"><a href="#cb41-9"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div data-align="center">
 <p><img src="https://d33wubrfki0l68.cloudfront.net/108c0749d084c03103f8e1e8276c20e06357b124/5f113/diagrams/join-setup.png"></p>
 </div>
 </div><div class="column">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="fu">inner_join</span>(x, y, <span class="at">by =</span> <span class="fu">join_by</span>(key))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">inner_join</span>(x, y, <span class="at">by =</span> <span class="fu">join_by</span>(key))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
     key val_x val_y
@@ -1069,7 +1059,7 @@ Alissa Gordon
 <div class="columns">
 <div class="column">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>band_members</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>band_members</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   name  band   
@@ -1078,7 +1068,7 @@ Alissa Gordon
 2 John  Beatles
 3 Paul  Beatles</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a>band_instruments</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>band_instruments</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   name  plays 
@@ -1090,10 +1080,10 @@ Alissa Gordon
 </div>
 </div><div class="column">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a><span class="fu">inner_join</span>(</span>
-<span id="cb62-2"><a href="#cb62-2"></a>  band_instruments, </span>
-<span id="cb62-3"><a href="#cb62-3"></a>  band_members</span>
-<span id="cb62-4"><a href="#cb62-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">inner_join</span>(</span>
+<span id="cb48-2"><a href="#cb48-2"></a>  band_instruments, </span>
+<span id="cb48-3"><a href="#cb48-3"></a>  band_members</span>
+<span id="cb48-4"><a href="#cb48-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   name  plays  band   
@@ -1103,10 +1093,10 @@ Alissa Gordon
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a><span class="fu">full_join</span>(</span>
-<span id="cb64-2"><a href="#cb64-2"></a>  band_instruments, </span>
-<span id="cb64-3"><a href="#cb64-3"></a>  band_members</span>
-<span id="cb64-4"><a href="#cb64-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="fu">full_join</span>(</span>
+<span id="cb50-2"><a href="#cb50-2"></a>  band_instruments, </span>
+<span id="cb50-3"><a href="#cb50-3"></a>  band_members</span>
+<span id="cb50-4"><a href="#cb50-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 3
   name  plays  band   
@@ -1125,22 +1115,22 @@ Alissa Gordon
 <div class="columns">
 <div class="column">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a>x <span class="ot">=</span> <span class="fu">tibble</span>(</span>
-<span id="cb66-2"><a href="#cb66-2"></a>  <span class="at">key =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
-<span id="cb66-3"><a href="#cb66-3"></a>  <span class="at">val_x =</span> <span class="fu">c</span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span>, <span class="st">"x4"</span>)</span>
-<span id="cb66-4"><a href="#cb66-4"></a>)</span>
-<span id="cb66-5"><a href="#cb66-5"></a></span>
-<span id="cb66-6"><a href="#cb66-6"></a>y <span class="ot">=</span> <span class="fu">tibble</span>(</span>
-<span id="cb66-7"><a href="#cb66-7"></a>  <span class="at">key =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>),</span>
-<span id="cb66-8"><a href="#cb66-8"></a>  <span class="at">val_y =</span> <span class="fu">c</span>(<span class="st">"y1"</span>, <span class="st">"y2"</span>, <span class="st">"y3"</span>, <span class="st">"y4"</span>)</span>
-<span id="cb66-9"><a href="#cb66-9"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>x <span class="ot">=</span> <span class="fu">tibble</span>(</span>
+<span id="cb52-2"><a href="#cb52-2"></a>  <span class="at">key =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>),</span>
+<span id="cb52-3"><a href="#cb52-3"></a>  <span class="at">val_x =</span> <span class="fu">c</span>(<span class="st">"x1"</span>, <span class="st">"x2"</span>, <span class="st">"x3"</span>, <span class="st">"x4"</span>)</span>
+<span id="cb52-4"><a href="#cb52-4"></a>)</span>
+<span id="cb52-5"><a href="#cb52-5"></a></span>
+<span id="cb52-6"><a href="#cb52-6"></a>y <span class="ot">=</span> <span class="fu">tibble</span>(</span>
+<span id="cb52-7"><a href="#cb52-7"></a>  <span class="at">key =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>),</span>
+<span id="cb52-8"><a href="#cb52-8"></a>  <span class="at">val_y =</span> <span class="fu">c</span>(<span class="st">"y1"</span>, <span class="st">"y2"</span>, <span class="st">"y3"</span>, <span class="st">"y4"</span>)</span>
+<span id="cb52-9"><a href="#cb52-9"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div data-align="center">
 <p><img src="https://d33wubrfki0l68.cloudfront.net/d37530bbf7749f48c02684013ae72b2996b07e25/37510/diagrams/join-many-to-many.png"></p>
 </div>
 </div><div class="column">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a><span class="fu">inner_join</span>(x, y, <span class="fu">join_by</span>(key))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a><span class="fu">inner_join</span>(x, y, <span class="fu">join_by</span>(key))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 3
     key val_x val_y
@@ -1159,8 +1149,8 @@ Alissa Gordon
 <section id="specifying-the-keys" class="slide level2">
 <h2>Specifying the keys</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a>gtex_samples <span class="sc">|&gt;</span> </span>
-<span id="cb69-2"><a href="#cb69-2"></a>  <span class="fu">inner_join</span>(gtex_subjects, <span class="fu">join_by</span>(center_id))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a>gtex_samples <span class="sc">|&gt;</span> </span>
+<span id="cb55-2"><a href="#cb55-2"></a>  <span class="fu">inner_join</span>(gtex_subjects, <span class="fu">join_by</span>(center_id))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in `inner_join()`:
 ! Join columns in `y` must be present in the data.
@@ -1177,11 +1167,11 @@ Alissa Gordon
 <li>When keys have different names in different dataframes, the syntax to join is:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a><span class="fu">head</span>(gtex, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a><span class="fu">head</span>(gtex, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in eval(expr, envir, enclos): object 'gtex' not found</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a><span class="fu">head</span>(gtex_subjects, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a><span class="fu">head</span>(gtex_subjects, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   subject_id sex    age   death                    
@@ -1191,9 +1181,9 @@ Alissa Gordon
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1"></a>gtex <span class="sc">|&gt;</span> </span>
-<span id="cb75-2"><a href="#cb75-2"></a>  <span class="fu">inner_join</span>(gtex_subjects, <span class="fu">join_by</span>(Ind <span class="sc">==</span> subject_id)) <span class="sc">|&gt;</span> </span>
-<span id="cb75-3"><a href="#cb75-3"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a>gtex <span class="sc">|&gt;</span> </span>
+<span id="cb61-2"><a href="#cb61-2"></a>  <span class="fu">inner_join</span>(gtex_subjects, <span class="fu">join_by</span>(Ind <span class="sc">==</span> subject_id)) <span class="sc">|&gt;</span> </span>
+<span id="cb61-3"><a href="#cb61-3"></a>  <span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>Error in eval(expr, envir, enclos): object 'gtex' not found</code></pre>
 </div>
@@ -1214,14 +1204,14 @@ Alissa Gordon
 <h2>Exercise: finding expression of specific samples</h2>
 <p>Use joins to find the samples collected in 2015 with blood expression greater than 3 of “KRT19” in males. Start with the <code>batch_data_year</code>; this data has an extra extracted column with the year.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1"></a>batch_data_year <span class="ot">=</span> </span>
-<span id="cb77-2"><a href="#cb77-2"></a>  gtex_batches <span class="sc">|&gt;</span> </span>
-<span id="cb77-3"><a href="#cb77-3"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb77-4"><a href="#cb77-4"></a>    <span class="at">batch_date =</span> lubridate<span class="sc">::</span><span class="fu">mdy</span>(batch_date), </span>
-<span id="cb77-5"><a href="#cb77-5"></a>    <span class="at">year =</span> lubridate<span class="sc">::</span><span class="fu">year</span>(batch_date)</span>
-<span id="cb77-6"><a href="#cb77-6"></a>  ) </span>
-<span id="cb77-7"><a href="#cb77-7"></a></span>
-<span id="cb77-8"><a href="#cb77-8"></a><span class="fu">head</span>(batch_data_year, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a>batch_data_year <span class="ot">=</span> </span>
+<span id="cb63-2"><a href="#cb63-2"></a>  gtex_batches <span class="sc">|&gt;</span> </span>
+<span id="cb63-3"><a href="#cb63-3"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb63-4"><a href="#cb63-4"></a>    <span class="at">batch_date =</span> lubridate<span class="sc">::</span><span class="fu">mdy</span>(batch_date), </span>
+<span id="cb63-5"><a href="#cb63-5"></a>    <span class="at">year =</span> lubridate<span class="sc">::</span><span class="fu">year</span>(batch_date)</span>
+<span id="cb63-6"><a href="#cb63-6"></a>  ) </span>
+<span id="cb63-7"><a href="#cb63-7"></a></span>
+<span id="cb63-8"><a href="#cb63-8"></a><span class="fu">head</span>(batch_data_year, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   batch_id batch_type                                         batch_date  year
@@ -1243,9 +1233,9 @@ Alissa Gordon
 <div class="column">
 <p>Let’s read in some more data</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1"></a>gtex_monthly_tissues <span class="ot">=</span> </span>
-<span id="cb79-2"><a href="#cb79-2"></a>  <span class="fu">read_csv</span>(<span class="st">"https://tinyurl.com/nze7rz7a"</span>)</span>
-<span id="cb79-3"><a href="#cb79-3"></a><span class="fu">head</span>(gtex_monthly_tissues, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a>gtex_monthly_tissues <span class="ot">=</span> </span>
+<span id="cb65-2"><a href="#cb65-2"></a>  <span class="fu">read_csv</span>(<span class="st">"https://tinyurl.com/nze7rz7a"</span>)</span>
+<span id="cb65-3"><a href="#cb65-3"></a><span class="fu">head</span>(gtex_monthly_tissues, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   tissue         month  year tiss_samples
@@ -1253,8 +1243,8 @@ Alissa Gordon
 1 Adipose Tissue     1  2012           13
 2 Adipose Tissue     1  2013            4</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1"></a>gtex_monthly_samples <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"https://tinyurl.com/2s5neht6"</span>)</span>
-<span id="cb81-2"><a href="#cb81-2"></a><span class="fu">head</span>(gtex_monthly_samples, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a>gtex_monthly_samples <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"https://tinyurl.com/2s5neht6"</span>)</span>
+<span id="cb67-2"><a href="#cb67-2"></a><span class="fu">head</span>(gtex_monthly_samples, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   month  year num_samples
@@ -1268,12 +1258,12 @@ Alissa Gordon
 <li>It is often desirable to find matches along more than one column, such as month and year in this example. Here we’re joining tissue sample counts with total sample counts.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1"></a><span class="fu">inner_join</span>(</span>
-<span id="cb83-2"><a href="#cb83-2"></a>  gtex_monthly_tissues,</span>
-<span id="cb83-3"><a href="#cb83-3"></a>  gtex_monthly_samples, </span>
-<span id="cb83-4"><a href="#cb83-4"></a>  <span class="fu">join_by</span>(month, year)</span>
-<span id="cb83-5"><a href="#cb83-5"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb83-6"><a href="#cb83-6"></a><span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a><span class="fu">inner_join</span>(</span>
+<span id="cb69-2"><a href="#cb69-2"></a>  gtex_monthly_tissues,</span>
+<span id="cb69-3"><a href="#cb69-3"></a>  gtex_monthly_samples, </span>
+<span id="cb69-4"><a href="#cb69-4"></a>  <span class="fu">join_by</span>(month, year)</span>
+<span id="cb69-5"><a href="#cb69-5"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb69-6"><a href="#cb69-6"></a><span class="fu">head</span>(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 5
   tissue         month  year tiss_samples num_samples

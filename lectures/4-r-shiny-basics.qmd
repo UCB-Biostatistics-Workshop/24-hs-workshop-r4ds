@@ -38,146 +38,126 @@ install.packages('shinyWidgets')
 
 ![](../4-r-shiny-basics-figures/shinyscreenshot.png){width=80%}
 
-[Shiny Example](https://alissagordon.shinyapps.io/PHAR_synthetic_data_explorer/)
+[Shiny Example](https://alissagordon.shinyapps.io/PHAR_synthetic_data_explorer/){target="_blank"}
 
 
-## Summarize
-```{r}
-summarize(gtex, blood_avg=mean(Blood, na.rm=T))
-```
+# Why are shiny apps useful? {data-background-color=navy}
 
-- `summarize()` boils down the data frame according to the conditions it gets. In this case, it creates a data frame with a single column called `blood_avg` that contains the mean of the `Blood` column
-- As with `mutate()`, the name on the left of the `=` is something you make up that you would like the new column to be named.
-- `mutate()` transforms columns into new columns of the same length, but `summarize()` collapses down the data frame into a single row
+## They are useful because...
 
-::::{.columns}
-:::{.column width="70%"}
-![](https://www.sonoshah.com/tutorials/2021-04-07-intro-to-dplyr-tools/summarize1.png)
+- We can make complex apps without knowledge of languages such as HTML and JavaScript
+- We can share them easily through URLs or as R files for local implementation
+- They are open source (affordable and accessible)!
+- They allow for interactive and quick data exploration
+
+# What is the basic structure of a shiny app? {data-background-color=teal}
+
+## Shiny structure
+
+- Shiny apps consist of two key components, both coded in R!
+- These components are the User Interface (aka UI) and the Server
+- These two work together to create the shiny app through a series of inputs and outputs
+
+![](https://media.geeksforgeeks.org/wp-content/uploads/20221211154233/Screenshot-(238).png)
+
+
+## The UI
+
+- The UI is what the users of shiny app see and interact with
+- In the grand scheme of the shiny app, you can think of the shiny app is a restaurant. The user of the shiny app is the restaurant customer, and the UI is the table where the customer sits at! The UI will have input options, like a dinner menu, where users can put in 'orders' for how they want to analyze their data. 
+- Once the output is created in the server, it is shown on the UI. In terms of our analogy, once the order is created, it is brought back to the table for the customer to enjoy!
+
+:::: {.columns}
+
+::: {.column width="70%}
+![](https://psyteachr.github.io/shiny-tutorials/images/01-first-app/05-app-interface.png)
 :::
-:::{.column width="30%"}
-![](https://www.sonoshah.com/tutorials/2021-04-07-intro-to-dplyr-tools/summary.png)
-:::
-::::
 
-***
-- note that you can also pass in multiple conditions that operate on multiple columns at the same time
-```{r, tidy=F}
-gtex |> 
-summarize( # newlines not necessary, again just increase clarity
-  lung_avg = mean(Lung, na.rm=T),
-  blood_max = max(Blood, na.rm=T),
-  blood_lung_dif_min = min(Blood - Lung, na.rm=T)
-)
-```
-
-## Exercise: summaries {data-background-color=teal}
-Find the average, maximum, and minimum expressions of the REN gene in blood. *Hint: filter and summarize.*
-
-# Grouping {data-background-color=black}
-
-## Grouped summaries
-
-::::{.columns}
-:::{.column}
-- Summaries are more useful when you apply them to subgroups of the data
-
-```{r, tidy=F, message=F}
-gtex |> 
-  group_by(Gene) |>
-  summarize(max_blood = max(Blood))
-```
-
-- `group_by()` is a helper function that "groups" the data according to the unique values in the column(s) it gets passed. 
-:::
-:::{.column}
-
-- Its output is a grouped data frame that looks the same as the original except for some additional metadata that subsequent functions can use
-- `summarize()` works the same as before, except now it returns as many rows as there are groups in the data
-- The result also always contains colunmns corresponding to the unique values of the grouping variable
-
-![](https://www.sonoshah.com/tutorials/2021-04-07-intro-to-dplyr-tools/group_summary.png)
+::: {.column width="30%"}
+![](https://www.shutterstock.com/image-vector/reserved-modern-restaurant-table-tablecloth-candles-754757053)
 :::
 ::::
 
-## Group on many columns
-
-```{r, tidy=F, message=F}
-gtex |> 
-  filter(!is.na(Blood) & !is.na(Lung)) |>
-  group_by(
-    pos_blood = Blood>0, 
-    pos_lung = Lung>0
-  ) |>
-  summarize(mean_liver = mean(Liver, na.rm=T))
-```
-
-- The result has the summary value for each unique combination of the grouping variables
-
-## Computing the number of rows in each group
-- The `n()` function counts the number of rows in each group:
-
-```{r, tidy=F, message=F}
-gtex |> 
-  filter(!is.na(Blood)) |>
-  group_by(Gene) |>
-  summarize(how_many = n())
-```
-- You can also use `count()`, which is just a shorthand for the same thing
-
-```{r, tidy=F, message=F, eval=F}
-gtex |> 
-  filter(!is.na(Blood)) |>
-  group_by(Gene) |>
-  count()
-```
 
 
-## Exercise: expression range per gene {data-background-color=teal}
+## The Server
 
-Ignoring NAs, what are the highest and lowest liver expression values seen for each gene in the `gtex` dataset?
+- The server is what happens behind the scenes in our shiny app! Most of the actual work goes on here. This typically includes calculations, simulations, data manipulation, and plotting.
+- In terms of the restaurant, the server is the kitchen! It takes the orders from the customer and creates the desired output! This output is then relayed back to the UI for the user.
 
-1. What steps should you take to solve this problem? When you have a question that asks something about "for each ..." that usually indicates that you need to **`group_by()`** the data by whatever thing that is. When you are asking about a summary measure (like a mean, max etc.), that usually indicates the use of **`summarize()`**. In this problem, what column(s) are you grouping by? What summaries of what columns are you computing?
 
-2. Now that you have a structure, write the code to implement it and solve the problem. 
+:::: {.columns}
 
-## Exercise: summarize and plot {data-background-color=teal}
-::::{.columns}
-:::{.column width="70%"}
-Before continuing, run this code to reformat your data and store it as a new data frame `gtex_tidy` (we'll see how to do this later today):
-
-```{r}
-gtex_tidy = gtex |>
-  pivot_longer(
-    Blood:Liver, 
-    names_to="tissue",
-    values_to="expression"
-  )
-```
-
-Have a look at the dataframe you created. Use it to recreate this plot:
-
-```{r, echo=F, message=F}
-size_text = 30
-gtex_tidy |> 
-  filter(Gene %in% c('FFAR4', 'KLK3', 'PLOD2', 'MLPH')) |>
-  group_by(Gene, tissue) |>
-  summarize(max_expression = max(expression ,na.rm=T)) |> 
-ggplot() +
-  geom_point(aes(y=Gene, x=max_expression, color=tissue), size = 8) + 
-  theme(axis.text = element_text(size = size_text),
-        axis.title = element_text(size = size_text),
-        legend.text = element_text(size = size_text),
-        legend.title = element_text(size = size_text),
-        strip.text = element_text(size = size_text)) 
-```
-
+::: {.column width="70%}
+![server pic](https://psyteachr.github.io/shiny-tutorials/images/01-first-app/05-app-interface.png)
 :::
-:::{.column width="30%"}
-The `max_expression` variable in the x-axis of the plot indicates the maximum expression across all samples (in whatever grouping we are looking at).
 
-It's helpful to think backwards from the output you want. First outline the ggplot code that would generate the given plot. What does the dataset need to look like that is going into `ggplot` in order to get the plot shown here? How can we get from `gtex_tidy` to that data? 
+::: {.column width="30%"}
+![kitchen pic](https://www.shutterstock.com/image-vector/reserved-modern-restaurant-table-tablecloth-candles-754757053)
 :::
 ::::
+
+
+## Summary
+
+- The UI and the server worker closely together to create our shiny app.
+- Users interact with the UI where they can toggle inputs to choose how they want to interact with their data. These inputs are relayed to the server where the output is created in accordance with the chosen inputs. These outputs are then sent back to the UI for users to see.
+- The shiny app works like a restaurant in which there are interactions between the customers (the users) and the staff. The UI is the dinner table where the users can order and customize their meals and later enjoy their meals. The server is the kitchen and the restaurant staff that create the customer's meals! If there is bad communication between the customers and the staff, the correct meal will not be made!
+
+![interaction pic](https://www.shutterstock.com/image-vector/reserved-modern-restaurant-table-tablecloth-candles-754757053)
+
+## Learning Check {data-background-color=teal}
+
+1. What are some good qualities of a shiny app?
+
+2. What are the two main components of a shiny app, and what do they do?
+
+3. Fill in the blanks: The inputs are selected in the _____ by the app users. The outputs are then created in the ________ and later shown back in the _________.
+
+
+# How do we work with inputs and outputs? {data-background-color=green}
+
+## Inputs
+
+- Shiny inputs are displayed on the UI for users to choose different options for their analysis.
+- With inputs, we can select variables, filter data, change plot types, and more!
+- Luckily, we have 'widgets' that are easy functions to implement to use as inputs through shinyWidgets and other similar packages.
+
+![Widget examples](https://www.shutterstock.com/image-vector/reserved-modern-restaurant-table-tablecloth-candles-754757053)
+
+[Shiny Widget Gallery](https://shiny.posit.co/r/gallery/widgets/widget-gallery/){target="_blank"}
+
+
+## Input Structure
+
+The basic structure of input functions are similar to each other.
+
+- The key to using inputs is to properly ID them so we can call them throughout our server code. We call them with 'input$inputId' in our code.
+
+![](../4-r-shiny-basics-figures/inputexample.png){width=80%}
+
+## Creating Outputs
+
+- Outputs are created in the server portion of our code. Outputs can be a range of objects including but not limited to tables, graphs, and text.
+- Whenever we create output in the server, we use 'render' code. We can think of rendering an object as preparing it to be used as an output. In our restaurant analogy, this equates to cooking our ingredients in the kitchen to create the meal.
+- We use these render functions and assign them to a specific output ID using 'output$outputId'.
+- These output IDs can then be called in the UI using output functions 
+- Example here for labeling
+- Can also show tables 
+- Should this be two separate slides?
+
+## Calling Outputs
+
+
+## Exercises: Labeling our inputs and outputs! {data-background-color=teal}
+
+# How do we deploy our apps? {data-background-color=blue}
+
+## Local versus Global
+
+# Demo time! {data-background-color=pink}
+
+# Project time! {data-background-color=red}
 
 ## Filtering grouped data
 
@@ -301,7 +281,7 @@ tidy |>
 - `tidyr::pivot_longer()` is the function you will most often want to use to tidy your data
 - the three important arguments are: a) a selection of columns, b) the name of the new key column, and c) the name of the new value column
 
-![](https://swcarpentry.github.io/r-novice-gapminder/fig/14-tidyr-fig3.png)
+![](https://psyteachr.github.io/shiny-tutorials/images/01-first-app/05-app-interface.png)
 
 ## Tidying data with pivot_longer()
 
