@@ -106,10 +106,6 @@ c("a", "b", "c") == "b"
 filter(sleep, occupation == "Teacher")
 ```
 
-- why doesn't `Occupation == Teacher` work?
-- why doesn't `Occupation == teacher` work?
-- why doesn't `"Occupation" == "Teacher"` make sense?
-
 ## Filtering on computed values
 - the condition can contain computed values
 
