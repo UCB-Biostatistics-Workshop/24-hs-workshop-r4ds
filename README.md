@@ -1,1 +1,1 @@
-# See the [course website here](https://alejandroschuler.github.io/r4ds-courses/)
+# See the [course website here](http://ucb-biostatistics-workshop.github.io/f24/)
