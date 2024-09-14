@@ -24,17 +24,17 @@ echo: true
 library(tidyverse)
 ```
 ```{r, eval=F}
-genes = read_csv("https://tinyurl.com/cjkuecnc")
+sleep = read_csv("https://raw.githubusercontent.com/UCB-Biostatistics-Workshop/f24/summer-2023/data/ss.csv")
 ```
 ```{r, include=F}
-genes = read_csv("https://tinyurl.com/cjkuecnc")
+sleep = read_csv("https://raw.githubusercontent.com/UCB-Biostatistics-Workshop/f24/summer-2023/data/ss.csv")
 ```
 
 - We know this reads a .csv from a file and creates something called a "data frame" 
 - We've been using this data frame in code like
 ```{r, eval=F}
-ggplot(genes) + 
-  geom_bar(aes(x = ancestry, fill = phenotype))
+ggplot(sleep) + 
+  geom_bar(aes(x = bmi_category, fill = gender))
 ```
 
 - But what does this syntax really mean? Is it useful outside of making plots?
@@ -46,10 +46,10 @@ ggplot(genes) +
 - To do complex computations, we need to be able to give
 names to things.
 ```{r, eval=F}
-genes = read_csv("https://tinyurl.com/cjkuecnc")
+sleep = read_csv("https://raw.githubusercontent.com/UCB-Biostatistics-Workshop/f24/summer-2023/data/ss.csv")
 ```
 
-- This code *assigns* the result of running `read_csv("https://tinyurl.com/cjkuecnc")` to the name `gene`
+- This code *assigns* the result of running `read_csv("https://raw.githubusercontent.com/UCB-Biostatistics-Workshop/f24/summer-2023/data/ss.csv")` to the name `sleep`
 - You can do this with any values and/or functions
 
 :::: {.columns}
@@ -121,7 +121,7 @@ what can be a name.
 There are different conventions for constructing compound names. Warning:
 disputes over the right way to do this can get heated.
 ```{r, prompt=FALSE,eval=FALSE,tidy=FALSE}
-stringlength
+stringlength 
 string.length
 StringLength
 stringLength
@@ -224,8 +224,8 @@ variable `=` value.
 - When using names, the order of the named arguments
 does not matter.
 ```{r, tidy=F}
-ggplot(data=genes) + 
-  geom_point(mapping=aes(y=EIF3L, x=VAPA))
+ggplot(data=sleep) + 
+  geom_point(mapping=aes(y=sleep_duration, x=quality_of_sleep))
 ```
 
 :::
@@ -234,8 +234,8 @@ ggplot(data=genes) +
 - If you leave the names off, R defaults to a **positional** order that is specific to each function (e.g. for `aes()`, `x` comes first, then `y`)
 - you can see the default order of the arguments in the help page for each function
 ```{r, tidy=F} 
-ggplot(genes) + 
-  geom_point(aes(VAPA, EIF3L))
+ggplot(sleep) + 
+  geom_point(aes(quality_of_sleep, sleep_duration))
 ```
 
 :::
