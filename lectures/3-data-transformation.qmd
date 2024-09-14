@@ -62,7 +62,7 @@ This dataset consists of collected survey results from 373 individuals. The foll
 - Sleep information: sleep duration (hours), quality of sleep (scale from 1-10), sleep disorder (none, insomnia, sleep apnea)
 - Other health and lifestyle information: physical activity level (minutes/day), stress level (scale 1-10), BMI category (underweight, normal, overweight), blood pressure (systolic/diastolic), heart rate (bpm), daily steps (number of steps walked per day)
 
-- **Goal.** We will use the data here to illustrate different functions for data transformation. #needs updating
+- **Goal.** We will use the data here to illustrate how we can use the four basic data frame functions to answer questions we might have about our data. #needs updating
 
 
 ```{r, message=F}
@@ -86,7 +86,7 @@ nrow(sleep)
 - It takes two arguments: the dataset and the condition
 
 ```{r, message=F}
-filter(sleep, Sleep.Duration < 6)
+filter(sleep, sleep_duration < 6)
 ```
 
 ## Comparisons
@@ -99,25 +99,11 @@ c(1,5,-22,4) > 0
 c("a", "b", "c") == "b"
 ```
 
-## Comparing to NA
-- A common "gotcha" is that  `==`  cannot be used to compare to `NA`:
-```{r}
-x = NA
-x == NA
-```
-
-- The result actually makes sense though, because I'm asking if [an unknown value] is the same as [another unknown value]. Since either side could be any value, the right answer is "I don't know".
-- To check if something is `NA`, use `is.na()`
-```{r}
-x = NA
-is.na(x)
-```
-
 ## Equality on Strings
 - you can use `==` to test whether a string variable matches given text
 - but remember to quote the text you want to compare to
 ```{r}
-filter(sleep, Occupation == "Teacher")
+filter(sleep, occupation == "Teacher")
 ```
 
 - why doesn't `Occupation == Teacher` work?
@@ -128,7 +114,7 @@ filter(sleep, Occupation == "Teacher")
 - the condition can contain computed values
 
 ```{r, message=F}
-filter(sleep, `Sleep Duration` * `Quality of Sleep` > 75)
+filter(sleep, sleep_duration * quality_of_sleep > 75)
 ```
 
 - note that we didn't actually do anything to the values in the data. 
@@ -143,21 +129,22 @@ nrow(sleep)
 ```
 
 ```{r, eval=F}
-filter(sleep, Occupation == "Teacher")
-filter(sleep, `Sleep Duration` <= 6)
+filter(sleep, occupation == "Teacher")
+filter(sleep, sleep_duration <= 6)
 nrow(sleep)
 ```
 
-
+```
 ## Exercise
-
+EH: I want to get rid of this to save time
 - Without using the internet, think of how you can use `filter` multiple times to create a dataset where quality of sleep is greater than or equal to 8 **and** stress level is less than or equal to 3
 
 - Using any resources you like, figure out how to use `filter` to create a dataset where **either** quality of sleep is greater than or equal to 8 **or** stress level is less than or equal to 3
+```
 
 ## Logical conjunctions (AND)
 ```{r}
-filter(sleep, `Quality of Sleep` >=8 & `Stress Level` <= 3)
+filter(sleep, quality_of_sleep >=8 & stress_level <= 3)
 ```
 
 - This filters by the **conjunction** of the two constraints---both must be satisfied.
@@ -173,15 +160,14 @@ FALSE & TRUE
 
 - For filter, you can do "AND" by passing in two separate conditions as two different arguments, but the comma and ampersand are not generally interchangeable
 ```{r}
-# filter(sleep, `Quality of Sleep` >=8 & `Stress Level` <= 3)
-filter(sleep, `Quality of Sleep` >=8, `Stress Level` <= 3)
+filter(sleep, quality_of_sleep >=8, stress_level <= 3)
 ```
 
 
 ## Logical conjunctions (OR)
 
 ```{r}
-filter(sleep, Occupation == "Teacher" | Occupation == "Lawyer")
+filter(sleep, occupation == "Teacher" | occupation == "Lawyer")
 ```
 
 - The pipe sign ` | ` stands for "OR" 
@@ -190,7 +176,7 @@ filter(sleep, Occupation == "Teacher" | Occupation == "Lawyer")
 
 ## Negation (NOT)
 ```{r}
-filter(sleep, !(Occupation=="Teacher"))
+filter(sleep, !(occupation=="Teacher"))
 ```
 - The exclamation point ` ! ` means "NOT", which negates the logical condition
 - sometimes it's easier to say what you *don't* want!
@@ -199,10 +185,10 @@ filter(sleep, !(Occupation=="Teacher"))
 
 **Do these two exercises separately**
 
-- Filter the sleep data to keep just the rows where the product of Sleep Duration and Quality of Sleep is between 36 and 40.
+- Filter the sleep data to keep just the rows where the product of sleep duration and quality of sleep is between 36 and 40.
 
 
-- How many people with normal BMI have sleep apnea? (Note: The sleep dataset has two different values to represent normal BMI. You can also use parentheses to indicate order of logical conjunctions)
+- How many people with normal BMI have sleep apnea? 
 
 
 ## Sampling rows
@@ -237,13 +223,13 @@ filter(sleep, row_number()<=3)
 - `arrange()` takes a data frame and a column, and sorts the rows by the values in that column (ascending order).
 - Again, the first argument is the data frame and the other arguments tell the function what to do with it
 ```{r}
-arrange(sleep, `Stress Level`)
+arrange(sleep, stress_level)
 ```
 
 ## Descending sort
 - Use the desc function to arrange by descending values
 ```{r}
-arrange(sleep, desc(`Stress Level`))
+arrange(sleep, desc(stress_level))
 ```
 
 ## Multisort
@@ -251,7 +237,7 @@ arrange(sleep, desc(`Stress Level`))
 - This is useful if there is a tie in sorting by the first column.
 
 ```{r}
-arrange(sleep, `Stress Level`, `Physical Activity Level`)
+arrange(sleep, stress_level, physical_activity_level)
 ```
 
 
@@ -373,6 +359,7 @@ filter(sleep, Gene=="ZZZ3")
 sleep |> filter(Gene=="ZZZ3") 
 sleep %>% filter(Gene=="ZZZ3") 
 ```
+
 
 ## Exercise: Pipe to ggplot {data-background-color=teal}
 
