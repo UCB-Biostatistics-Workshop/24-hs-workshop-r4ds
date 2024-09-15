@@ -244,9 +244,9 @@ ggplot(sleep) +
 ## Optional arguments
 - Many R functions have arguments that you don't always have to specify. For example:
 ```{r setup, eval=FALSE}
-file_name = "https://tinyurl.com/cjkuecnc"
-genes_10 = read_csv(file_name, n_max=10) # only read in 10 rows
-genes = read_csv(file_name) 
+file_name = "https://raw.githubusercontent.com/UCB-Biostatistics-Workshop/f24/summer-2023/data/ss.csv"
+sleep_10 = read_csv(file_name, n_max=10) # only read in 10 rows
+sleep = read_csv(file_name) 
 ```
 - `n_max` tells `read_csv()` to only read the first 10 rows of the dataset. 
 - If you don't specify it, it defaults to infinity (i.e. R reads until there are no more lines in the file).
@@ -256,8 +256,9 @@ genes = read_csv(file_name)
 Why does this code generate errors?
 
 ```{r, tidy=F}
-ggplot(the_data=genes) + 
-  geom_point(mapping=aes(y_axis=EIF3L, x_axis=VAPA))
+ggplot(the_data=sleep) + 
+  geom_point(mapping=aes(y_axis=sleep_duration,
+                         x_axis=quality_of_sleep))
 ```
 
 ## Exercise [together] {data-background-color=teal}
@@ -267,16 +268,16 @@ ggplot(the_data=genes) +
 I'm trying to generate this plot:
 
 ```{r, echo=F, tidy=F}
-ggplot(data=genes) + 
-  geom_point(aes(EIF3L, VAPA))
+ggplot(data=sleep) + 
+  geom_point(aes(quality_of_sleep,sleep_duration))
 ```
 :::
-:::{.column}
+:::{.columns}
 But when I use this code, I get:
 
 ```{r, tidy=F}
-ggplot(data=genes) + 
-  geom_point(aes(VAPA, EIF3L))
+ggplot(data=sleep) + 
+  geom_point(aes(sleep_duration, quality_of_sleep))
 ```
 
 What am I doing wrong?
