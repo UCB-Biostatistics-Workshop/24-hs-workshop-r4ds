@@ -1,6 +1,6 @@
 ---
 title: Tabular Data
-author: Emily Hou, Lauren Liao
+author: Emily Hou
 format:
   revealjs:
     smaller: true
@@ -385,30 +385,28 @@ ggplot(outliers) +
 
 ***
 - The select function will return a subset of the tibble, using only the requested columns in the order specified.
-- first argument is a data frame, then columns you want to select
+- first argument is a data frame, then list the columns you want to select
 
 ```{r}
-sleep |>
-  select(Gene, Ind, expression=Blood)
+select(sleep, occupation, sleep_duration)
 ```
 
 - you can rename columns in the result with the syntax ` new_name = old_name`
+
+```{r}
+select(sleep, job=occupation, sleep_duration)
+```
 
 ## Helpers
 - `select()` can also be used with handy helpers like `starts_with()` and `contains()`
 
 ```{r}
-sleep |>
-  select(starts_with("L"))
+select(sleep, contains('steps'))
 ```
 - Use `?select` to see all the possibilities
 
 ***
 
-```{r}
-sleep |>
-  select(contains("N"))
-```
 - The quotes around the letter `"N"` make it a string. If we did not do this, `R` would think it was looking for a variable called `N` and not just the plain letter.
 - We don't have to quote the names of columns (like `Ind`) because the `tidyverse` functions know that we are working within the dataframe and thus treat the column names like they are variables in their own right
 
@@ -417,8 +415,7 @@ sleep |>
 - we can even select columns based on metadata (but not values!)
 
 ```{r}
-sleep |>
-  select(where(is.numeric))
+select(sleep, where(is.numeric))
 ```
 
 
@@ -426,8 +423,8 @@ sleep |>
 
 - `select()` can also be used to select everything **except for** certain columns
 ```{r}
-sleep |>
-  select(-starts_with("L"), -Ind)
+select(sleep, -starts_with('s'), -person_id)
+
 ```
 
 
@@ -437,28 +434,6 @@ A colleague wants to see the blood expression for the gene A2ML1 for each person
 
 Before writing any code, break the problem down conceptually into steps. Figure out how to do each step independently before you put them together.
 
-## pull() 
-- `select()` has a friend called `pull()` which returns a vector instead of a (one-column) data frame
-
-![](https://www.gastonsanchez.com/intro2cwd/images/eda/dplyr-extract-column.svg)
-
-*** 
-::::{.columns}
-:::{.column}
-```{r max.lines = 3}
-# same as sleep$Gene, but pipeable!
-# eg. sleep |> .... |> pull(some_col) 
-sleep |> pull(Gene)
-```
-
-:::
-:::{.column}
-```{r}
-sleep |> select(Gene)
-```
-
-:::
-::::
 
 ## Rename columns
 ::::{.columns}
