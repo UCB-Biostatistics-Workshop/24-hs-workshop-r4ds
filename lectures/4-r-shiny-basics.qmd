@@ -66,6 +66,7 @@ install.packages('shinyWidgets')
 - The UI is what the users of shiny app see and interact with
 - In the grand scheme of the shiny app, you can think of the shiny app is a restaurant. The user of the shiny app is the restaurant customer, and the UI is the table where the customer sits at! The UI will have input options, like a dinner menu, where users can put in 'orders' for how they want to analyze their data. 
 - Once the output is created in the server, it is shown on the UI. In terms of our analogy, once the order is created, it is brought back to the table for the customer to enjoy!
+- Be mindful of separating functions in the UI with commas (will revisit at demo)
 
 :::: {.columns}
 
@@ -122,6 +123,7 @@ install.packages('shinyWidgets')
 - Shiny inputs are displayed on the UI for users to choose different options for their analysis.
 - With inputs, we can select variables, filter data, change plot types, and more!
 - Luckily, we have 'widgets' that are easy functions to implement to use as inputs through shinyWidgets and other similar packages.
+- When you list inputs, be sure to separate them with commas
 
 ![Widget examples](https://www.shutterstock.com/image-vector/reserved-modern-restaurant-table-tablecloth-candles-754757053)
 
@@ -136,532 +138,56 @@ The basic structure of input functions are similar to each other.
 
 ![](../4-r-shiny-basics-figures/inputexample.png){width=80%}
 
-## Creating Outputs
+##  Outputs
 
 - Outputs are created in the server portion of our code. Outputs can be a range of objects including but not limited to tables, graphs, and text.
 - Whenever we create output in the server, we use 'render' code. We can think of rendering an object as preparing it to be used as an output. In our restaurant analogy, this equates to cooking our ingredients in the kitchen to create the meal.
-- We use these render functions and assign them to a specific output ID using 'output$outputId'.
-- These output IDs can then be called in the UI using output functions 
-- Example here for labeling
-- Can also show tables 
-- Should this be two separate slides?
+- Show tables 
 
-## Calling Outputs
+## Output Structure
+The basic structure when rendering outputs are also similar to one another.
+- The key to using outputs is to properly ID them so we can call them later back to our UI. We call them with 'output$outputID' in our code.
+- We also want to make sure that we are using the correct render function based on our desired output.
+![](../4-r-shiny-basics-figures/inputexample.png){width=80%}
 
+## Calling our outputs
+We can call our outputs back to our UI using their output IDs. Specifically, we have code that allows us to call outputs based on their output type.
+
+- Table here
+
+## A note on the reactive function
+You will see code later that uses the reactive function in the server. The main thing about the reactive function is that it allows us to streamline our computations. In our case, we will use it to change the data throughout the server that we work with based on the input values. This saves computation time as we will not have to reactively change the data in every render function.
 
 ## Exercises: Labeling our inputs and outputs! {data-background-color=teal}
 
+1. What does this following code do? Address what all the arguments do in the UI.
+Have some input code.
+
+2. Suppose we want to create a plot. How do we set this up in the server, and how do we call it in the UI? (Hint: make sure to address which output and render functions and also properly use IDs)
+
 # How do we deploy our apps? {data-background-color=blue}
 
-## Local versus Global
+## Local versus Hosted
+One of the great things about shiny apps is that we can deploy them locally (on our own computers) or host them online (with URLs anyone can access). Deploying them locally doesn't necessarily mean no one else can access them since we can share the code for people to also locally deploy the shiny app. For now we will focus on local deployment.
+
+- We can locally deploy the app just by running the shinyApp function after defining the UI and the server!
+- This will pop up a separate window with your functional shiny app
+- If there are any errors in the UI or server code, your app will not run or will not run as expected
+
+```{r, eval=FALSE}
+ui<-fluidPage(
+  
+)
+
+server<-function(input, output){
+  
+}
+
+shinyApp(ui = ui, server = server)
+```
+
 
 # Demo time! {data-background-color=pink}
 
 # Project time! {data-background-color=red}
 
-## Filtering grouped data
-
-- `filter()` is aware of grouping. When used on a grouped dataset, it applies the filtering condition separately in each group
-
-```{r, tidy=F}
-gtex |>
-  select(Ind, Gene, Lung) |>
-  group_by(Ind) |>
-  filter(Lung == max(Lung, na.rm=T))
-```
-
-- This is an extremely convenient idiom for finding the rows that minimize or maximize a condition
-
-## Mutating grouped data
-
-::::{.columns}
-:::{.column}
-```{r, tidy=F, message=F}
-gtex |>
-  group_by(Gene) |>
-  mutate(rank = rank(-Blood)) |>
-  select(Gene, Ind, rank, Blood) |>
-  filter(rank <= 3) |>
-  arrange(Gene, rank)
-```
-
-- when `mutate` is used on a grouped dataset, it applies the mutation separately in each group
-
-:::
-:::{.column}
-
-```{r, tidy=F, message=F}
-gtex |>
-  mutate(rank = rank(-Blood)) |>
-  select(Gene, Ind, rank, Blood) |>
-  filter(rank <= 3) |>
-  arrange(Gene, rank)
-```
-
-- without the `group_by`, the ranking is done overall across all genes.
-:::
-::::
-
-## Exercise: Max expression blood and lung {data-background-color=teal}
-
-Create a dataset that shows which gene has the lowest expression in each person's heart tissue
-
-
-# Tidy data: rearranging a data frame {data-background-color=black}
-
-## Messy data
-- Sometimes data are organized in a way that makes it difficult to compute in a vector-oriented way. For example, look at this dataset:
-
-```{r, message = FALSE}
-gtex_time_tissue_data = read_csv("https://tinyurl.com/3wd4dcsf")
-
-head(gtex_time_tissue_data, 3)
-```
-
-- the values in the table represent how many samples of that tissue were collected during that year.
-- How could I use ggplot to make this plot? It's hard!
-
-```{r, echo = FALSE, warning = FALSE}
-clean = 
-  gtex_time_tissue_data |>
-  select(-`2017`) |>
-  pivot_longer(cols = `2011`:`2016`, names_to = "year", values_to = "n") |>
-  group_by(tissue) |>
-  mutate(freq = n / sum(n)) |>
-  ungroup() |>
-  rename(count = n)
-```
-
-```{r, echo = FALSE, warning = FALSE, fig.width = 20, fig.height = 5}
-clean |> 
-  filter(tissue %in% c("Blood", "Heart", "Liver", "Lung")) |>
-  ggplot() +
-  geom_bar(aes(x = year, y = count, fill = tissue), stat = 'identity')
-```
-
-## Messy data
-```{r}
-head(gtex_time_tissue_data, 3)
-```
-
-- One of the problems with the way these data are formatted is that the year collected, which is a property of the samples, is stuck into the names of the columns. 
-- Because of this, it's also not obvious what the numbers in the table mean (although we know they are counts)
-
-## Tidy data
-- Here's a better way to organize the data:
-```{r, echo = FALSE}
-tidy = 
-  gtex_time_tissue_data |>
-  pivot_longer(-tissue, names_to="year", values_to="count")
-
-head(tidy)
-```
-
-This data is *tidy*. Tidy data follows three precepts:
-
-1. each "variable" has its own dedicated column
-2. each "observation" has its own row
-3. each type of observational unit has its own data frame
-
-In our example, each of the **observations** are different **groups of samples**, each of which has an associated _tissue_, _year_, and _count_. These are the _variables_ that are associated with the groups of samples. 
-
-## Tidy data
-
-Tidy data is easy to work with.
-
-```{r, tidy = FALSE, warning = FALSE, fig.width = 20, fig.height = 5}
-tidy |> 
-  filter(tissue %in% c("Blood", "Heart", "Liver", "Lung")) |>
-  ggplot() +
-  geom_bar(aes(x = year, y = count, fill = tissue), stat = 'identity')
-```
-
-## Tidying data with pivot_longer()
-
-- `tidyr::pivot_longer()` is the function you will most often want to use to tidy your data
-- the three important arguments are: a) a selection of columns, b) the name of the new key column, and c) the name of the new value column
-
-![](https://psyteachr.github.io/shiny-tutorials/images/01-first-app/05-app-interface.png)
-
-## Tidying data with pivot_longer()
-
-- `tidyr::pivot_longer()` is the function you will most often want to use to tidy your data
-```{r, tidy = FALSE}
-gtex_time_tissue_data |>
-  pivot_longer(-tissue, names_to = "year", values_to = "count") |>
-  head(2)
-```
-
-- the three important arguments are: a) a selection of columns, b) the name of the new key column, and c) the name of the new value column
-
-![](https://swcarpentry.github.io/r-novice-gapminder/fig/14-tidyr-fig3.png)
-
-## "Messy" data is relative and not always bad
-
-::::{.columns}
-:::{.column}
-```{r, echo = FALSE}
-wide_mice = tibble(
-  mouse = c(1, 2, 3, 4),
-  weight_before = rnorm(4, 10, 2),
-  weight_after = rnorm(4, 11, 2),
-)
-wide_mice
-```
-
-```{r, tidy = FALSE}
-wide_mice |>
-  mutate(weight_gain = weight_after - weight_before) |>
-  select(mouse, weight_gain)
-```
-
-:::
-:::{.column}
-
-```{r, echo = FALSE}
-long_mice = 
-  wide_mice |>
-  pivot_longer(-mouse, names_to = "time", values_to = "weight", names_prefix = "weight_")
-
-long_mice
-```
-
-```{r, tidy = FALSE}
-long_mice |>
-  group_by(mouse) |>
-  mutate(weight_gain = weight - lag(weight)) |>
-  filter(!is.na(weight_gain)) |>
-  select(mouse, weight_gain)
-```
-
-:::
-::::
-
-## Pivoting wider
-
-- As we saw with the mouse example, sometimes our data is actually easier to work with in the "wide" format. 
-- wide data is also often nice to make tables for presentations, or is (unfortunately) sometimes required as input for other software packages
-- To go from long to wide, we use `pivot_wider()`:
-
-::::{.columns}
-:::{.column}
-
-```{r, tidy = FALSE}
-long_mice
-```
-
-:::
-:::{.column}
-
-```{r, tidy = FALSE}
-long_mice |> 
-  pivot_wider(
-    names_from = time, 
-    values_from = weight
-  )
-```
-
-:::
-::::
-
-## Exercise: pivot {data-background-color=teal}
-
-
-::::{.columns}
-:::{.column}
-
-I have a dataset that records the pollution levels (in ppm) in three cities across five months:
-
-```{r, message=F}
-pollution = read_csv(
-  "https://tinyurl.com/yu983bhc"
-)
-pollution
-```
-
-:::
-:::{.column}
-
-Use a pivot and mutate to compute the difference in pollution levels between SF and LA across all 5 months. The output should look like this:
-
-```{r, echo=F}
-pollution |>
-  pivot_wider(names_from="city", values_from="smoke_ppm") |>
-  mutate(SF_LA_diff = SF - LA) |>
-  select(month, SF, LA, SF_LA_diff)
-```
-
-:::
-::::
-
-## Exercise: cleaning GTEX {data-background-color=teal}
-
-Use the GTEX data to reproduce the following plot:
-
-```{r, echo = FALSE, warning = FALSE}
-gtex |>
-  filter(
-    Ind %in% c('GTEX-11GSP', 'GTEX-11DXZ'),
-    Gene %in% c('A2ML1', 'A3GALT2', 'A4GALT')
-  ) |>
-  pivot_longer(
-    Blood:Liver, 
-    names_to = "tissue", 
-    values_to = 'expression'
-  ) |>
-  ggplot() +
-  geom_point(aes(x = Gene, y = expression, color = tissue), size = 5) + 
-  facet_wrap(~Ind)
-```
-
-The individuals and genes of interest are `c('GTEX-11GSP', 'GTEX-11DXZ')` and `c('A2ML1', 'A3GALT2', 'A4GALT')`, respectively.
-
-Think backwards: what do the data need to look like to make this plot? How do we pare down and reformat `gtex` so that it looks like what we need?
-
-## Exercise: tabulating missigness {data-background-color=teal}
-
-Use the GTEX data to make the following table:
-
-```{r, echo = FALSE, message = FALSE}
-print("Number of missing tissues:")
-gtex |>
-  filter(
-    Ind %in% c('GTEX-11GSP', 'GTEX-11DXZ'),
-    Gene %in% c('A2ML1', 'A3GALT2', 'A4GALT')
-  ) |> 
-  pivot_longer(Lung:Liver, names_to = 'tissue', values_to = 'expression') |>
-  group_by(Ind, Gene) |>
-  summarize(n_missing_tissues = sum(is.na(expression))) |>
-  pivot_wider(names_from = Gene, values_from = n_missing_tissues)
-```
-
-The numbers in the table are the number of tissues in each individual for which the gene in question was missing.
-
-
-# Combining multiple tables with joins {data-background-color=black}
-
-
-## Relational data
-
-- When we get an expression dataset, the data is usually divided into an expression matrix with the expression values of each sample, and table(s) with metadata about the samples themselves. 
-
-```{r, message = FALSE, max.lines=4}
-gtex_samples = read_csv("https://tinyurl.com/2hy9awda")
-gtex_subjects = read_csv("https://tinyurl.com/3tfbew8f")
-gtex_batches = read_csv("https://tinyurl.com/3phsbxsj")
-```
-
-***
-
-- The **sample** data has information about the tissue and the subject who contributed the sample, the batch it was processed in, the center the sample was processed at, and the RNA integrity number (RIN score) for the sample. 
-```{r max.lines=4, message = FALSE}
-gtex_samples |> head(1)
-```
-- The **subject** data table contains some subject demographic information.
-```{r max.lines=4, message = FALSE}
-gtex_subjects |> head(1)
-```
-- The **batch** data contains the batch type and the dates the batches were run
-```{r max.lines=4, message = FALSE}
-gtex_batches |> head(1)
-```
-
-***
-
-- These data are not independent of each other. Subjects described in the `subject` data are referenced in the `sample` data, and the batches referenced in the `sample` data are in the `batch` data. The sample ids from the `sample` data are used for accessing expression data.
-
-![](https://raw.githubusercontent.com/alejandroschuler/r4ds-courses/advance-2020/relational_data.png)
-
-- `subject` connects to `sample` via a single variable, `subject_id`.
-- `sample` connects to `batch` through the `batch_id` variable.
-
-
-## An example join
-- Imagine we want to add subject information to the sample data
-- We can accomplish that with a **join**:
-```{r, tidy = FALSE}
-gtex_samples |> 
-  inner_join(gtex_subjects, by = join_by(subject_id))
-```
-
-## Joins
-
-::::{.columns}
-:::{.column}
-```{r, tidy = FALSE}
-x = tibble(
-  key = c(1, 2, 3),
-  val_x = c("x1", "x2", "x3")
-)
-
-y = tibble(
-  key = c(1, 2, 4),
-  val_y = c("y1", "y2", "y3")
-)
-```
-
-<div align="center">
-<img src="https://d33wubrfki0l68.cloudfront.net/108c0749d084c03103f8e1e8276c20e06357b124/5f113/diagrams/join-setup.png">
-</div>
-
-:::
-:::{.column}
-
-```{r}
-inner_join(x, y, by = join_by(key))
-```
-
-- An inner join matches pairs of observations when their "keys" are equal
-- the column that is joined on is specified as a "key" with the argument `by=join_by(column_name)`
-
-<div align="center">
-<img src="https://d33wubrfki0l68.cloudfront.net/3abea0b730526c3f053a3838953c35a0ccbe8980/7f29b/diagrams/join-inner.png">
-</div>
-
-:::
-::::
-
-## Joins: a simple example
-
-::::{.columns}
-:::{.column}
-```{r}
-band_members
-
-band_instruments
-```
-
-:::
-:::{.column}
-
-```{r}
-inner_join(
-  band_instruments, 
-  band_members
-)
-```
-
-```{r}
-full_join(
-  band_instruments, 
-  band_members
-)
-```
-
-:::
-::::
-
-## Duplicate keys
-
-::::{.columns}
-:::{.column}
-```{r}
-x = tibble(
-  key = c(1, 2, 2, 3),
-  val_x = c("x1", "x2", "x3", "x4")
-)
-
-y = tibble(
-  key = c(1, 2, 2, 4),
-  val_y = c("y1", "y2", "y3", "y4")
-)
-```
-
-<div align="center">
-<img src="https://d33wubrfki0l68.cloudfront.net/d37530bbf7749f48c02684013ae72b2996b07e25/37510/diagrams/join-many-to-many.png">
-</div>
-
-:::
-:::{.column}
-
-```{r}
-inner_join(x, y, join_by(key))
-```
-
-When keys are duplicated, multiple rows can match multiple rows, so each possible combination is produced
-
-:::
-::::
-
-## Specifying the keys
-```{r}
-gtex_samples |> 
-  inner_join(gtex_subjects, join_by(center_id))
-```
-
-- Why does this fail?
-
-***
-
-- When keys have different names in different dataframes, the syntax to join is:
-```{r}
-head(gtex, 2)
-head(gtex_subjects, 2)
-```
-```{r}
-gtex |> 
-  inner_join(gtex_subjects, join_by(Ind == subject_id)) |> 
-  head(5)
-```
-Note that the first key (`Ind`) corresponds to the first data frame (`gtex`) and the second key (`subject_id`) corresponds to the second data frame (`gtex_subjects`).
-
-## Exercise: join {data-background-color=teal}
-
-How does the average A2ML1 expression in lung tissue compare between females vs. males? To answer this question let's break it down:
-
-1. Since we only care about A2ML1, we can start by filtering `gtex` to only include those rows.
-2. To add sex information for each subject, we have to join our result to the `gtex_subjects` data frame.
-3. Finally, we can group that result by sex and summarize the average expression in lung tissue.
-
-Write the code to execute these steps.
-
-
-## Exercise: finding expression of specific samples {data-background-color=teal}
-
-Use joins to find the samples collected in 2015 with blood expression greater than 3 of "KRT19" in males. Start with the `batch_data_year`; this data has an extra extracted column with the year.
-```{r}
-batch_data_year = 
-  gtex_batches |> 
-  mutate(
-    batch_date = lubridate::mdy(batch_date), 
-    year = lubridate::year(batch_date)
-  ) 
-
-head(batch_data_year, 2)
-```
-
-Start by figuring out what other data frame(s) you have to join to. Consider also what other operations you must do to pick out the data of interest and in what order (if it matters).
-
-## Exercise: join vs. concatenation {data-background-color=teal}
-Another common way to combine two data frames is `bind_rows` (or `bind_cols`). Read the documentation for those functions and compare to what you know about joins. What is fundamentally different about binding (concatenating) vs. joining?
-
-When would you do one vs. the other?
-
-## Joining on multiple columns
-
-::::{.columns}
-:::{.column}
-Let's read in some more data
-```{r, message = FALSE}
-gtex_monthly_tissues = 
-  read_csv("https://tinyurl.com/nze7rz7a")
-head(gtex_monthly_tissues, 2)
-
-gtex_monthly_samples = read_csv("https://tinyurl.com/2s5neht6")
-head(gtex_monthly_samples, 2)
-```
-
-:::
-:::{.column}
-- It is often desirable to find matches along more than one column, such as month and year in this example. Here we're joining tissue sample counts with total sample counts.
-```{r, message = FALSE}
-inner_join(
-  gtex_monthly_tissues,
-  gtex_monthly_samples, 
-  join_by(month, year)
-) |>
-head(5)
-```
-
-:::
-::::
