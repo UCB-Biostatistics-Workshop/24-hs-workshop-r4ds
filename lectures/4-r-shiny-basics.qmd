@@ -36,9 +36,7 @@ install.packages('shinyWidgets')
 ```
 
 
-![](../4-r-shiny-basics-figures/shinyscreenshot.png){width=80%}
-
-[Shiny Example](https://alissagordon.shinyapps.io/PHAR_synthetic_data_explorer/){target="_blank"}
+[![Shiny app example: click to explore](../4-r-shiny-basics-figures/shinyscreenshot.png){fig-align="center" width=80%}](https://alissagordon.shinyapps.io/PHAR_synthetic_data_explorer/){target="_blank"}
 
 
 # Why are shiny apps useful? {data-background-color=navy}
@@ -46,7 +44,7 @@ install.packages('shinyWidgets')
 ## They are useful because...
 
 - We can make complex apps without knowledge of languages such as HTML and JavaScript
-- We can share them easily through URLs or as R files for local implementation
+- We can share them easily as R files for local implementation or as URLs
 - They are open source (affordable and accessible)!
 - They allow for interactive and quick data exploration
 
@@ -56,63 +54,72 @@ install.packages('shinyWidgets')
 
 - Shiny apps consist of two key components, both coded in R!
 - These components are the User Interface (aka UI) and the Server
-- These two work together to create the shiny app through a series of inputs and outputs
+- These two work together, communicating through inputs and outputs, to create the shiny app 
 
-![](https://media.geeksforgeeks.org/wp-content/uploads/20221211154233/Screenshot-(238).png)
+![](https://media.geeksforgeeks.org/wp-content/uploads/20221211154233/Screenshot-(238).png){fig-align="center"}
 
 
-## The UI
+## The UI and Server
 
-- The UI is what the users of shiny app see and interact with
-- In the grand scheme of the shiny app, you can think of the shiny app is a restaurant. The user of the shiny app is the restaurant customer, and the UI is the table where the customer sits at! The UI will have input options, like a dinner menu, where users can put in 'orders' for how they want to analyze their data. 
-- Once the output is created in the server, it is shown on the UI. In terms of our analogy, once the order is created, it is brought back to the table for the customer to enjoy!
-- Be mindful of separating functions in the UI with commas (will revisit at demo)
+- The UI is the front-end of a Shiny app, where users interact with various input elements (like sliders, buttons, text fields, and dropdowns). It defines what the app looks like and how users provide their preferences or data.
+- These preferences are processed by the server. The server performs the necessary computations, and generates outputs (such as plots and tables).
+- These outputs are then sent back to the UI to be displayed to the users!
 
 :::: {.columns}
 
-::: {.column width="70%}
-![](https://psyteachr.github.io/shiny-tutorials/images/01-first-app/05-app-interface.png)
+::: {.column width="50%}
+
+![](../4-r-shiny-basics-figures/user.png){width=70% style="display: block; margin-left: auto; margin-right: auto;"}
+
 :::
 
-::: {.column width="30%"}
-![](https://www.shutterstock.com/image-vector/reserved-modern-restaurant-table-tablecloth-candles-754757053)
+::: {.column width="50%"}
+<br>
+![](../4-r-shiny-basics-figures/serverr.png){style="display: block; margin-left: auto; margin-right: auto;"}
 :::
 ::::
 
 
 
-## The Server
+## The Restaurant Analogy: The UI
 
-- The server is what happens behind the scenes in our shiny app! Most of the actual work goes on here. This typically includes calculations, simulations, data manipulation, and plotting.
-- In terms of the restaurant, the server is the kitchen! It takes the orders from the customer and creates the desired output! This output is then relayed back to the UI for the user.
+- In the grand scheme of the shiny app, you can think of the shiny app as a restaurant. 
+- The user of the shiny app is the restaurant customer, and the UI is the table where the customer sits at! You can also think of the user inputs as a dinner menu at the restaurant, giving the customer different options for their food.
+
+![](../4-r-shiny-basics-figures/customer.webp){fig-align="center"}
 
 
-:::: {.columns}
 
-::: {.column width="70%}
-![server pic](https://psyteachr.github.io/shiny-tutorials/images/01-first-app/05-app-interface.png)
-:::
 
-::: {.column width="30%"}
-![kitchen pic](https://www.shutterstock.com/image-vector/reserved-modern-restaurant-table-tablecloth-candles-754757053)
-:::
-::::
+## The Restaurant Analogy: The Server
+- The customer's orders are then taken back to the kitchen. We can think of the kitchen and staff as our shiny server. You can think of the meal as the output from the shiny app. The kitchen makes the customer's meal based on their order.
+
+![](../4-r-shiny-basics-figures/kitchen.webp){fig-align="center"}
+
+
+## The Restaurant Analogy: Back to the UI!
+- Once the meal is created, it is brought back to the customer's table for the customer to enjoy!
+- For the restaurant to be successful, we want to ensure proper communication between the customer and the kitchen so that the customer gets what they want!
+
+![](../4-r-shiny-basics-figures/happycustomer.webp){fig-align="center"}
+
 
 
 ## Summary
 
-- The UI and the server worker closely together to create our shiny app.
-- Users interact with the UI where they can toggle inputs to choose how they want to interact with their data. These inputs are relayed to the server where the output is created in accordance with the chosen inputs. These outputs are then sent back to the UI for users to see.
-- The shiny app works like a restaurant in which there are interactions between the customers (the users) and the staff. The UI is the dinner table where the users can order and customize their meals and later enjoy their meals. The server is the kitchen and the restaurant staff that create the customer's meals! If there is bad communication between the customers and the staff, the correct meal will not be made!
+- The UI and the server worker closely together to create the shiny app.
+- The shiny app works like a restaurant. If the customers' orders are not properly communicated to the kitchen, we will have wrong orders and unhappy customers!
 
-![interaction pic](https://www.shutterstock.com/image-vector/reserved-modern-restaurant-table-tablecloth-candles-754757053)
+![](../4-r-shiny-basics-figures/interactions.png){fig-align="center"}
 
 ## Learning Check {data-background-color=teal}
 
-1. What are some good qualities of a shiny app?
-
+1. Why are shiny apps useful?
+<br>
+<br>
 2. What are the two main components of a shiny app, and what do they do?
-
+<br>
+<br>
 3. Fill in the blanks: The inputs are selected in the _____ by the app users. The outputs are then created in the ________ and later shown back in the _________.
 
 
@@ -120,14 +127,12 @@ install.packages('shinyWidgets')
 
 ## Inputs
 
-- Shiny inputs are displayed on the UI for users to choose different options for their analysis.
+- Inputs are displayed on the UI for users to choose different options for their analysis.
 - With inputs, we can select variables, filter data, change plot types, and more!
-- Luckily, we have 'widgets' that are easy functions to implement to use as inputs through shinyWidgets and other similar packages.
-- When you list inputs, be sure to separate them with commas
+- Luckily, we have 'widgets' that are easy functions to create inputs through shinyWidgets and other similar packages.
+- When you list inputs in the UI, be sure to separate them with commas
 
-![Widget examples](https://www.shutterstock.com/image-vector/reserved-modern-restaurant-table-tablecloth-candles-754757053)
-
-[Shiny Widget Gallery](https://shiny.posit.co/r/gallery/widgets/widget-gallery/){target="_blank"}
+[![](../4-r-shiny-basics-figures/widgets.png){fig-align="center" width=80%}](https://shiny.posit.co/r/gallery/widgets/widget-gallery/){target="_blank"}
 
 
 ## Input Structure
