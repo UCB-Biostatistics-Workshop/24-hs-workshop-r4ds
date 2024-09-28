@@ -36,7 +36,7 @@ install.packages('shinyWidgets')
 ```
 
 
-[![Shiny app example: click to explore](../4-r-shiny-basics-figures/shinyscreenshot.png){fig-align="center" width=80%}](https://alissagordon.shinyapps.io/PHAR_synthetic_data_explorer/){target="_blank"}
+[![Shiny app example: click to explore](4-r-shiny-basics-figures/shinyscreenshot.png){fig-align="center" width=80%}](https://alissagordon.shinyapps.io/PHAR_synthetic_data_explorer/){target="_blank"}
 
 
 # Why are shiny apps useful? {data-background-color=navy}
@@ -69,13 +69,13 @@ install.packages('shinyWidgets')
 
 ::: {.column width="50%}
 
-![](../4-r-shiny-basics-figures/user.png){width=70% style="display: block; margin-left: auto; margin-right: auto;"}
+![](4-r-shiny-basics-figures/user.png){width=70% style="display: block; margin-left: auto; margin-right: auto;"}
 
 :::
 
 ::: {.column width="50%"}
 <br>
-![](../4-r-shiny-basics-figures/serverr.png){style="display: block; margin-left: auto; margin-right: auto;"}
+![](4-r-shiny-basics-figures/serverr.png){style="display: block; margin-left: auto; margin-right: auto;"}
 :::
 ::::
 
@@ -86,7 +86,7 @@ install.packages('shinyWidgets')
 - In the grand scheme of the shiny app, you can think of the shiny app as a restaurant. 
 - The user of the shiny app is the restaurant customer, and the UI is the table where the customer sits at! You can also think of the user inputs as a dinner menu at the restaurant, giving the customer different options for their food.
 
-![](../4-r-shiny-basics-figures/customer.webp){fig-align="center"}
+![](4-r-shiny-basics-figures/customer.webp){fig-align="center"}
 
 
 
@@ -94,14 +94,14 @@ install.packages('shinyWidgets')
 ## The Restaurant Analogy: The Server
 - The customer's orders are then taken back to the kitchen. We can think of the kitchen and staff as our shiny server. You can think of the meal as the output from the shiny app. The kitchen makes the customer's meal based on their order.
 
-![](../4-r-shiny-basics-figures/kitchen.webp){fig-align="center"}
+![](4-r-shiny-basics-figures/kitchen.webp){fig-align="center"}
 
 
 ## The Restaurant Analogy: Back to the UI!
 - Once the meal is created, it is brought back to the customer's table for the customer to enjoy!
 - For the restaurant to be successful, we want to ensure proper communication between the customer and the kitchen so that the customer gets what they want!
 
-![](../4-r-shiny-basics-figures/happycustomer.webp){fig-align="center"}
+![](4-r-shiny-basics-figures/happycustomer.webp){fig-align="center"}
 
 
 
@@ -110,7 +110,7 @@ install.packages('shinyWidgets')
 - The UI and the server worker closely together to create the shiny app.
 - The shiny app works like a restaurant. If the customers' orders are not properly communicated to the kitchen, we will have wrong orders and unhappy customers!
 
-![](../4-r-shiny-basics-figures/interactions.png){fig-align="center"}
+![](4-r-shiny-basics-figures/interactions.png){fig-align="center"}
 
 ## Learning Check {data-background-color=teal}
 
@@ -132,7 +132,7 @@ install.packages('shinyWidgets')
 - Luckily, we have 'widgets' that are easy functions to create inputs through shinyWidgets and other similar packages.
 - When you list inputs in the UI, be sure to separate them with commas
 
-[![](../4-r-shiny-basics-figures/widgets.png){fig-align="center" width=80%}](https://shiny.posit.co/r/gallery/widgets/widget-gallery/){target="_blank"}
+[![](4-r-shiny-basics-figures/widgets.png){fig-align="center" width=80%}](https://shiny.posit.co/r/gallery/widgets/widget-gallery/){target="_blank"}
 
 
 ## Input Structure
@@ -141,7 +141,7 @@ The basic structure of input functions are similar to each other.
 
 - The key to using inputs is to properly ID them so we can call them throughout our server code. We call them with 'input$inputId' in our code.
 
-![](../4-r-shiny-basics-figures/inputexample.png){width=80%}
+![](4-r-shiny-basics-figures/inputexample.png){width=80%}
 
 ##  Outputs
 
@@ -153,7 +153,7 @@ The basic structure of input functions are similar to each other.
 The basic structure when rendering outputs are also similar to one another.
 - The key to using outputs is to properly ID them so we can call them later back to our UI. We call them with 'output$outputID' in our code.
 - We also want to make sure that we are using the correct render function based on our desired output.
-![](../4-r-shiny-basics-figures/inputexample.png){width=80%}
+![](4-r-shiny-basics-figures/inputexample.png){width=80%}
 
 ## Calling our outputs
 We can call our outputs back to our UI using their output IDs. Specifically, we have code that allows us to call outputs based on their output type.
