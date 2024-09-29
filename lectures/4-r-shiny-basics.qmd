@@ -141,39 +141,77 @@ The basic structure of input functions are similar to each other.
 
 - The key to using inputs is to properly ID them so we can call them throughout our server code. We call them with 'input$inputId' in our code.
 
-![](4-r-shiny-basics-figures/inputexample.png){width=80%}
+![Example input function](4-r-shiny-basics-figures/inputexample.png){fig-align="center"}
 
-##  Outputs
+##  Creating Outputs
 
-- Outputs are created in the server portion of our code. Outputs can be a range of objects including but not limited to tables, graphs, and text.
-- Whenever we create output in the server, we use 'render' code. We can think of rendering an object as preparing it to be used as an output. In our restaurant analogy, this equates to cooking our ingredients in the kitchen to create the meal.
-- Show tables 
+- Outputs can be a range of objects including but not limited to tables, graphs, and text.
+- Whenever we create output in the server, we make code them inside 'render' functions. Rendering is the process of converting code into a format that can be displayed and interacted with by users. 
+- In our restaurant analogy, we can think of the raw code to create the outputs as ingredients. These must be cooked before we can serve them, so we can think of rendering as cooking our ingredients.
+
+![Common render functions](4-r-shiny-basics-figures/render.png){fig-align="center"}
 
 ## Output Structure
-The basic structure when rendering outputs are also similar to one another.
-- The key to using outputs is to properly ID them so we can call them later back to our UI. We call them with 'output$outputID' in our code.
+
+
+
+
+- The basic structure when rendering outputs are also similar to one another.
+
+- The key to using outputs is to properly ID them so we can call them  back to our UI. We name them in the server with 'output$outputID'.
 - We also want to make sure that we are using the correct render function based on our desired output.
-![](4-r-shiny-basics-figures/inputexample.png){width=80%}
+
+<br>
+
+```{r, eval=FALSE}
+output$myoutputid<-renderPlot({
+  hist(xvar)
+})
+```
+
 
 ## Calling our outputs
-We can call our outputs back to our UI using their output IDs. Specifically, we have code that allows us to call outputs based on their output type.
 
-- Table here
+- We can call our outputs back to our UI by using their output IDs.
+- We have code that allows us to call outputs based on their output type.
+
+```{r, eval=F}
+plotOutput("myoutputid")
+```
+
+
+![Common output functions](4-r-shiny-basics-figures/output.png){figure-align="center"}
 
 ## A note on the reactive function
-You will see code later that uses the reactive function in the server. The main thing about the reactive function is that it allows us to streamline our computations. In our case, we will use it to change the data throughout the server that we work with based on the input values. This saves computation time as we will not have to reactively change the data in every render function.
+You will see code later that uses the reactive function in the server. The main thing to know about the reactive function is that it allows us to streamline our computations. For example, say we filter all of our data based on a single value. Instead of repeating this computation within every render function, we can filter our data in the reactive function. We can then use the data from the reactive function throughout the server. This allows us to only perform the computation once instead of in every render function.
+
 
 ## Exercises: Labeling our inputs and outputs! {data-background-color=teal}
 
-1. What does this following code do? Address what all the arguments do in the UI.
-Have some input code.
+1. What does the following piece of code do? Address all arguments in the function.
 
-2. Suppose we want to create a plot. How do we set this up in the server, and how do we call it in the UI? (Hint: make sure to address which output and render functions and also properly use IDs)
+```{r, eval=F}
+selectInput("myselection", label=h3("Selection Box"),
+            choices=list("First"=1, "Second"=2, "Third"=3),
+            selected=2)
+```
+
+
+2. What is wrong with the following pieces of code? How would you fix it?<br>a. 
+```{r, eval=F}
+myplot<-renderPlot(
+  hist(x)
+)
+```
+  <br>  b.
+```{r, eval=F}
+tableOutput(myoutputtable)
+```
 
 # How do we deploy our apps? {data-background-color=blue}
 
 ## Local versus Hosted
-One of the great things about shiny apps is that we can deploy them locally (on our own computers) or host them online (with URLs anyone can access). Deploying them locally doesn't necessarily mean no one else can access them since we can share the code for people to also locally deploy the shiny app. For now we will focus on local deployment.
+One of the great things about shiny apps is that we can deploy them locally (on our own computers) or host them online (with URLs anyone can access). Deploying our apps locally doesn't necessarily mean no one else can access them since we can share the code for people to also locally deploy the shiny app. For now we will focus on local deployment.
 
 - We can locally deploy the app just by running the shinyApp function after defining the UI and the server!
 - This will pop up a separate window with your functional shiny app
@@ -193,6 +231,7 @@ shinyApp(ui = ui, server = server)
 
 
 # Demo time! {data-background-color=pink}
+
 
 # Project time! {data-background-color=red}
 

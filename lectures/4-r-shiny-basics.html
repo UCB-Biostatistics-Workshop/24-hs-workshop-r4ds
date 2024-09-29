@@ -541,36 +541,67 @@ Alissa Gordon
 <li>The key to using inputs is to properly ID them so we can call them throughout our server code. We call them with ‘input$inputId’ in our code.</li>
 </ul>
 
-<img data-src="4-r-shiny-basics-figures/inputexample.png" style="width:80.0%" class="r-stretch"></section>
-<section id="outputs" class="slide level2">
-<h2>Outputs</h2>
+<img data-src="4-r-shiny-basics-figures/inputexample.png" class="r-stretch quarto-figure-center"><p class="caption">Example input function</p></section>
+<section id="creating-outputs" class="slide level2">
+<h2>Creating Outputs</h2>
 <ul>
-<li>Outputs are created in the server portion of our code. Outputs can be a range of objects including but not limited to tables, graphs, and text.</li>
-<li>Whenever we create output in the server, we use ‘render’ code. We can think of rendering an object as preparing it to be used as an output. In our restaurant analogy, this equates to cooking our ingredients in the kitchen to create the meal.</li>
-<li>Show tables</li>
+<li>Outputs can be a range of objects including but not limited to tables, graphs, and text.</li>
+<li>Whenever we create output in the server, we make code them inside ‘render’ functions. Rendering is the process of converting code into a format that can be displayed and interacted with by users.</li>
+<li>In our restaurant analogy, we can think of the raw code to create the outputs as ingredients. These must be cooked before we can serve them, so we can think of rendering as cooking our ingredients.</li>
 </ul>
-</section>
+
+<img data-src="4-r-shiny-basics-figures/render.png" class="r-stretch quarto-figure-center"><p class="caption">Common render functions</p></section>
 <section id="output-structure" class="slide level2">
 <h2>Output Structure</h2>
-<p>The basic structure when rendering outputs are also similar to one another. - The key to using outputs is to properly ID them so we can call them later back to our UI. We call them with ‘output$outputID’ in our code. - We also want to make sure that we are using the correct render function based on our desired output. <img data-src="4-r-shiny-basics-figures/inputexample.png" style="width:80.0%"></p>
+<ul>
+<li><p>The basic structure when rendering outputs are also similar to one another.</p></li>
+<li><p>The key to using outputs is to properly ID them so we can call them back to our UI. We name them in the server with ‘output$outputID’.</p></li>
+<li><p>We also want to make sure that we are using the correct render function based on our desired output.</p></li>
+</ul>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>output<span class="sc">$</span>myoutputid<span class="ot">&lt;-</span><span class="fu">renderPlot</span>({</span>
+<span id="cb2-2"><a href=""></a>  <span class="fu">hist</span>(xvar)</span>
+<span id="cb2-3"><a href=""></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="calling-our-outputs" class="slide level2">
 <h2>Calling our outputs</h2>
-<p>We can call our outputs back to our UI using their output IDs. Specifically, we have code that allows us to call outputs based on their output type.</p>
 <ul>
-<li>Table here</li>
+<li>We can call our outputs back to our UI by using their output IDs.</li>
+<li>We have code that allows us to call outputs based on their output type.</li>
 </ul>
-</section>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">plotOutput</span>(<span class="st">"myoutputid"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+<img data-src="4-r-shiny-basics-figures/output.png" data-figure-align="center" class="r-stretch quarto-figure-center"><p class="caption">Common output functions</p></section>
 <section id="a-note-on-the-reactive-function" class="slide level2">
 <h2>A note on the reactive function</h2>
-<p>You will see code later that uses the reactive function in the server. The main thing about the reactive function is that it allows us to streamline our computations. In our case, we will use it to change the data throughout the server that we work with based on the input values. This saves computation time as we will not have to reactively change the data in every render function.</p>
+<p>You will see code later that uses the reactive function in the server. The main thing to know about the reactive function is that it allows us to streamline our computations. For example, say we filter all of our data based on a single value. Instead of repeating this computation within every render function, we can filter our data in the reactive function. We can then use the data from the reactive function throughout the server. This allows us to only perform the computation once instead of in every render function.</p>
 </section>
 <section id="exercises-labeling-our-inputs-and-outputs" class="slide level2" data-background-color="teal">
 <h2>Exercises: Labeling our inputs and outputs!</h2>
 <ol type="1">
-<li><p>What does this following code do? Address what all the arguments do in the UI. Have some input code.</p></li>
-<li><p>Suppose we want to create a plot. How do we set this up in the server, and how do we call it in the UI? (Hint: make sure to address which output and render functions and also properly use IDs)</p></li>
+<li>What does the following piece of code do? Address all arguments in the function.</li>
 </ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="fu">selectInput</span>(<span class="st">"myselection"</span>, <span class="at">label=</span><span class="fu">h3</span>(<span class="st">"Selection Box"</span>),</span>
+<span id="cb4-2"><a href=""></a>            <span class="at">choices=</span><span class="fu">list</span>(<span class="st">"First"</span><span class="ot">=</span><span class="dv">1</span>, <span class="st">"Second"</span><span class="ot">=</span><span class="dv">2</span>, <span class="st">"Third"</span><span class="ot">=</span><span class="dv">3</span>),</span>
+<span id="cb4-3"><a href=""></a>            <span class="at">selected=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ol start="2" type="1">
+<li>What is wrong with the following pieces of code? How would you fix it?<br>a.</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>myplot<span class="ot">&lt;-</span><span class="fu">renderPlot</span>(</span>
+<span id="cb5-2"><a href=""></a>  <span class="fu">hist</span>(x)</span>
+<span id="cb5-3"><a href=""></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br> b.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="fu">tableOutput</span>(myoutputtable)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section></section>
 <section>
 <section id="how-do-we-deploy-our-apps" class="title-slide slide level1 center" data-background-color="blue">
@@ -579,22 +610,22 @@ Alissa Gordon
 </section>
 <section id="local-versus-hosted" class="slide level2">
 <h2>Local versus Hosted</h2>
-<p>One of the great things about shiny apps is that we can deploy them locally (on our own computers) or host them online (with URLs anyone can access). Deploying them locally doesn’t necessarily mean no one else can access them since we can share the code for people to also locally deploy the shiny app. For now we will focus on local deployment.</p>
+<p>One of the great things about shiny apps is that we can deploy them locally (on our own computers) or host them online (with URLs anyone can access). Deploying our apps locally doesn’t necessarily mean no one else can access them since we can share the code for people to also locally deploy the shiny app. For now we will focus on local deployment.</p>
 <ul>
 <li>We can locally deploy the app just by running the shinyApp function after defining the UI and the server!</li>
 <li>This will pop up a separate window with your functional shiny app</li>
 <li>If there are any errors in the UI or server code, your app will not run or will not run as expected</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>ui<span class="ot">&lt;-</span><span class="fu">fluidPage</span>(</span>
-<span id="cb2-2"><a href=""></a>  </span>
-<span id="cb2-3"><a href=""></a>)</span>
-<span id="cb2-4"><a href=""></a></span>
-<span id="cb2-5"><a href=""></a>server<span class="ot">&lt;-</span><span class="cf">function</span>(input, output){</span>
-<span id="cb2-6"><a href=""></a>  </span>
-<span id="cb2-7"><a href=""></a>}</span>
-<span id="cb2-8"><a href=""></a></span>
-<span id="cb2-9"><a href=""></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a>ui<span class="ot">&lt;-</span><span class="fu">fluidPage</span>(</span>
+<span id="cb7-2"><a href=""></a>  </span>
+<span id="cb7-3"><a href=""></a>)</span>
+<span id="cb7-4"><a href=""></a></span>
+<span id="cb7-5"><a href=""></a>server<span class="ot">&lt;-</span><span class="cf">function</span>(input, output){</span>
+<span id="cb7-6"><a href=""></a>  </span>
+<span id="cb7-7"><a href=""></a>}</span>
+<span id="cb7-8"><a href=""></a></span>
+<span id="cb7-9"><a href=""></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section></section>
 <section id="demo-time" class="title-slide slide level1 center" data-background-color="pink">
