@@ -270,16 +270,16 @@ filter(sleep_by_steps, row_number()<=5)
 
 ## Pipe syntax
 
-When `dataframe1` is piped into `func(x)` (`func` is just some fake function)
+When `dataframe1` is piped into `fun(x)` (`fun` is just some fake function)
 
 ```{r eval=FALSE}
-dataframe1 |> func(x)
+dataframe1 |> fun(x)
 ```
 
 is converted into:
 
 ```{r eval=FALSE}
-func(dataframe1, x)
+fun(dataframe1, x)
 ```
 
 - That is: the thing being piped in is used as the _first_ argument of `fun`.

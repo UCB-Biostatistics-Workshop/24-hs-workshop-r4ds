@@ -918,13 +918,13 @@ Emily Hou
 </section>
 <section id="pipe-syntax" class="slide level2">
 <h2>Pipe syntax</h2>
-<p>When <code>dataframe1</code> is piped into <code>func(x)</code> (<code>func</code> is just some fake function)</p>
+<p>When <code>dataframe1</code> is piped into <code>fun(x)</code> (<code>fun</code> is just some fake function)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a>dataframe1 <span class="sc">|&gt;</span> <span class="fu">func</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href=""></a>dataframe1 <span class="sc">|&gt;</span> <span class="fu">fun</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>is converted into:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a><span class="fu">func</span>(dataframe1, x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href=""></a><span class="fu">fun</span>(dataframe1, x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>That is: the thing being piped in is used as the <em>first</em> argument of <code>fun</code>.</li>
