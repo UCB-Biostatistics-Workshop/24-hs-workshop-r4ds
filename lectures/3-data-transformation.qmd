@@ -107,7 +107,7 @@ filter(sleep, occupation == "Teacher")
 ```
 
 - why doesn't `Occupation == Teacher` work?
-- why doesn't `Occupation == teacher` work?
+- why doesn't `Occupation == "teacher"` work?
 - why doesn't `"Occupation" == "Teacher"` make sense?
 
 ## Filtering on computed values
@@ -132,14 +132,6 @@ nrow(sleep)
 filter(sleep, occupation == "Teacher")
 filter(sleep, sleep_duration <= 6)
 nrow(sleep)
-```
-
-```
-## Exercise
-EH: I want to get rid of this to save time
-- Without using the internet, think of how you can use `filter` multiple times to create a dataset where quality of sleep is greater than or equal to 8 **and** stress level is less than or equal to 3
-
-- Using any resources you like, figure out how to use `filter` to create a dataset where **either** quality of sleep is greater than or equal to 8 **or** stress level is less than or equal to 3
 ```
 
 ## Logical conjunctions (AND)
@@ -181,7 +173,7 @@ filter(sleep, !(occupation=="Teacher"))
 - The exclamation point ` ! ` means "NOT", which negates the logical condition
 - sometimes it's easier to say what you *don't* want!
 
-## Exercises: computed conditions, conjunctions, NAs {data-background-color=teal}
+## Exercises: computed conditions, conjunctions {data-background-color=teal}
 
 **Do these two exercises separately**
 
@@ -190,17 +182,6 @@ filter(sleep, !(occupation=="Teacher"))
 
 - How many people with normal BMI have sleep apnea? 
 
-
-## Sampling rows
-
-- You can use `slice_sample()` to get `n` randomly selected rows if you don't have a particular condition you would like to filter on.
-
-```{r}
-slice_sample(sleep, n=5)
-```
-
-- the named argument `prop` allows you to sample a proportion of rows
-- Do `?slice_sample()` to see how you can sample with replacement or with weights
 
 ## Filtering by row number
 
@@ -249,18 +230,21 @@ Use `arrange()` and `filter()` to get the data for the 5 rows with the highest d
 
 ## Nesting and Temporary Variables
 
-- In our last exercise, we used two function applications to arrive at our answer. Shown below, we used temporary variables to keep our code clean. 
+- In a previous exercise, we used arrange() and filter() to get the data for the 5 rows with the highest daily steps. One way to do this is to use temporary variables to keep our code clean. 
 ```{r}
-sleep_by_blood = arrange(sleep, desc(Blood)) # using a temporary variable
-filter(sleep_by_blood, row_number()<=5)
+sleep_by_steps = arrange(sleep, desc(daily_steps)) # using a temporary variable
+filter(sleep_by_steps, row_number()<=5)
 ```
 
-- we can also accompish this by "nesting" the function calls:
+- We can also accomplish this by "nesting" the function calls:
 ```{r}
-filter(arrange(sleep, desc(Blood)), row_number()<=5) # "nesting" the calls to filter and arrange
+filter(arrange(sleep, desc(daily_steps)),row_number()<=5) # "nesting" the calls to filter and arrange
 ```
 
-- Which do you prefer? Why? What are the sylistic pros and cons to both if you are trying to understand what the code does for the first time?
+- Which do you prefer? Why? What are the stylistic pros and cons to both if you are trying to understand what the code does for the first time? 
+
+Using temporary variables can make it easier to see each step, but can also be clunky to constantly need to define and keep track of new temporary variables.
+
 
 ## The pipe
 
@@ -268,32 +252,34 @@ filter(arrange(sleep, desc(Blood)), row_number()<=5) # "nesting" the calls to fi
 
 ```{r, eval=F, tidy=F}
 sleep |> 
-  arrange(desc(Blood)) |>
+  arrange(desc(daily_steps)) |>
   filter(row_number()<=5)
 ```
 
 . . . 
 
-- How does this compare with our code before? What do you notice?
+- How does this compare with our code before? What do you notice? 
+
+Each step is clearly listed out without the need to define temporary variables.
 
 ```{r, eval=F, tidy=F}
-sleep_by_blood = arrange(sleep, desc(Blood)) # using a temporary variable
-filter(sleep_by_blood, row_number()<=5)
+sleep_by_steps = arrange(sleep, desc(daily_steps)) # using a temporary variable
+filter(sleep_by_steps, row_number()<=5)
 ```
 
 
 ## Pipe syntax
 
-When `df1` is piped into `fun(x)` (`fun` is just some fake function)
+When `dataframe1` is piped into `func(x)` (`func` is just some fake function)
 
 ```{r eval=FALSE}
-df1 |> fun(x)
+dataframe1 |> func(x)
 ```
 
 is converted into:
 
 ```{r eval=FALSE}
-fun(df1, x)
+func(dataframe1, x)
 ```
 
 - That is: the thing being piped in is used as the _first_ argument of `fun`.
@@ -305,16 +291,16 @@ fun(df1, x)
 
 ```{r, eval=F, tidy=F}
 sleep |> 
-  arrange(desc(Blood)) |>
+  arrange(desc(daily_steps)) |>
   filter(row_number()<=5)
 
 # same as:
-#   arrange(sleep, desc(Blood)) |>
+#   arrange(sleep, desc(daily_steps)) |>
 #   filter(row_number()<=5)
 
 
 # same as:
-#   filter( arrange(sleep, desc(Blood)), row_number()<=5)
+#   filter( arrange(sleep, desc(daily_steps)), row_number()<=5)
 ```
 
 *** 
@@ -336,8 +322,8 @@ c(1,44,21,0,-4) |> sum()
 Piping a data frame
 
 ```{r, max.lines=5}
-# filter(sleep, Gene=="ZZZ3")
-sleep |> filter(Gene=="ZZZ3") 
+# filter(sleep, age == 28)
+sleep |> filter(age == 28) 
 ```
 
 
@@ -355,26 +341,35 @@ sleep |> filter(Gene=="ZZZ3")
 
 
 ```{r, max.lines=5, eval=F}
-filter(sleep, Gene=="ZZZ3")
-sleep |> filter(Gene=="ZZZ3") 
-sleep %>% filter(Gene=="ZZZ3") 
+filter(sleep, age == 28)
+sleep |> filter(age == 28) 
+sleep %>% filter(age == 28) 
 ```
 
 
 ## Exercise: Pipe to ggplot {data-background-color=teal}
 
-- Run this code to see what it does. Then rewrite it using the pipe operator (get rid of the intermediate variables `mybl2` and `outliers`) and get it to produce the same output.
+- Run this code to see what it does. Then rewrite it using the pipe operator (get rid of the intermediate variables `sleep_lawyer` and `outliers`) and get it to produce the same output.
 
 ```{r, eval=F, tidy=F}
-mybl2 = filter(sleep, Gene == 'MYBL2')
+sleep_lawyer = filter(sleep, occupation == 'Lawyer')
 
 # we haven't learned about this function yet, but doesn't matter
-outliers = mutate(mybl2, blood_outlier = abs(Blood) > 2) 
+outliers = mutate(sleep_lawyer, sleep_outlier = heart_rate > 70) 
 
 ggplot(outliers) +
-  geom_bar(aes(x=blood_outlier))
+  geom_bar(aes(x=sleep_outlier))
 ```
+## Exercise: Solution {data-background-color=teal}
 
+- Here is the solution to the previous exercise:
+
+```{r, eval=F, tidy=F}
+
+sleep %>% filter(occupation == "Lawyer") %>% mutate(sleep_outlier = heart_rate > 70) %>% ggplot() + geom_bar(aes(x=sleep_outlier))
+sleep_lawyer = filter(sleep, occupation == 'Lawyer')
+
+```
 
 # Select columns with select() {data-background-color=black}
 
@@ -408,7 +403,7 @@ select(sleep, contains('steps'))
 ***
 
 - The quotes around the letter `"N"` make it a string. If we did not do this, `R` would think it was looking for a variable called `N` and not just the plain letter.
-- We don't have to quote the names of columns (like `Ind`) because the `tidyverse` functions know that we are working within the dataframe and thus treat the column names like they are variables in their own right
+- We don't have to quote the names of columns (like `sleep_duration`) because the `tidyverse` functions know that we are working within the dataframe and thus treat the column names like they are variables in their own right
 
 ***
 
@@ -424,34 +419,14 @@ select(sleep, where(is.numeric))
 - `select()` can also be used to select everything **except for** certain columns
 ```{r}
 select(sleep, -starts_with('s'), -person_id)
-
 ```
 
 
 ## Exercise: select and filter {data-background-color=teal}
 
-A colleague wants to see the blood expression for the gene A2ML1 for each person. Use select and filter to produce a dataframe for her that has just two columns: `individual` and `expression`, where the expression values are the blood expression values for each person for the gene A2ML1.
+Your classmate wants to see the sleep duration for male software engineers. Use select and filter to produce a dataframe for your classmate that has just two columns: `person_id` and `sleep_duration`.
 
 Before writing any code, break the problem down conceptually into steps. Figure out how to do each step independently before you put them together.
-
-
-## Rename columns
-::::{.columns}
-:::{.column}
-- `select()` can be used to rename variables, but it drops all variables not selected
-```{r max.lines = 6}
-sleep |> select(individual = Ind)
-```
-
-:::
-:::{.column}
-- `rename()` is better suited for this because it keeps all the columns
-```{r max.lines = 6}
-sleep |> rename(individual = Ind)
-```
-
-:::
-::::
 
 
 # Add new variables with mutate() {data-background-color=black}
@@ -465,43 +440,29 @@ sleep |> rename(individual = Ind)
 - `mutate` creates new columns
 - first argument is a dataframe, second specifies what you want the new columns to be
 ```{r, max.lines = 5}
-sleep |>
-  mutate(scaled_blood = 100*Blood))
+mutate(sleep, scaled_stress = 10*stress_level)
 ```
-- This uses `mutate()` to add a new column to which is the absolute value of `Blood`.
+- This uses `mutate()` to add a new column to which is 10 times the value of `stress_level`
 - The thing on the left of the `=` is a new name that you make up which you would like the new column to be called
 - The expression on the right of the `=` defines what will go into the new column
 
 ***
 - **Warning!** If the new variable name already exists, `mutate()` will overwrite the existing one (*in the new dataframe that gets created*)
 ```{r, max.lines = 5}
-sleep |>
-  mutate(Blood = 100*Blood)
+mutate(sleep, stress_level = 10*stress_level)
 ```
 
 ***
 - `mutate()` can create multiple columns at the same time and use multiple columns to define a single new one
 
 ```{r, tidy=F}
-sleep |>
-  mutate(  # the newlines make it more readable
-      scaled_blood = 100* Blood,
-      scaled_heart = 100* Heart,
-      scaled_blood_heart_dif = scaled_blood - scaled_heart
+mutate(sleep,  # the newlines make it more readable
+      scaled_stress = 10* stress_level,
+      scaled_quality_sleep = 10* quality_of_sleep,
+      scaled_stress_quality_sleep_dif = scaled_stress - scaled_quality_sleep
   )
 ```
 - Note that we have also used two columns simultaneously to create a new column
-
-
-***
-- mutate is used for text data too
-```{r, max.lines = 5}
-library(stringr)
-
-sleep |>
-  mutate(Ind_ID_suffix = str_extract(Ind, "(sleep-)(.*)", group=2)) |>
-  select(Ind, Ind_ID_suffix)
-```
 
 
 ## Type conversion
@@ -523,31 +484,19 @@ df |> mutate(number = as.numeric(number))
 :::{.column}
 - `mutate()` can be used to make logical columns (indicators)
 ```{r, tidy=F}
-sleep |>
-  mutate(positive_liver = Liver > 0) |>
-  select(Gene, Ind, Liver, positive_liver)
+mutate(sleep, has_sleep_disorder = sleep_disorder != "None")
 ```
 
 :::
 :::{.column}
 - which can be used to make plots
 ```{r, tidy=F}
-sleep |>
-  mutate(positive_liver = Liver > 0) |>
-ggplot(aes(x=positive_liver, y=Blood)) +
-  geom_violin()
+mutate(sleep, has_sleep_disorder = sleep_disorder != "None") %>% ggplot(aes(x=has_sleep_disorder)) +
+  geom_bar()
 ```
 
 :::
 ::::
-
-***
-or you can just "mutate" directly in ggplot!
-```{r, tidy=F}
-sleep |>  # mutate(positive_liver = Liver > 0) |>
-ggplot(aes(x=Liver > 0, y=Blood)) +
-  geom_violin()
-```
 
 ## Exercise: mutate() {data-background-color=teal}
 
@@ -556,47 +505,10 @@ ggplot(aes(x=Liver > 0, y=Blood)) +
 
 **Problem 1** 
 
-I want to see if certain genes are generally more highly expressed in certain individuals, irrespective of tissue type. Using the sleep data, create a new column containing the sum of the four expression measurements in the different tissues.
+I want to look at a single value that describes an individual's sleep. Create a new variable named `sleep_overall` that is the sum of sleep_duration and quality_of_sleep. 
 
 **Problem 2** 
 
-Produce a plot showing blood vs heart expression of the MYL1 gene only and assign color based on positive vs. negative expression of that gene in liver tissue.
-
-**Problem 3** 
-
-Produce a vector containing the ten individual IDs (`Ind`) with the biggest difference in their heart and lung expression for the A2ML1 gene.
+Produce a plot showing the number of people with stress level greater than or equal to 5, and the number of people with stress level less than 5.
 
 
-
-## mutate() and if_else()
-- `if_else` is a vectorized if-else statement
-- the first argument is an R expression that evaluates to a logical vector, the second argument is what to replace all of the resulting TRUEs with, and the third argument is what to replace the resulting FALSEs with
-```{r}
-x = c(-1, 1/2, 2/3, 5)
-if_else(0<=x & x<=1, "in [0,1]", "not in [0,1]")
-```
-- this is often used in `mutate()`:
-```{r, max.lines=10}
-sleep |>
-mutate( 
-  blood_expression = ifelse(
-    Blood < 0, "-", "+"
-))
-```
-
-***
-- this is useful to "interleave" columns:
-```{r, echo=F}
-emails = tibble(
-  name = c('aya', 'bilal', 'chris', 'diego'),
-  school = c('aya@amherst.edu', 'bilal@berkeley.edu', 'chris@cornell.edu', 'diego@duke.edu'),
-  personal = c('aya@aol.com', 'bilal@bellsouth.net', 'chris@comcast.com', 'diego@dodo.com.au'),
-  preferred = c('school', 'personal', 'personal', 'school')
-)
-emails
-```
-
-```{r}
-emails |> 
-mutate(preferred_email = ifelse(preferred=='personal', personal, school))
-```
