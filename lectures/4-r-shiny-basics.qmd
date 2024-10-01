@@ -232,6 +232,12 @@ shinyApp(ui = ui, server = server)
 
 # Demo time! {data-background-color=pink}
 
+## Shiny Skeleton Code
+If you don't already have the shiny skeleton code for the demo, go ahead and download it!
+*Insert screenshot of where they can find it
 
 # Project time! {data-background-color=red}
 
+## Project Description
+
+## Project Datasets
