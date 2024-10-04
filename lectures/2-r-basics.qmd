@@ -272,7 +272,7 @@ ggplot(data=sleep) +
   geom_point(aes(quality_of_sleep,sleep_duration))
 ```
 :::
-:::{.columns}
+:::{.column}
 But when I use this code, I get:
 
 ```{r, tidy=F}
