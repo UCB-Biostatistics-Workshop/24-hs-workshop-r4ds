@@ -7,7 +7,7 @@ library(tidyr)
 library(shinyWidgets)
 
 ### Load data. Make sure directory is correct.
-health=read_csv("data/ss.csv")
+sleep=read_csv("data/ss.csv")
 
 ### Define the UI. 
 ui <- fluidPage(
@@ -89,15 +89,15 @@ server <- function(input, output) {
     if(input$gender=='male'){
       
       ### Filters dataset
-      filtered_dat<-health %>% filter(gender=='Male')
+      filtered_dat<-sleep %>% filter(gender=='Male')
 
     ### Next, we filter based on female
     }else if(input$gender=='female'){
-      filtered_dat<-health %>% filter(gender=='Female')
+      filtered_dat<-sleep %>% filter(gender=='Female')
 
     ### Finally, if we do not filter at all
     }else{
-      filtered_dat<-health
+      filtered_dat<-sleep
     }
 
     ### mydat is a function, so we need to return a value. Here we return our filtered dataset
