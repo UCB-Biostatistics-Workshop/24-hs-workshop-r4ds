@@ -107,7 +107,7 @@ install.packages('shinyWidgets')
 
 ## Summary
 
-- The UI and the server worker closely together to create the shiny app.
+- The UI and the server work closely together to create the shiny app.
 - The shiny app works like a restaurant. If the customers' orders are not properly communicated to the kitchen, we will have wrong orders and unhappy customers!
 
 ![](4-r-shiny-basics-figures/interactions.png){fig-align="center"}
