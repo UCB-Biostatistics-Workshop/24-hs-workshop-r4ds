@@ -6,11 +6,16 @@ library(ggplot2)
 library(tidyr)
 library(shinyWidgets)
 
-### Load data.
-shinydata=read_csv("https://raw.githubusercontent.com/UCB-Biostatistics-Workshop/f24/summer-2023/data/ss.csv")
+
+
+### Load data. Change data link!
+shinydata<-read_csv("https://raw.githubusercontent.com/UCB-Biostatistics-Workshop/f24/summer-2023/data/ss.csv")
+
+
 
 ### Define the UI. 
 ui <- fluidPage(
+  
   
     ### Set background color using hex code. alpha.f sets transparency.
     setBackgroundColor(color = adjustcolor("#33FFEC",alpha.f = 0.25)),
@@ -18,6 +23,7 @@ ui <- fluidPage(
     
     ### Application title
     titlePanel("My Shiny Skeleton"),
+    
 
     ### We will put key inputs in the sidebar. Make sure there are commas separating each widget.
     sidebarLayout(
@@ -37,13 +43,13 @@ ui <- fluidPage(
           
           ### Radio Buttons widget displays choices as buttons to be selected by user
           
-          
+          ### We coded the input keys to correspond to the actual variable names in our dataset
           radioButtons('box',label=h3("X Variable for Box Plot"),
                        choices=list("Gender"='gender', "Sleep Disorder"='sleep_disorder'),
                        selected='gender'),
-          
+         
           ### Select input allows user to choose filtering variable from a drop down menu
-          selectInput("gender",label=h3("Gender"),
+          selectInput("filter",label=h3("Gender"),
                       choices=list("Male"='male', "Female"='female', "Both"='both'),
                     selected='both'),
           
@@ -81,18 +87,19 @@ ui <- fluidPage(
 ### Define the server logic. 
 server <- function(input, output) {
   
+  
   ### The reactive function allows us to reactively change our data for use throughout the server. 
       ## In this case, it filters the dataset based on the selected filtering input (gender).
   mydat<-reactive({
     
     ### Calls the input value of gender. First, we filter based on male
-    if(input$gender=='male'){
+    if(input$filter=='male'){
       
       ### Filters dataset
       filtered_dat<-shinydata %>% filter(gender=='Male')
 
     ### Next, we filter based on female
-    }else if(input$gender=='female'){
+    }else if(input$filter=='female'){
       filtered_dat<-shinydata %>% filter(gender=='Female')
 
     ### Finally, if we do not filter at all
@@ -124,6 +131,7 @@ server <- function(input, output) {
             geom_point()+
         ## Add in labels
             labs(x='Physical Activity Level', y='Sleep Duration')
+    
     
     ### Stratify based on switch. 
     ### Note: the switch's value is stored as TRUE or FALSE instead of "Yes" and "No"      
