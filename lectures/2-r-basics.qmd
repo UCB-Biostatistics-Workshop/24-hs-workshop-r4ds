@@ -24,10 +24,10 @@ echo: true
 library(tidyverse)
 ```
 ```{r, eval=F}
-sleep = read_csv("https://raw.githubusercontent.com/UCB-Biostatistics-Workshop/f24/summer-2023/data/ss.csv")
+sleep = read_csv("https://bit.ly/ucb_biostat_data")
 ```
 ```{r, include=F}
-sleep = read_csv("https://raw.githubusercontent.com/UCB-Biostatistics-Workshop/f24/summer-2023/data/ss.csv")
+sleep = read_csv("https://bit.ly/ucb_biostat_data")
 ```
 
 - We know this reads a .csv from a file and creates something called a "data frame" 
@@ -46,10 +46,10 @@ ggplot(sleep) +
 - To do complex computations, we need to be able to give
 names to things.
 ```{r, eval=F}
-sleep = read_csv("https://raw.githubusercontent.com/UCB-Biostatistics-Workshop/f24/summer-2023/data/ss.csv")
+sleep = read_csv("https://bit.ly/ucb_biostat_data")
 ```
 
-- This code *assigns* the result of running `read_csv("https://raw.githubusercontent.com/UCB-Biostatistics-Workshop/f24/summer-2023/data/ss.csv")` to the name `sleep`
+- This code *assigns* the result of running `read_csv("https://bit.ly/ucb_biostat_data")` to the name `sleep`
 - You can do this with any values and/or functions
 
 :::: {.columns}
@@ -207,11 +207,9 @@ sqrt(2)
 - the names the function calls these inputs inside itself will be different than what you call them on the outside
 
 ```
-aes(x=EIF3L, y=VAPA)
+aes(x=sleep_duration, y=quality_of_sleep)
 ```
-
-![](https://github.com/alejandroschuler/r4ds-courses/blob/summer-2023/figures/call.png?raw=true)
-
+![](https://github.com/UCB-Biostatistics-Workshop/f24/blob/02533f16a99cabf4ab5c19efbacc92351a630ad3/figures/call.png?raw=true)
 
 ## Named and positional arguments
 
@@ -225,7 +223,8 @@ variable `=` value.
 does not matter.
 ```{r, tidy=F}
 ggplot(data=sleep) + 
-  geom_point(mapping=aes(y=sleep_duration, x=quality_of_sleep))
+  geom_point(mapping=aes(y=sleep_duration, 
+                         x=quality_of_sleep))
 ```
 
 :::
@@ -235,7 +234,8 @@ ggplot(data=sleep) +
 - you can see the default order of the arguments in the help page for each function
 ```{r, tidy=F} 
 ggplot(sleep) + 
-  geom_point(aes(quality_of_sleep, sleep_duration))
+  geom_point(aes(quality_of_sleep, 
+                 sleep_duration))
 ```
 
 :::
@@ -244,7 +244,7 @@ ggplot(sleep) +
 ## Optional arguments
 - Many R functions have arguments that you don't always have to specify. For example:
 ```{r setup, eval=FALSE}
-file_name = "https://raw.githubusercontent.com/UCB-Biostatistics-Workshop/f24/summer-2023/data/ss.csv"
+file_name = "https://bit.ly/ucb_biostat_data"
 sleep_10 = read_csv(file_name, n_max=10) # only read in 10 rows
 sleep = read_csv(file_name) 
 ```
@@ -269,7 +269,8 @@ I'm trying to generate this plot:
 
 ```{r, echo=F, tidy=F}
 ggplot(data=sleep) + 
-  geom_point(aes(quality_of_sleep,sleep_duration))
+  geom_point(aes(quality_of_sleep, 
+                 sleep_duration))
 ```
 :::
 :::{.column}
@@ -277,7 +278,8 @@ But when I use this code, I get:
 
 ```{r, tidy=F}
 ggplot(data=sleep) + 
-  geom_point(aes(sleep_duration, quality_of_sleep))
+  geom_point(aes(sleep_duration, 
+                 quality_of_sleep))
 ```
 
 What am I doing wrong?
@@ -536,9 +538,11 @@ line and is ignored by R.
 - These features make it much easier to rename variables, etc.
 
 ## Exercise: Plotting a parabola  {data-background-color=teal}
+::: {style="font-size: 85%;"}
 
 ::::{.columns}
 :::{.column}
+
 Write an R script that starts with:
 
 ```{r}

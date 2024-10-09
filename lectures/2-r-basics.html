@@ -8,7 +8,7 @@
 <link href="2-r-basics_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="2-r-basics_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="2-r-basics_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.5.57">
+  <meta name="generator" content="quarto-1.5.56">
 
   <meta name="author" content="Alejandro Schuler, Yutine Wu">
   <title>R Programming</title>
@@ -418,7 +418,7 @@ Alejandro Schuler, Yutine Wu
 <li>We’ve seen code like</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a>sleep <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/UCB-Biostatistics-Workshop/f24/summer-2023/data/ss.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a>sleep <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"https://bit.ly/ucb_biostat_data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>We know this reads a .csv from a file and creates something called a “data frame”</li>
@@ -443,10 +443,10 @@ Alejandro Schuler, Yutine Wu
 <li>To do complex computations, we need to be able to give names to things.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>sleep <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/UCB-Biostatistics-Workshop/f24/summer-2023/data/ss.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>sleep <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"https://bit.ly/ucb_biostat_data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
-<li>This code <em>assigns</em> the result of running <code>read_csv("https://raw.githubusercontent.com/UCB-Biostatistics-Workshop/f24/summer-2023/data/ss.csv")</code> to the name <code>sleep</code></li>
+<li>This code <em>assigns</em> the result of running <code>read_csv("https://bit.ly/ucb_biostat_data")</code> to the name <code>sleep</code></li>
 <li>You can do this with any values and/or functions</li>
 </ul>
 <div class="columns">
@@ -641,9 +641,9 @@ Alejandro Schuler, Yutine Wu
 <li>when you call a function, you tell it how to connect the variables in your environment to the ones it expects to have so that it can do its job</li>
 <li>the names the function calls these inputs inside itself will be different than what you call them on the outside</li>
 </ul>
-<pre><code>aes(x=EIF3L, y=VAPA)</code></pre>
+<pre><code>aes(x=sleep_duration, y=quality_of_sleep)</code></pre>
 
-<img data-src="https://github.com/alejandroschuler/r4ds-courses/blob/summer-2023/figures/call.png?raw=true" class="r-stretch"></section>
+<img data-src="https://github.com/UCB-Biostatistics-Workshop/f24/blob/02533f16a99cabf4ab5c19efbacc92351a630ad3/figures/call.png?raw=true" class="r-stretch"></section>
 <section id="named-and-positional-arguments" class="slide level2">
 <h2>Named and positional arguments</h2>
 <div class="columns">
@@ -655,7 +655,8 @@ Alejandro Schuler, Yutine Wu
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href=""></a><span class="fu">ggplot</span>(<span class="at">data=</span>sleep) <span class="sc">+</span> </span>
-<span id="cb32-2"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">y=</span>sleep_duration, <span class="at">x=</span>quality_of_sleep))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-2"><a href=""></a>  <span class="fu">geom_point</span>(<span class="at">mapping=</span><span class="fu">aes</span>(<span class="at">y=</span>sleep_duration, </span>
+<span id="cb32-3"><a href=""></a>                         <span class="at">x=</span>quality_of_sleep))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -671,7 +672,8 @@ Alejandro Schuler, Yutine Wu
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href=""></a><span class="fu">ggplot</span>(sleep) <span class="sc">+</span> </span>
-<span id="cb33-2"><a href=""></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(quality_of_sleep, sleep_duration))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-2"><a href=""></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(quality_of_sleep, </span>
+<span id="cb33-3"><a href=""></a>                 sleep_duration))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -688,7 +690,7 @@ Alejandro Schuler, Yutine Wu
 <li>Many R functions have arguments that you don’t always have to specify. For example:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a>file_name <span class="ot">=</span> <span class="st">"https://raw.githubusercontent.com/UCB-Biostatistics-Workshop/f24/summer-2023/data/ss.csv"</span></span>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href=""></a>file_name <span class="ot">=</span> <span class="st">"https://bit.ly/ucb_biostat_data"</span></span>
 <span id="cb34-2"><a href=""></a>sleep_10 <span class="ot">=</span> <span class="fu">read_csv</span>(file_name, <span class="at">n_max=</span><span class="dv">10</span>) <span class="co"># only read in 10 rows</span></span>
 <span id="cb34-3"><a href=""></a>sleep <span class="ot">=</span> <span class="fu">read_csv</span>(file_name) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -709,7 +711,7 @@ Alejandro Schuler, Yutine Wu
 ! Problem while computing aesthetics.
 ℹ Error occurred in the 1st layer.
 Caused by error:
-! 找不到物件 'sleep_duration'</code></pre>
+! object 'sleep_duration' not found</code></pre>
 </div>
 </div>
 </section>
@@ -731,7 +733,8 @@ Caused by error:
 <p>But when I use this code, I get:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href=""></a><span class="fu">ggplot</span>(<span class="at">data=</span>sleep) <span class="sc">+</span> </span>
-<span id="cb37-2"><a href=""></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(sleep_duration, quality_of_sleep))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-2"><a href=""></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(sleep_duration, </span>
+<span id="cb37-3"><a href=""></a>                 quality_of_sleep))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -1131,6 +1134,7 @@ $ age    &lt;dbl&gt; 33, 48, 8, 29</code></pre>
 </section>
 <section id="exercise-plotting-a-parabola" class="slide level2" data-background-color="teal">
 <h2>Exercise: Plotting a parabola</h2>
+<div style="font-size: 85%;">
 <div class="columns">
 <div class="column">
 <p>Write an R script that starts with:</p>
@@ -1162,6 +1166,7 @@ $ age    &lt;dbl&gt; 33, 48, 8, 29</code></pre>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
+</div>
 </div>
 </div>
 </section></section>
@@ -1376,80 +1381,42 @@ $ age    &lt;dbl&gt; 33, 48, 8, 29</code></pre>
       });
     </script>
     
-
     <script>
-
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-
       // slide changes (different for each slide format).
-
       (function () {
-
         // dispatch for htmlwidgets
-
         function fireSlideEnter() {
-
           const event = window.document.createEvent("Event");
-
           event.initEvent("slideenter", true, true);
-
           window.document.dispatchEvent(event);
-
         }
-
-    
 
         function fireSlideChanged(previousSlide, currentSlide) {
-
           fireSlideEnter();
 
-    
-
           // dispatch for shiny
-
           if (window.jQuery) {
-
             if (previousSlide) {
-
               window.jQuery(previousSlide).trigger("hidden");
-
             }
-
             if (currentSlide) {
-
               window.jQuery(currentSlide).trigger("shown");
-
             }
-
           }
-
         }
-
-    
 
         // hookup for slidy
-
         if (window.w3c_slidy) {
-
           window.w3c_slidy.add_observer(function (slide_num) {
-
             // slide_num starts at position 1
-
             fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-
           });
-
         }
 
-    
-
       })();
-
     </script>
-
-    
 
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
