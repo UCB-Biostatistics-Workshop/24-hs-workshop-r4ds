@@ -1,6 +1,6 @@
 ---
 title: Tabular Data
-author: Emily Hou
+author: Alejandro Schuler, Emily Hou, Lauren Liao
 format:
   revealjs:
     smaller: true
@@ -10,12 +10,10 @@ error: true
 echo: true
 ---
 
-## Learning Goals
-- **Filter** rows of a dataset based on conditions
-- **Arrange** rows of a dataset based on one or more columns
-- **Select** columns of a dataset
-- **Mutate** existing columns to create new columns
-- use the pipe to combine multiple operations
+## Learning goals
+- Understand what the `filter()`, `arrange()`, `select()`, and `mutate()` functions do 
+- Learn the syntax for the above functions and how to apply them to a dataset
+- Practice combining the above functions together to perform multiple manipulations of a dataset
 
 ```{r include=FALSE}
 ## better font size for slides
@@ -42,39 +40,50 @@ truncate_to_lines <- function(x, n) {
 ## dplyr functions
 This section shows the basic data frame functions in the `dplyr` package (part of `tidyverse`). The basic functions are:
 
-- `filter()` picks out rows according to specified conditions
-- `arrange()` sorts the row by values in some column(s)
-- `select()` picks out columns according to their names
-- `mutate()` creates new columns, often based on operations on other columns
+- `filter()` picks out *rows* according to specified conditions
+- `arrange()` sorts the *rows* by values in some column(s)
+- `select()` picks out *columns* according to their names
+- `mutate()` creates new *columns*, often based on operations on other columns
+
+## dplyr functions
 
 All work similarly:
 
-1. The first argument is a data frame.
-2. The subsequent arguments describe what to do with the data frame, using the variable names (without quotes).
-3. The result is a new data frame.
+- The first argument is a data frame
+- The subsequent arguments describe what to do with the data frame, using the variable names (without quotes)
+- The result is a new data frame
 
 Together these properties make it easy to chain together multiple simple steps to achieve a complex result. 
 
 
-## Sleep, Health, and Lifestyle Data
+## Sleep, health, and lifestyle data
 This dataset consists of collected survey results from 373 individuals. The following data points were collected for each individual:
-- Identity information: gender, age, occupation
-- Sleep information: sleep duration (hours), quality of sleep (scale from 1-10), sleep disorder (none, insomnia, sleep apnea)
-- Other health and lifestyle information: physical activity level (minutes/day), stress level (scale 1-10), BMI category (underweight, normal, overweight), blood pressure (systolic/diastolic), heart rate (bpm), daily steps (number of steps walked per day)
 
-- **Goal.** We will use the data here to illustrate how we can use the four basic data frame functions to answer questions we might have about our data. #needs updating
+- Identity information: 
+  - gender, age, occupation
+- Sleep information: 
+  - sleep duration (hours), quality of sleep (scale from 1-10), sleep disorder (none, insomnia, sleep apnea)
+- Other health and lifestyle information: 
+  - physical activity level (minutes/day), stress level (scale 1-10), BMI category (underweight, normal, overweight), blood pressure (systolic/diastolic), heart rate (bpm), daily steps (number of steps walked per day)
 
+--------------------------------------------------------------------------------
+
+## Setting up
+**Goal:** We will use the sleep data to answer questions using the four basic functions 
 
 ```{r, message=F}
-# Read subsetted data from online file - make sure there are no spaces
-# need to update
-sleep = read_csv('https://bit.ly/ucb_biostat_data')
+library(tidyverse) #Don't forget to load the tidyverse library!
+
+sleep <- read_csv('https://bit.ly/ucb_biostat_data') #Reading in the data
 
 # Check number of rows
 nrow(sleep)
+
+# Look at the first 6 rows 
+head(sleep)
 ```
 
-# Filter rows with filter() {data-background-color=black}
+# Filter rows with filter() {data-background-color=lightblue}
 
 ## Filter rows with filter()
 - `filter()` lets you filter out rows of a dataset that meet a certain condition
@@ -93,54 +102,55 @@ filter(sleep, sleep_duration < 6)
 - `==` and `!=` test for equality and inequality (do not use `=` for equality)
 - `>` and `<` test for greater-than and less-than
 - `>=` and `<=` are greater-than-or-equal and less-than-or-equal
-- these can also be used directly on vectors outside of data frames
+- These can also be used directly on vectors outside of data frames
 ```{r}
 c(1,5,-22,4) > 0
 c("a", "b", "c") == "b"
 ```
 
-## Equality on Strings
-- you can use `==` to test whether a string variable matches given text
-- but remember to quote the text you want to compare to
+## Equality on strings
+- You can use `==` to test whether a string variable matches given text
+- But remember to quote the text you want to compare to
 ```{r}
 filter(sleep, occupation == "Teacher")
 ```
 
-- why doesn't `Occupation == Teacher` work?
-- why doesn't `Occupation == "teacher"` work?
-- why doesn't `"Occupation" == "Teacher"` make sense?
+- why doesn't `occupation == Teacher` work?
+- why doesn't `occupation == "teacher"` work?
 
 ## Filtering on computed values
-- the condition can contain computed values
+- The condition can contain computed values
 
 ```{r, message=F}
-filter(sleep, sleep_duration * quality_of_sleep > 75)
+filter(sleep, sleep_duration + quality_of_sleep > 10)
 ```
 
-- note that we didn't actually do anything to the values in the data. 
-- the values in the sleep duration and quality of sleep columns remain the same as before, and no new column was created either (stay tuned!)
+- Note that we didn't actually do anything to change the values in the data
+- The values in the sleep duration and quality of sleep columns remain the same as before, and no new column was created (stay tuned!)
 
 ## Exercise [together] {data-background-color=teal}
 
-- What is the result of running this code?
-
-```{r}
-nrow(sleep)
-```
-
-```{r, eval=F}
-filter(sleep, occupation == "Teacher")
-filter(sleep, sleep_duration <= 6)
-nrow(sleep)
-```
+- Filter the sleep data to include only individuals with normal BMI
 
 ## Logical conjunctions (AND)
+
+- Previously, we only passed one constraint into our `filter()` function. What happens if I am interested in more than one constraint?
+
 ```{r}
 filter(sleep, quality_of_sleep >=8 & stress_level <= 3)
 ```
 
-- This filters by the **conjunction** of the two constraints---both must be satisfied.
 - The ampersand sign ` & ` stands for "AND"
+
+## Logical conjunctions (AND)
+
+- With "AND", for any given row, both constraints must be satisfied in order for that row to appear in your filtered data
+
+. . .
+```{r,eval=F}
+filter(sleep, quality_of_sleep >=8 & stress_level <= 3)
+```
+. . .
 
 ```{r}
 TRUE & FALSE
@@ -150,11 +160,6 @@ FALSE & TRUE
 
 *** 
 
-- For filter, you can do "AND" by passing in two separate conditions as two different arguments, but the comma and ampersand are not generally interchangeable
-```{r}
-filter(sleep, quality_of_sleep >=8, stress_level <= 3)
-```
-
 
 ## Logical conjunctions (OR)
 
@@ -163,25 +168,34 @@ filter(sleep, occupation == "Teacher" | occupation == "Lawyer")
 ```
 
 - The pipe sign ` | ` stands for "OR" 
-- Multiple conjunctions can describe complex logical conditions
+
+## Logical conjunctions (OR)
+- With "OR", for any given row, only one constraint needs to be satisfied in order for that row to appear in your filtered data
+
+```{r}
+TRUE | FALSE
+TRUE | TRUE
+FALSE | FALSE
+```
 
 
 ## Negation (NOT)
 ```{r}
-filter(sleep, !(occupation=="Teacher"))
+filter(sleep, !(occupation == "Teacher"))
 ```
 - The exclamation point ` ! ` means "NOT", which negates the logical condition
-- sometimes it's easier to say what you *don't* want!
+- Sometimes it's easier to say what you *don't* want!
 
-## Exercises: computed conditions, conjunctions {data-background-color=teal}
+## Exercises: Computed Conditions, Conjunctions {data-background-color=teal}
 
 **Do these two exercises separately**
 
 - Filter the sleep data to keep just the rows where the product of sleep duration and quality of sleep is between 36 and 40.
 
-
 - How many people with normal BMI have sleep apnea? 
 
+
+*Tip: Before you start coding, think about how to approach the problem conceptually.*
 
 ## Filtering by row number
 
@@ -189,10 +203,10 @@ filter(sleep, !(occupation=="Teacher"))
 - This is more useful once you have sorted the data in a particular order, which we will soon see how to do.
 
 ```{r}
-filter(sleep, row_number()<=3)
+filter(sleep, row_number() <= 3)
 ```
 
-# Sort rows with arrange() {data-background-color=black}
+# Sort rows with arrange() {data-background-color=lightblue}
 
 ## Sort rows with arrange()
 
@@ -204,41 +218,200 @@ filter(sleep, row_number()<=3)
 - `arrange()` takes a data frame and a column, and sorts the rows by the values in that column (ascending order).
 - Again, the first argument is the data frame and the other arguments tell the function what to do with it
 ```{r}
-arrange(sleep, stress_level)
+arrange(sleep, age)
 ```
 
 ## Descending sort
 - Use the desc function to arrange by descending values
 ```{r}
-arrange(sleep, desc(stress_level))
+arrange(sleep, desc(age))
 ```
 
 ## Multisort
 
-- This is useful if there is a tie in sorting by the first column.
+- This is useful if there is a tie in sorting by the first column, since the function will break the tie by looking at the second column.
 
 ```{r}
-arrange(sleep, stress_level, physical_activity_level)
+arrange(sleep, desc(age), sleep_duration)
+```
+
+- How would you further break the tie?
+
+## Exercise: Top 5 Highest Daily Steps {data-background-color=teal}
+
+Use `arrange()` and `filter()` to get the data for the 5 rows with the highest daily steps.
+
+*Tip: Think about the steps conceptually before you start coding.*
+
+# Select columns with select() {data-background-color=lightblue}
+
+## Select columns with select()
+- The select function will return a subset of the dataset, using only the requested columns in the order specified.
+
+![](http://ohi-science.org/data-science-training/img/rstudio-cheatsheet-select.png)
+
+***
+- The select function will return a subset of the dataset, using only the requested columns in the order specified.
+- first argument is a data frame, then list the columns you want to select
+
+```{r}
+select(sleep, occupation, sleep_duration)
+```
+
+--------------------------------------------------------------------------------
+
+- you can rename columns in the result with the syntax ` new_name = old_name`
+
+```{r}
+select(sleep, job = occupation, sleep_duration)
+```
+
+## Negation
+
+- `select()` can also be used to select everything **except for** certain columns. You can think of this as removing those columns from the dataset
+
+```{r}
+select(sleep, -person_id)
+```
+
+- This is more useful in situations with larger datasets
+
+## Exercise: select and filter {data-background-color=teal}
+
+Your classmate wants to see sleep duration only for male software engineers. Use select and filter to produce a dataframe for your classmate that has just two columns: `person_id` and `sleep_duration`.
+
+*Tip: Again, break the problem down into steps conceptually before coding. Then, figure out how to do each step independently before you put them together.*
+
+
+# Add new variables with mutate() {data-background-color=lightblue}
+
+## Add new variables with mutate()
+- `mutate` creates new columns
+
+![](https://ohi-science.org/data-science-training/img/rstudio-cheatsheet-mutate.png)
+
+***
+- `mutate` creates new columns
+- first argument is a dataframe, second specifies what you want the new columns to be
+```{r, max.lines = 5, eval=F}
+mutate(sleep, scaled_stress = 10*stress_level)
+```
+```{r, echo=F, max.lines = 5}
+mutate(sleep, scaled_stress = 10*stress_level) %>% relocate(stress_level, scaled_stress, .before = quality_of_sleep)
+```
+. . .
+
+- This uses `mutate()` to add a new column to which is 10 times the value of `stress_level`
+- To the left of the `=` is a new column name that you want the new column to be called
+- To the right of the `=` defines what will go into the new column
+
+***
+- **Warning!** If the new variable name already exists, `mutate()` will overwrite the existing one (*in the resulting dataframe that gets created*)
+
+```{r, max.lines = 5, eval=F}
+mutate(sleep, stress_level = 10*stress_level)
+```
+```{r, echo=F}
+mutate(sleep, stress_level = 10*stress_level) %>% relocate(stress_level, .before = quality_of_sleep)
+```
+***
+- `mutate()` can create multiple columns at the same time and use multiple columns to define a single new one
+
+```{r, tidy=F, eval=F}
+mutate(sleep,  # the newlines make it more readable
+      scaled_stress = 10*stress_level,
+      scaled_quality_sleep = 10*quality_of_sleep,
+      scaled_diff = scaled_stress - scaled_quality_sleep
+  )
+```
+```{r, tidy=F, echo=F, max.lines=5}
+mutate(sleep,  # the newlines make it more readable
+      scaled_stress = 10*stress_level,
+      scaled_quality_sleep = 10*quality_of_sleep,
+      scaled_diff = scaled_stress - scaled_quality_sleep
+  ) %>% relocate(scaled_stress, scaled_quality_sleep, scaled_diff, .after = age)
+```
+- Notice we used two columns simultaneously to create a new column
+
+
+
+
+## Indicators
+
+::::{.columns}
+:::{.column}
+- `mutate()` can be used to make logical columns (indicators)
+```{r, tidy=F}
+sleep_wdisorder <- mutate(sleep, has_sleep_disorder = !(sleep_disorder == "None"))
+select(sleep_wdisorder, 
+       has_sleep_disorder, sleep_disorder)
+```
+
+:::
+:::{.column}
+- which can be used to make plots
+```{r, tidy=F}
+ggplot(sleep_wdisorder,
+       aes(x=has_sleep_disorder)) +
+  geom_bar()
+```
+
+:::
+::::
+
+## Exercise: mutate() {data-background-color=teal}
+
+*Tip: Before writing code for each problem, break the problem into steps. Do you have to create new columns? Filter rows? Arrange rows? Select columns? In what order? Once you have a plan, write code, one step at a time.*
+
+
+**Problem 1** 
+
+I want to look at a single value that describes an individual's sleep. Create a new variable named `sleep_overall` that is the sum of sleep_duration and quality_of_sleep. 
+
+**Problem 2** 
+
+Produce a plot showing the number of people with stress level greater than or equal to 5, and the number of people with stress level less than 5.
+
+# Appendix {data-background-color=lightblue}
+
+## Type conversion using `mutate()`
+
+- Data is sometimes given to you in a form that makes it difficult to do operations on. If we have numerical data that is stored as text, we cannot do any mathematical operations on that data.
+
+```{r}
+df <- tibble(number = c("1", "2", "3"))
+df
+
+mutate(df, number_plus_1 = number + 1)
 ```
 
 
-## Exercise: top 5 highest daily steps {data-background-color=teal}
+---------------------------------------
+- In this situation, we can use `mutate()` to convert data types, in this case text to numbers. After the conversion, we will be able to perform mathematical operations as normal.
 
-Use `arrange()` and `filter()` to get the data for the 5 rows with the highest daily steps
+```{r}
+mutate(df, number = as.numeric(number))
+```
 
-# Piping {data-background-color=black}
+# Piping {data-background-color=lightblue}
 
 ## Nesting and Temporary Variables
 
-- In a previous exercise, we used arrange() and filter() to get the data for the 5 rows with the highest daily steps. One way to do this is to use temporary variables to keep our code clean. 
+- In a previous exercise, we used `arrange()` and `filter()` to get the data for the 5 rows with the highest daily steps. One way to do this is to use temporary variables to keep our code clean. 
+
 ```{r}
-sleep_by_steps = arrange(sleep, desc(daily_steps)) # using a temporary variable
+sleep_by_steps <- arrange(sleep, desc(daily_steps)) # using a temporary variable
 filter(sleep_by_steps, row_number()<=5)
 ```
 
+---------------------------------------
+
 - We can also accomplish this by "nesting" the function calls:
+
 ```{r}
-filter(arrange(sleep, desc(daily_steps)),row_number()<=5) # "nesting" the calls to filter and arrange
+filter(arrange(sleep, 
+               desc(daily_steps)),
+       row_number()<=5) # "nesting" the calls to filter and arrange
 ```
 
 - Which do you prefer? Why? What are the stylistic pros and cons to both if you are trying to understand what the code does for the first time? 
@@ -248,7 +421,7 @@ Using temporary variables can make it easier to see each step, but can also be c
 
 ## The pipe
 
-- R solves these problems with the "pipe" operator `|>`
+R solves these problems with the "pipe" operator `|>`
 
 ```{r, eval=F, tidy=F}
 sleep |> 
@@ -258,12 +431,13 @@ sleep |>
 
 . . . 
 
-- How does this compare with our code before? What do you notice? 
+How does this compare with our code before? What do you notice? 
 
-Each step is clearly listed out without the need to define temporary variables.
+- Each step is clearly listed out without the need to define temporary variables.
 
 ```{r, eval=F, tidy=F}
-sleep_by_steps = arrange(sleep, desc(daily_steps)) # using a temporary variable
+sleep_by_steps <- arrange(sleep, desc(daily_steps)) # using a temporary variable
+
 filter(sleep_by_steps, row_number()<=5)
 ```
 
@@ -282,8 +456,8 @@ is converted into:
 fun(dataframe1, x)
 ```
 
-- That is: the thing being piped in is used as the _first_ argument of `fun`.
-- The tidyverse functions are consistently designed so that the first argument is a data frame, and the result is a data frame, so you can push a dataframe all the way through a series of functions
+- That is: the object being piped in is used as the _first_ argument of `fun`.
+- The tidyverse functions are consistently designed so that the first argument is a data frame, and the result is a data frame, so you can push a data frame all the way through a series of functions
 
 *** 
 
@@ -330,6 +504,7 @@ sleep |> filter(age == 28)
 ## Two Pipes
 
 **History**
+
 - R had no pipe
 - ~2014: introduced by `magrittr` package (as `%>%`)
 - ~2016: tidyverse adoption, proliferated in code
@@ -337,7 +512,7 @@ sleep |> filter(age == 28)
 
 
 - `%>%` and `|>` are (basically) the same
-- you will see both in the wild
+- You will see both in the wild
 
 
 ```{r, max.lines=5, eval=F}
@@ -352,163 +527,35 @@ sleep %>% filter(age == 28)
 - Run this code to see what it does. Then rewrite it using the pipe operator (get rid of the intermediate variables `sleep_lawyer` and `outliers`) and get it to produce the same output.
 
 ```{r, eval=F, tidy=F}
-sleep_lawyer = filter(sleep, occupation == 'Lawyer')
+sleep_lawyer <- filter(sleep, occupation == 'Lawyer')
 
-# we haven't learned about this function yet, but doesn't matter
-outliers = mutate(sleep_lawyer, sleep_outlier = heart_rate > 70) 
+outliers <- mutate(sleep_lawyer, sleep_outlier = heart_rate > 70) 
 
 ggplot(outliers) +
   geom_bar(aes(x=sleep_outlier))
 ```
+
 ## Exercise: Solution {data-background-color=teal}
 
-- Here is the solution to the previous exercise:
+Here is the solution to the previous exercise:
 
 ```{r, eval=F, tidy=F}
 
-sleep %>% filter(occupation == "Lawyer") %>% mutate(sleep_outlier = heart_rate > 70) %>% ggplot() + geom_bar(aes(x=sleep_outlier))
-sleep_lawyer = filter(sleep, occupation == 'Lawyer')
+sleep %>% 
+  filter(occupation == "Lawyer") %>% 
+  mutate(sleep_outlier = heart_rate > 70)
 
 ```
 
-# Select columns with select() {data-background-color=black}
-
-## Select columns with select()
-- The select function will return a subset of the tibble, using only the requested columns in the order specified.
-
-![](http://ohi-science.org/data-science-training/img/rstudio-cheatsheet-select.png)
-
-***
-- The select function will return a subset of the tibble, using only the requested columns in the order specified.
-- first argument is a data frame, then list the columns you want to select
+## Exercise: Solution {data-background-color=teal}
+With the pipe syntax, you can easily feed it into a `ggplot()` to make beautiful graphs!
 
 ```{r}
-select(sleep, occupation, sleep_duration)
+sleep %>% 
+  filter(occupation == "Lawyer") %>% 
+  mutate(sleep_outlier = heart_rate > 70) %>% 
+  ggplot() + 
+  geom_bar(aes(x=sleep_outlier))
 ```
-
-- you can rename columns in the result with the syntax ` new_name = old_name`
-
-```{r}
-select(sleep, job=occupation, sleep_duration)
-```
-
-## Helpers
-- `select()` can also be used with handy helpers like `starts_with()` and `contains()`
-
-```{r}
-select(sleep, contains('steps'))
-```
-- Use `?select` to see all the possibilities
-
-***
-
-- The quotes around the letter `"N"` make it a string. If we did not do this, `R` would think it was looking for a variable called `N` and not just the plain letter.
-- We don't have to quote the names of columns (like `sleep_duration`) because the `tidyverse` functions know that we are working within the dataframe and thus treat the column names like they are variables in their own right
-
-***
-
-- we can even select columns based on metadata (but not values!)
-
-```{r}
-select(sleep, where(is.numeric))
-```
-
-
-## Negation
-
-- `select()` can also be used to select everything **except for** certain columns
-```{r}
-select(sleep, -starts_with('s'), -person_id)
-```
-
-
-## Exercise: select and filter {data-background-color=teal}
-
-Your classmate wants to see the sleep duration for male software engineers. Use select and filter to produce a dataframe for your classmate that has just two columns: `person_id` and `sleep_duration`.
-
-Before writing any code, break the problem down conceptually into steps. Figure out how to do each step independently before you put them together.
-
-
-# Add new variables with mutate() {data-background-color=black}
-
-## Add new variables with mutate()
-- `mutate` creates new columns
-
-![](https://ohi-science.org/data-science-training/img/rstudio-cheatsheet-mutate.png)
-
-***
-- `mutate` creates new columns
-- first argument is a dataframe, second specifies what you want the new columns to be
-```{r, max.lines = 5}
-mutate(sleep, scaled_stress = 10*stress_level)
-```
-- This uses `mutate()` to add a new column to which is 10 times the value of `stress_level`
-- The thing on the left of the `=` is a new name that you make up which you would like the new column to be called
-- The expression on the right of the `=` defines what will go into the new column
-
-***
-- **Warning!** If the new variable name already exists, `mutate()` will overwrite the existing one (*in the new dataframe that gets created*)
-```{r, max.lines = 5}
-mutate(sleep, stress_level = 10*stress_level)
-```
-
-***
-- `mutate()` can create multiple columns at the same time and use multiple columns to define a single new one
-
-```{r, tidy=F}
-mutate(sleep,  # the newlines make it more readable
-      scaled_stress = 10* stress_level,
-      scaled_quality_sleep = 10* quality_of_sleep,
-      scaled_stress_quality_sleep_dif = scaled_stress - scaled_quality_sleep
-  )
-```
-- Note that we have also used two columns simultaneously to create a new column
-
-
-## Type conversion
-- Data is sometimes given to you in a form that makes it difficult to do operations on
-```{r}
-df = tibble(number = c("1", "2", "3"))
-df
-df |> mutate(number_plus_1 = number + 1)
-```
-
-- `mutate()` is also useful for converting data types, in this case text to numbers
-```{r}
-df |> mutate(number = as.numeric(number))
-```
-
-## Indicators
-
-::::{.columns}
-:::{.column}
-- `mutate()` can be used to make logical columns (indicators)
-```{r, tidy=F}
-mutate(sleep, has_sleep_disorder = sleep_disorder != "None")
-```
-
-:::
-:::{.column}
-- which can be used to make plots
-```{r, tidy=F}
-mutate(sleep, has_sleep_disorder = sleep_disorder != "None") %>% ggplot(aes(x=has_sleep_disorder)) +
-  geom_bar()
-```
-
-:::
-::::
-
-## Exercise: mutate() {data-background-color=teal}
-
-*Before writing code for each problem , break the problem into steps. Do you have to create new columns? Filter rows? Arrange rows? Select columns? In what order? Once you have a plan, write code, one step at a time.*
-
-
-**Problem 1** 
-
-I want to look at a single value that describes an individual's sleep. Create a new variable named `sleep_overall` that is the sum of sleep_duration and quality_of_sleep. 
-
-**Problem 2** 
-
-Produce a plot showing the number of people with stress level greater than or equal to 5, and the number of people with stress level less than 5.
 
 
