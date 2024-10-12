@@ -112,7 +112,7 @@ Subject to change
 
 | Time             | Activity                                                                                                  |
 |----------------------|-------------------------------------------------|
-| 9 AM - 10 AM      | Welcome and Introduction                                                                               |
+| 9 AM - 10 AM      | [Welcome](https://docs.google.com/presentation/d/1jvmNNnyfmf9_0mncpjdNoUjYlUGZiCXWY74cx9hQ604/edit?usp=sharing){target="_blank"} and [Introduction](https://docs.google.com/presentation/d/1q4xhvJQtOkojJnbvB78gB9YrnTTT-_eZ2plo3n77v5A/edit?usp=sharing){target="_blank"}                                                                               |
 | 10 AM - 11 AM  | Lecture 1: [Intro and Plotting](lectures/1-intro-plotting.html){target="_blank"} |
 | 11 AM - 12 PM | Faculty Panel                                                                                    |
 | 12 PM - 12:30 PM | Lunch                                                                                             |
