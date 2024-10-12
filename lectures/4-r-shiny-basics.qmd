@@ -234,10 +234,28 @@ shinyApp(ui = ui, server = server)
 
 ## Shiny Skeleton Code
 If you don't already have the shiny skeleton code for the demo, go ahead and download it!
-*Insert screenshot of where they can find it
+
+:::: {.columns}
+
+::: {.column width="45%"}
+![Where to find the Shiny App Skeleton](4-r-shiny-basics-figures/skeleton_where_to_find.png){figure-align="center"}
+:::
+
+::: {.column width="10%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="45%"}
+
+![Where to find the Shiny App Skeleton](4-r-shiny-basics-figures/save_github.png){figure-align="center"}
+:::
+
+::::
+
 
 # Project time! {data-background-color=red}
 
 ## Project Description
+For
 
 ## Project Datasets
