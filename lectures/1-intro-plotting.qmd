@@ -97,7 +97,7 @@ QuadRoot(c(3,14,-5))
 - csv is a common format for data to come in, and it's easy to export csv files from microsoft excel, for instance. 
 
 ```{r}
-# I have a file called "lupusGenes.csv" on github that we can read from the URL 
+# I have a csv file with sleep data on Github that we can read from the URL 
 sleep = read_csv("https://bit.ly/ucb_biostat_data")
 ```
 
