@@ -650,7 +650,7 @@ Alissa Gordon
 <div class="quarto-figure quarto-figure-center">
 <figure>
 <p><img data-src="4-r-shiny-basics-figures/save_github.png" data-figure-align="center"></p>
-<figcaption>Where to find the Shiny App Skeleton</figcaption>
+<figcaption>Download the file</figcaption>
 </figure>
 </div>
 </div></div>
@@ -662,10 +662,76 @@ Alissa Gordon
 </section>
 <section id="project-description" class="slide level2">
 <h2>Project Description</h2>
-<p>For</p>
+<p>Working in small groups, create your own Shiny app using the Shiny Skeleton!</p>
+<ul>
+<li>Choose one of the three data set options</li>
+<li>Explore the data set to find two interesting trends in the data between different variables</li>
+<li>Include two different types of plots in your app</li>
+<li>Include one filtering option in your app</li>
+<li>Write a few bullet points about your findings</li>
+<li>At the end, you will present your app to the whole group :)</li>
+</ul>
 </section>
-<section id="project-datasets" class="slide level2">
-<h2>Project Datasets</h2>
+<section id="project-datasets-heart-disease" class="slide level2">
+<h2>Project Datasets: Heart Disease</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a>heart_disease <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"https://bit.ly/ucb_biostat_heart_disease_data"</span>)</span>
+<span id="cb8-2"><a href=""></a><span class="fu">head</span>(heart_disease)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 9
+   ...1   age   sex blood_pressure cholesterol fbs_over_120 max_hr
+  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;  &lt;dbl&gt;
+1     1    70     1            130         322            0    109
+2     2    80     0            115         564            0    160
+3     3    55     1            124         261            0    141
+4     4    65     1            128         263            0    105
+5     5    45     0            120         269            0    121
+6     6    30     1            120         177            0    140
+# ℹ 2 more variables: exercise_angina &lt;dbl&gt;, heart_disease &lt;chr&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="project-datasets-marketing-campaign" class="slide level2">
+<h2>Project Datasets: Marketing Campaign</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>marketing <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"https://bit.ly/ucb_biostat_marketing_data"</span>)</span>
+<span id="cb10-2"><a href=""></a><span class="fu">head</span>(marketing)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 12
+   ...1    id birth_year education  marital_status income fruit_purchases
+  &lt;dbl&gt; &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;           &lt;dbl&gt;           &lt;dbl&gt;
+1     1  5524       1957 Graduation Single          58138              88
+2     2  2174       1954 Graduation Single          46344               1
+3     3  4141       1965 Graduation Together        71613              49
+4     4  6182       1984 Graduation Together        26646               4
+5     5  5324       1981 PhD        Married         58293              43
+6     6  7446       1967 Master     Together        62513              42
+# ℹ 5 more variables: meat_purchases &lt;dbl&gt;, fish_purchases &lt;dbl&gt;,
+#   candy_purchases &lt;dbl&gt;, sale_purchases &lt;dbl&gt;, complaint &lt;dbl&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="project-datasets-student-achievement-data" class="slide level2">
+<h2>Project Datasets: Student Achievement Data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>student <span class="ot">=</span> <span class="fu">read_csv</span>(<span class="st">"https://bit.ly/ucb_biostat_student_data"</span>)</span>
+<span id="cb12-2"><a href=""></a>student <span class="ot">=</span> student[<span class="fu">sample</span>(<span class="fu">nrow</span>(student), <span class="at">size=</span><span class="dv">500</span>),]</span>
+<span id="cb12-3"><a href=""></a><span class="fu">head</span>(student)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 14
+   ...1 student_id hours_studied attendance parental_involvement
+  &lt;dbl&gt;      &lt;dbl&gt;         &lt;dbl&gt;      &lt;dbl&gt; &lt;chr&gt;               
+1  6248       6248            24         76 High                
+2  5420       5420            13         65 Low                 
+3  2768       2768            23         67 Medium              
+4  6527       6527            18         91 Low                 
+5  4383       4383            16         67 Medium              
+6  1817       1817             7         92 High                
+# ℹ 9 more variables: access_to_resources &lt;chr&gt;, sleep_hours &lt;dbl&gt;,
+#   previous_scores &lt;dbl&gt;, internet_access &lt;chr&gt;, family_income &lt;chr&gt;,
+#   teacher_quality &lt;chr&gt;, school_type &lt;chr&gt;, gender &lt;chr&gt;, exam_score &lt;dbl&gt;</code></pre>
+</div>
+</div>
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
 
