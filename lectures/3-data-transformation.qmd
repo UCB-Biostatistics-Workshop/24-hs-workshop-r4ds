@@ -364,13 +364,13 @@ ggplot(sleep_wdisorder,
 *Tip: Before writing code for each problem, break the problem into steps. Do you have to create new columns? Filter rows? Arrange rows? Select columns? In what order? Once you have a plan, write code, one step at a time.*
 
 
-**Problem 1** 
+**Problem 1a** 
 
 I want to look at a single value that describes an individual's sleep. Create a new variable named `sleep_overall` that is the sum of sleep_duration and quality_of_sleep. 
 
-**Problem 2** 
+**Problem 1b** 
 
-Produce a plot showing the number of people with stress level greater than or equal to 5, and the number of people with stress level less than 5.
+Save the dataset you created in Problem 1a. Using ggplot, create a histogram of `sleep_overall()` for male salespeople. 
 
 # Appendix {data-background-color=lightblue}
 

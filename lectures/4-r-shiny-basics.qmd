@@ -234,10 +234,55 @@ shinyApp(ui = ui, server = server)
 
 ## Shiny Skeleton Code
 If you don't already have the shiny skeleton code for the demo, go ahead and download it!
-*Insert screenshot of where they can find it
+
+:::: {.columns}
+
+::: {.column width="45%"}
+![Where to find the Shiny App Skeleton](4-r-shiny-basics-figures/skeleton_where_to_find.png){figure-align="center"}
+:::
+
+::: {.column width="10%"}
+<!-- empty column to create gap -->
+:::
+
+::: {.column width="45%"}
+
+![Download the file](4-r-shiny-basics-figures/save_github.png){figure-align="center"}
+:::
+
+::::
+
 
 # Project time! {data-background-color=red}
 
 ## Project Description
+Working in small groups, create your own Shiny app using the Shiny Skeleton!
 
-## Project Datasets
+- Choose one of the three data set options
+- Explore the data set to find two interesting trends in the data between different variables
+- Include two different types of plots in your app
+- Include one filtering option in your app
+- Write a few bullet points about your findings
+- At the end, you will present your app to the whole group :)
+
+## Project Datasets: Heart Disease
+
+```{r}
+heart_disease = read_csv("https://bit.ly/ucb_biostat_heart_disease_data")
+head(heart_disease)
+```
+
+## Project Datasets: Marketing Campaign
+
+```{r}
+marketing = read_csv("https://bit.ly/ucb_biostat_marketing_data")
+head(marketing)
+```
+
+## Project Datasets: Student Achievement Data
+```{r}
+student = read_csv("https://bit.ly/ucb_biostat_student_data")
+student = student[sample(nrow(student), size=500),]
+head(student)
+```
+

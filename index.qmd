@@ -112,7 +112,7 @@ Subject to change
 
 | Time             | Activity                                                                                                  |
 |----------------------|-------------------------------------------------|
-| 9 AM - 10 AM      | Welcome and Introduction                                                                               |
+| 9 AM - 10 AM      | [Welcome](https://docs.google.com/presentation/d/1jvmNNnyfmf9_0mncpjdNoUjYlUGZiCXWY74cx9hQ604/edit?usp=sharing){target="_blank"} and [Introduction](https://docs.google.com/presentation/d/1q4xhvJQtOkojJnbvB78gB9YrnTTT-_eZ2plo3n77v5A/edit?usp=sharing){target="_blank"}                                                                               |
 | 10 AM - 11 AM  | Lecture 1: [Intro and Plotting](lectures/1-intro-plotting.html){target="_blank"} |
 | 11 AM - 12 PM | Faculty Panel                                                                                    |
 | 12 PM - 12:30 PM | Lunch                                                                                             |
@@ -129,12 +129,12 @@ Subject to change
 | 11 AM - 12:30 PM       | Lecture 3: [Tabular Data](lectures/3-data-transformation.html){target="_blank"}                                        |
 | 12:30 PM - 1 PM | Lunch     |
 | 1 PM - 2 PM    | Mentorship Discussion |
-| 2 PM - 3:30 PM      | Lecture 4: [Intro to Shiny](lectures/4-r-shiny-basics.html)  |
+| 2 PM - 3:30 PM      | Lecture 4: [Intro to Shiny](lectures/4-r-shiny-basics.html) - [Shiny App Skeleton](https://github.com/UCB-Biostatistics-Workshop/f24/blob/summer-2023/ShinySkeleton.R){target="_blank"} |
 | 3:30 PM - 5 PM         | Group Project: Create Your Own Shiny App!  |
 
 
 
-# Schedule and Slides
+# Slide Details
 
 <table>
   <tbody>
@@ -178,7 +178,7 @@ Subject to change
     </tr>
     <tr>
       <td>3</td>
-      <td>[Tabluar Data](lectures/3-data-transformation.html){target="_blank"}</td>
+      <td>[Tabular Data](lectures/3-data-transformation.html){target="_blank"}</td>
         <td><ul>
             <li>filter rows of a dataset based on conditions</li>
             <li>arrange rows of a dataset based on one or more columns</li>
