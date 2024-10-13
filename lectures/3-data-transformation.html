@@ -1176,62 +1176,61 @@ Caused by error in `number + 1`:
 ! non-numeric argument to binary operator</code></pre>
 </div>
 </div>
-<table class="caption-top" style="width:56%;">
-<colgroup>
-<col style="width: 55%">
-</colgroup>
-<tbody>
-<tr class="odd">
-<td>- In this situation, we can use <code>mutate()</code> to convert data types, in this case text to numbers. After the conversion, we will be able to perform mathematical operations as normal.</td>
-</tr>
-<tr class="even">
-<td>::: {.cell}</td>
-</tr>
-<tr class="odd">
-<td><code>{.r .cell-code} mutate(df, number = as.numeric(number))</code></td>
-</tr>
-<tr class="even">
-<td>::: {.cell-output .cell-output-stdout}</td>
-</tr>
-<tr class="odd">
-<td><code># A tibble: 3 × 1 number &lt;dbl&gt; 1      1 2      2 3      3</code></td>
-</tr>
-<tr class="even">
-<td>::: :::</td>
-</tr>
-<tr class="odd">
-<td># Piping {data-background-color=lightblue}</td>
-</tr>
-<tr class="even">
-<td>## Nesting and Temporary Variables</td>
-</tr>
-<tr class="odd">
-<td>- In a previous exercise, we used <code>arrange()</code> and <code>filter()</code> to get the data for the 5 rows with the highest daily steps. One way to do this is to use temporary variables to keep our code clean.</td>
-</tr>
-<tr class="even">
-<td>::: {.cell}</td>
-</tr>
-<tr class="odd">
-<td><code>{.r .cell-code} sleep_by_steps &lt;- arrange(sleep, desc(daily_steps)) # using a temporary variable filter(sleep_by_steps, row_number()&lt;=5)</code></td>
-</tr>
-<tr class="even">
-<td>::: {.cell-output .cell-output-stdout}</td>
-</tr>
-<tr class="odd">
-<td><code># A tibble: 5 × 13 person_id gender   age occupation sleep_duration quality_of_sleep &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;            &lt;dbl&gt; 1         2 Male      28 Doctor                6.2                6 2         3 Male      28 Doctor                6.2                6 3       266 Female    48 Nurse                 5.9                6 4       268 Female    49 Nurse                 6.2                6 5       269 Female    49 Nurse                 6                  6 # ℹ 7 more variables: physical_activity_level &lt;dbl&gt;, stress_level &lt;dbl&gt;, #   bmi_category &lt;chr&gt;, blood_pressure &lt;chr&gt;, heart_rate &lt;dbl&gt;, #   daily_steps &lt;dbl&gt;, sleep_disorder &lt;chr&gt;</code></td>
-</tr>
-<tr class="even">
-<td>::: :::</td>
-</tr>
-</tbody>
-</table>
+</section>
+<section class="slide level2">
+
+<ul>
+<li>In this situation, we can use <code>mutate()</code> to convert data types, in this case text to numbers. After the conversion, we will be able to perform mathematical operations as normal.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href=""></a><span class="fu">mutate</span>(df, <span class="at">number =</span> <span class="fu">as.numeric</span>(number), <span class="at">number_plus_1 =</span> number <span class="sc">+</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  number number_plus_1
+   &lt;dbl&gt;         &lt;dbl&gt;
+1      1             2
+2      2             3
+3      3             4</code></pre>
+</div>
+</div>
+</section></section>
+<section>
+<section id="piping" class="title-slide slide level1 center" data-background-color="lightblue">
+<h1>Piping</h1>
+
+</section>
+<section id="nesting-and-temporary-variables" class="slide level2">
+<h2>Nesting and Temporary Variables</h2>
+<ul>
+<li>In a previous exercise, we used <code>arrange()</code> and <code>filter()</code> to get the data for the 5 rows with the highest daily steps. One way to do this is to use temporary variables to keep our code clean.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href=""></a>sleep_by_steps <span class="ot">&lt;-</span> <span class="fu">arrange</span>(sleep, <span class="fu">desc</span>(daily_steps)) <span class="co"># using a temporary variable</span></span>
+<span id="cb63-2"><a href=""></a><span class="fu">filter</span>(sleep_by_steps, <span class="fu">row_number</span>()<span class="sc">&lt;=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 13
+  person_id gender   age occupation sleep_duration quality_of_sleep
+      &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;            &lt;dbl&gt;
+1         2 Male      28 Doctor                6.2                6
+2         3 Male      28 Doctor                6.2                6
+3       266 Female    48 Nurse                 5.9                6
+4       268 Female    49 Nurse                 6.2                6
+5       269 Female    49 Nurse                 6                  6
+# ℹ 7 more variables: physical_activity_level &lt;dbl&gt;, stress_level &lt;dbl&gt;,
+#   bmi_category &lt;chr&gt;, blood_pressure &lt;chr&gt;, heart_rate &lt;dbl&gt;,
+#   daily_steps &lt;dbl&gt;, sleep_disorder &lt;chr&gt;</code></pre>
+</div>
+</div>
+</section>
+<section class="slide level2">
+
 <ul>
 <li>We can also accomplish this by “nesting” the function calls:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href=""></a><span class="fu">filter</span>(<span class="fu">arrange</span>(sleep, </span>
-<span id="cb61-2"><a href=""></a>               <span class="fu">desc</span>(daily_steps)),</span>
-<span id="cb61-3"><a href=""></a>       <span class="fu">row_number</span>()<span class="sc">&lt;=</span><span class="dv">5</span>) <span class="co"># "nesting" the calls to filter and arrange</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href=""></a><span class="fu">filter</span>(<span class="fu">arrange</span>(sleep, </span>
+<span id="cb65-2"><a href=""></a>               <span class="fu">desc</span>(daily_steps)),</span>
+<span id="cb65-3"><a href=""></a>       <span class="fu">row_number</span>()<span class="sc">&lt;=</span><span class="dv">5</span>) <span class="co"># "nesting" the calls to filter and arrange</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 13
   person_id gender   age occupation sleep_duration quality_of_sleep
@@ -1255,9 +1254,9 @@ Caused by error in `number + 1`:
 <h2>The pipe</h2>
 <p>R solves these problems with the “pipe” operator <code>|&gt;</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href=""></a>sleep <span class="sc">|&gt;</span> </span>
-<span id="cb63-2"><a href=""></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(daily_steps)) <span class="sc">|&gt;</span></span>
-<span id="cb63-3"><a href=""></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>()<span class="sc">&lt;=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href=""></a>sleep <span class="sc">|&gt;</span> </span>
+<span id="cb67-2"><a href=""></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(daily_steps)) <span class="sc">|&gt;</span></span>
+<span id="cb67-3"><a href=""></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>()<span class="sc">&lt;=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="fragment">
 <p>How does this compare with our code before? What do you notice?</p>
@@ -1265,9 +1264,9 @@ Caused by error in `number + 1`:
 <li>Each step is clearly listed out without the need to define temporary variables.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href=""></a>sleep_by_steps <span class="ot">&lt;-</span> <span class="fu">arrange</span>(sleep, <span class="fu">desc</span>(daily_steps)) <span class="co"># using a temporary variable</span></span>
-<span id="cb64-2"><a href=""></a></span>
-<span id="cb64-3"><a href=""></a><span class="fu">filter</span>(sleep_by_steps, <span class="fu">row_number</span>()<span class="sc">&lt;=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href=""></a>sleep_by_steps <span class="ot">&lt;-</span> <span class="fu">arrange</span>(sleep, <span class="fu">desc</span>(daily_steps)) <span class="co"># using a temporary variable</span></span>
+<span id="cb68-2"><a href=""></a></span>
+<span id="cb68-3"><a href=""></a><span class="fu">filter</span>(sleep_by_steps, <span class="fu">row_number</span>()<span class="sc">&lt;=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -1275,11 +1274,11 @@ Caused by error in `number + 1`:
 <h2>Pipe syntax</h2>
 <p>When <code>dataframe1</code> is piped into <code>fun(x)</code> (<code>fun</code> is just some fake function)</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href=""></a>dataframe1 <span class="sc">|&gt;</span> <span class="fu">fun</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href=""></a>dataframe1 <span class="sc">|&gt;</span> <span class="fu">fun</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>is converted into:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href=""></a><span class="fu">fun</span>(dataframe1, x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href=""></a><span class="fu">fun</span>(dataframe1, x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>That is: the object being piped in is used as the <em>first</em> argument of <code>fun</code>.</li>
@@ -1292,17 +1291,17 @@ Caused by error in `number + 1`:
 <li>The pipe represents a “conveyor belt” along which data is passed from function to function (“workers”) in an assembly line</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href=""></a>sleep <span class="sc">|&gt;</span> </span>
-<span id="cb67-2"><a href=""></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(daily_steps)) <span class="sc">|&gt;</span></span>
-<span id="cb67-3"><a href=""></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>()<span class="sc">&lt;=</span><span class="dv">5</span>)</span>
-<span id="cb67-4"><a href=""></a></span>
-<span id="cb67-5"><a href=""></a><span class="co"># same as:</span></span>
-<span id="cb67-6"><a href=""></a><span class="co">#   arrange(sleep, desc(daily_steps)) |&gt;</span></span>
-<span id="cb67-7"><a href=""></a><span class="co">#   filter(row_number()&lt;=5)</span></span>
-<span id="cb67-8"><a href=""></a></span>
-<span id="cb67-9"><a href=""></a></span>
-<span id="cb67-10"><a href=""></a><span class="co"># same as:</span></span>
-<span id="cb67-11"><a href=""></a><span class="co">#   filter( arrange(sleep, desc(daily_steps)), row_number()&lt;=5)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href=""></a>sleep <span class="sc">|&gt;</span> </span>
+<span id="cb71-2"><a href=""></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(daily_steps)) <span class="sc">|&gt;</span></span>
+<span id="cb71-3"><a href=""></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>()<span class="sc">&lt;=</span><span class="dv">5</span>)</span>
+<span id="cb71-4"><a href=""></a></span>
+<span id="cb71-5"><a href=""></a><span class="co"># same as:</span></span>
+<span id="cb71-6"><a href=""></a><span class="co">#   arrange(sleep, desc(daily_steps)) |&gt;</span></span>
+<span id="cb71-7"><a href=""></a><span class="co">#   filter(row_number()&lt;=5)</span></span>
+<span id="cb71-8"><a href=""></a></span>
+<span id="cb71-9"><a href=""></a></span>
+<span id="cb71-10"><a href=""></a><span class="co"># same as:</span></span>
+<span id="cb71-11"><a href=""></a><span class="co">#   filter( arrange(sleep, desc(daily_steps)), row_number()&lt;=5)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section class="slide level2">
@@ -1312,24 +1311,24 @@ Caused by error in `number + 1`:
 </ul>
 <p>Piping a string</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href=""></a><span class="co"># paste("hello", "world")</span></span>
-<span id="cb68-2"><a href=""></a><span class="st">"hello"</span> <span class="sc">|&gt;</span> <span class="fu">paste</span>(<span class="st">"world"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href=""></a><span class="co"># paste("hello", "world")</span></span>
+<span id="cb72-2"><a href=""></a><span class="st">"hello"</span> <span class="sc">|&gt;</span> <span class="fu">paste</span>(<span class="st">"world"</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "hello world"</code></pre>
 </div>
 </div>
 <p>Piping a vector</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href=""></a><span class="co"># sum(c(1,44,21,0,-4))</span></span>
-<span id="cb70-2"><a href=""></a><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">44</span>,<span class="dv">21</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">4</span>) <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href=""></a><span class="co"># sum(c(1,44,21,0,-4))</span></span>
+<span id="cb74-2"><a href=""></a><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">44</span>,<span class="dv">21</span>,<span class="dv">0</span>,<span class="sc">-</span><span class="dv">4</span>) <span class="sc">|&gt;</span> <span class="fu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 62</code></pre>
 </div>
 </div>
 <p>Piping a data frame</p>
 <div class="cell" data-max.lines="5">
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href=""></a><span class="co"># filter(sleep, age == 28)</span></span>
-<span id="cb72-2"><a href=""></a>sleep <span class="sc">|&gt;</span> <span class="fu">filter</span>(age <span class="sc">==</span> <span class="dv">28</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href=""></a><span class="co"># filter(sleep, age == 28)</span></span>
+<span id="cb76-2"><a href=""></a>sleep <span class="sc">|&gt;</span> <span class="fu">filter</span>(age <span class="sc">==</span> <span class="dv">28</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 13
   person_id gender   age occupation           sleep_duration quality_of_sleep
@@ -1357,9 +1356,9 @@ Caused by error in `number + 1`:
 <li><p>You will see both in the wild</p></li>
 </ul>
 <div class="cell" data-max.lines="5">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href=""></a><span class="fu">filter</span>(sleep, age <span class="sc">==</span> <span class="dv">28</span>)</span>
-<span id="cb74-2"><a href=""></a>sleep <span class="sc">|&gt;</span> <span class="fu">filter</span>(age <span class="sc">==</span> <span class="dv">28</span>) </span>
-<span id="cb74-3"><a href=""></a>sleep <span class="sc">%&gt;%</span> <span class="fu">filter</span>(age <span class="sc">==</span> <span class="dv">28</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href=""></a><span class="fu">filter</span>(sleep, age <span class="sc">==</span> <span class="dv">28</span>)</span>
+<span id="cb78-2"><a href=""></a>sleep <span class="sc">|&gt;</span> <span class="fu">filter</span>(age <span class="sc">==</span> <span class="dv">28</span>) </span>
+<span id="cb78-3"><a href=""></a>sleep <span class="sc">%&gt;%</span> <span class="fu">filter</span>(age <span class="sc">==</span> <span class="dv">28</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="exercise-pipe-to-ggplot" class="slide level2" data-background-color="teal">
@@ -1368,32 +1367,32 @@ Caused by error in `number + 1`:
 <li>Run this code to see what it does. Then rewrite it using the pipe operator (get rid of the intermediate variables <code>sleep_lawyer</code> and <code>outliers</code>) and get it to produce the same output.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href=""></a>sleep_lawyer <span class="ot">&lt;-</span> <span class="fu">filter</span>(sleep, occupation <span class="sc">==</span> <span class="st">'Lawyer'</span>)</span>
-<span id="cb75-2"><a href=""></a></span>
-<span id="cb75-3"><a href=""></a>outliers <span class="ot">&lt;-</span> <span class="fu">mutate</span>(sleep_lawyer, <span class="at">sleep_outlier =</span> heart_rate <span class="sc">&gt;</span> <span class="dv">70</span>) </span>
-<span id="cb75-4"><a href=""></a></span>
-<span id="cb75-5"><a href=""></a><span class="fu">ggplot</span>(outliers) <span class="sc">+</span></span>
-<span id="cb75-6"><a href=""></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x=</span>sleep_outlier))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href=""></a>sleep_lawyer <span class="ot">&lt;-</span> <span class="fu">filter</span>(sleep, occupation <span class="sc">==</span> <span class="st">'Lawyer'</span>)</span>
+<span id="cb79-2"><a href=""></a></span>
+<span id="cb79-3"><a href=""></a>outliers <span class="ot">&lt;-</span> <span class="fu">mutate</span>(sleep_lawyer, <span class="at">sleep_outlier =</span> heart_rate <span class="sc">&gt;</span> <span class="dv">70</span>) </span>
+<span id="cb79-4"><a href=""></a></span>
+<span id="cb79-5"><a href=""></a><span class="fu">ggplot</span>(outliers) <span class="sc">+</span></span>
+<span id="cb79-6"><a href=""></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x=</span>sleep_outlier))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="exercise-solution" class="slide level2" data-background-color="teal">
 <h2>Exercise: Solution</h2>
 <p>Here is the solution to the previous exercise:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href=""></a>sleep <span class="sc">%&gt;%</span> </span>
-<span id="cb76-2"><a href=""></a>  <span class="fu">filter</span>(occupation <span class="sc">==</span> <span class="st">"Lawyer"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb76-3"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">sleep_outlier =</span> heart_rate <span class="sc">&gt;</span> <span class="dv">70</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href=""></a>sleep <span class="sc">%&gt;%</span> </span>
+<span id="cb80-2"><a href=""></a>  <span class="fu">filter</span>(occupation <span class="sc">==</span> <span class="st">"Lawyer"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb80-3"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">sleep_outlier =</span> heart_rate <span class="sc">&gt;</span> <span class="dv">70</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="exercise-solution-1" class="slide level2" data-background-color="teal">
 <h2>Exercise: Solution</h2>
 <p>With the pipe syntax, you can easily feed it into a <code>ggplot()</code> to make beautiful graphs!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href=""></a>sleep <span class="sc">%&gt;%</span> </span>
-<span id="cb77-2"><a href=""></a>  <span class="fu">filter</span>(occupation <span class="sc">==</span> <span class="st">"Lawyer"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb77-3"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">sleep_outlier =</span> heart_rate <span class="sc">&gt;</span> <span class="dv">70</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb77-4"><a href=""></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb77-5"><a href=""></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x=</span>sleep_outlier))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href=""></a>sleep <span class="sc">%&gt;%</span> </span>
+<span id="cb81-2"><a href=""></a>  <span class="fu">filter</span>(occupation <span class="sc">==</span> <span class="st">"Lawyer"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb81-3"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">sleep_outlier =</span> heart_rate <span class="sc">&gt;</span> <span class="dv">70</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb81-4"><a href=""></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
+<span id="cb81-5"><a href=""></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">x=</span>sleep_outlier))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="3-data-transformation_files/figure-revealjs/unnamed-chunk-43-1.png" width="960" class="r-stretch"><div class="quarto-auto-generated-content">

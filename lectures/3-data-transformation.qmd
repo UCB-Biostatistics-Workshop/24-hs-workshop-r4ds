@@ -386,11 +386,12 @@ mutate(df, number_plus_1 = number + 1)
 ```
 
 
----------------------------------------
+----------------------------------------------------------------------------------
+
 - In this situation, we can use `mutate()` to convert data types, in this case text to numbers. After the conversion, we will be able to perform mathematical operations as normal.
 
 ```{r}
-mutate(df, number = as.numeric(number))
+mutate(df, number = as.numeric(number), number_plus_1 = number + 1)
 ```
 
 # Piping {data-background-color=lightblue}
